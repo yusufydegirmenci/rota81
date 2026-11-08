@@ -135,3 +135,55 @@ tbody tr:last-child td { border-bottom: 0; }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 @media print { .topbar, .bottomnav, .sidenav { display: none; } }
+
+/* Giriş sayfası */
+.loginpage { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); background: var(--color-page); }
+.loginhero { background: #0B2D6B; color: #fff; padding: 3rem clamp(1.5rem, 4vw, 4rem); display: flex; flex-direction: column; gap: 1.25rem; justify-content: center; }
+.loginhero h1 { color: #fff; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.1; margin: 0; }
+.loginhero p, .loginhero li { color: #dbe5f7; font-size: 1.1rem; }
+.loginhero ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .4rem; }
+.loginhero small { color: #aebfe0; }
+.loginbrand { display: flex; align-items: center; gap: .8rem; color: #fff; text-decoration: none; font-weight: 800; font-size: 1.4rem; letter-spacing: .04em; margin-bottom: 1.5rem; }
+.loginmain { display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+.loginbox { width: 100%; max-width: 460px; display: grid; gap: 1.1rem; }
+.loginbox h2 { margin: 0; font-size: 1.9rem; }
+.loginbox p { margin: 0; }
+.loginmobilebrand { display: none; align-items: center; gap: .6rem; color: #0B2D6B; font-size: 1.3rem; }
+.pwwrap { position: relative; }
+.pwtoggle { position: absolute; right: .5rem; top: 2.05rem; min-height: 40px; padding: 0 .7rem; border: 0; background: transparent; color: #0B2D6B; font-weight: 700; cursor: pointer; border-radius: 8px; }
+.pwwrap input { padding-right: 5.5rem; }
+.demobox { border-top: 1px solid var(--color-line); padding-top: 1.1rem; display: grid; gap: .6rem; }
+.demobox h3 { margin: 0; font-size: 1.05rem; }
+.demogrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+.demo { display: grid; gap: .1rem; text-align: left; min-height: 72px; padding: .6rem .8rem; border: 2px solid var(--color-line); border-radius: 12px; background: #fff; cursor: pointer; font: inherit; color: var(--color-ink); }
+.demo:hover, .demo:focus-visible { border-color: #FF7A00; }
+.demo small { color: var(--color-muted); }
+@media (max-width: 860px) {
+  .loginpage { grid-template-columns: 1fr; }
+  .loginhero { display: none; }
+  .loginmobilebrand { display: flex; }
+  .loginmain { align-items: flex-start; }
+}
+@media (max-width: 420px) { .demogrid { grid-template-columns: 1fr; } }
+
+.topbar a.btn { color: var(--color-brand-700); }
+.topbar a.btn.primary { color: #fff; }
+/* Açılış sayfası */
+.pubpage { min-height: 100vh; background: var(--color-page); }
+.pubbar { display: flex; align-items: center; gap: .75rem; padding: .8rem clamp(1rem, 4vw, 3rem); }
+.pubbrand { display: flex; align-items: center; gap: .6rem; color: #0B2D6B; text-decoration: none; font-weight: 800; font-size: 1.3rem; letter-spacing: .04em; }
+.herowrap { margin: 0 clamp(.75rem, 3vw, 2.5rem); border-radius: 24px; background: #0B2D6B; color: #fff; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; gap: 2rem; padding: clamp(1.5rem, 5vw, 4rem); overflow: hidden; }
+.hero { display: grid; gap: 1.1rem; justify-items: start; }
+.hero h1 { color: #fff; margin: 0; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.05; }
+.hero .eyebrow { margin: 0; color: #FF9A3D; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .85rem; }
+.hero .lead { margin: 0; color: #dbe5f7; font-size: 1.2rem; max-width: 36rem; }
+.btn.accent { background: #FF7A00; border-color: #FF7A00; color: #0B2D6B; }
+.btn.accent:hover { background: #ff9233; }
+.btn.ghost { background: transparent; border-color: #fff; color: #fff; }
+.btn.ghost:hover { background: rgba(255,255,255,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips span { border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: .2rem .8rem; font-size: .95rem; color: #dbe5f7; }
+.heroart { display: flex; justify-content: center; opacity: .95; }
+.heroart svg { max-width: 100%; height: auto; }
+.pubsec { max-width: 1100px; margin: 0 auto; padding: 2rem clamp(1rem, 4vw, 2rem) 3rem; display: grid; gap: 1.5rem; }
+@media (max-width: 780px) { .herowrap { grid-template-columns: 1fr; } .heroart { display: none; } }

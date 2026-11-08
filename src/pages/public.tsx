@@ -7,13 +7,13 @@ import { Card, SimNote, TextField } from '../ui/ui'
 
 function PublicFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="shell">
-      <header className="topbar">
-        <Link to="/" className="brand"><i>81</i> ROTA 81</Link>
+    <div className="pubpage">
+      <header className="pubbar">
+        <Link to="/" className="pubbrand"><Emblem size={44} /><span>ROTA 81</span></Link>
         <div className="sp" />
         <Link className="btn sm" to="/giris">Giriş yap</Link>
       </header>
-      <main className="content" id="main">{children}</main>
+      <main id="main">{children}</main>
       <Toasts />
     </div>
   )
@@ -21,70 +21,117 @@ function PublicFrame({ children }: { children: React.ReactNode }) {
 
 export function Welcome() {
   const { user } = useApp()
+  const cities = ['Ankara', 'İstanbul', 'İzmir', 'Bursa', 'Antalya', 'Eskişehir']
   return (
     <PublicFrame>
-      <div className="stack" style={{ maxWidth: 820, margin: '0 auto' }}>
-        <h1>81 Şehir. Tek Kart. Tek Hesap. Ortak Ulaşım Ağı.</h1>
-        <p style={{ fontSize: 'var(--step-1)' }} className="muted">ROTA 81, ulaşım kartınızı ve bakiyenizi katılımcı şehirlerde tek hesaptan kullanmanız için tasarlanmış ortak ulaşım ağıdır. Her şehir kendi tarifesini ve işletmecisini korur.</p>
-        <div className="row">
-          {user ? <Link className="btn primary" to={ROLE_HOME[user.role]}>Panelime git</Link> : <>
-            <Link className="btn primary" to="/giris">Giriş yap</Link>
-            <Link className="btn" to="/kayit">Hesap oluştur</Link>
-          </>}
+      <section className="herowrap">
+        <div className="hero">
+          <p className="eyebrow">Ortak ulaşım ağı · prototip</p>
+          <h1>81 il, bir kart,<br />hep beraber.</h1>
+          <p className="lead">Ulaşım kartınızı ve bakiyenizi katılımcı şehirlerde tek hesaptan kullanın. Her şehir kendi tarifesini ve işletmecisini korur.</p>
+          <div className="row">
+            {user ? <Link className="btn accent" to={ROLE_HOME[user.role]}>Panelime git</Link> : <>
+              <Link className="btn accent" to="/giris">Giriş yap</Link>
+              <Link className="btn ghost" to="/kayit">Hesap oluştur</Link>
+            </>}
+          </div>
+          <div className="chips" aria-label="Örnek verisi olan şehirler">
+            {cities.map((c) => <span key={c}>{c}</span>)}
+          </div>
         </div>
-        <SimNote>Bu bir prototiptir. Gerçek belediye entegrasyonu, NFC ödeme, canlı araç takibi ve para hareketi yoktur; her şey örnek veriyle çalışır.</SimNote>
+        <div className="heroart" aria-hidden="true"><Emblem size={260} light /></div>
+      </section>
+      <section className="pubsec">
         <div className="grid3">
           <Card title="Vatandaşlar için"><p>Dijital kart, bakiye, rota planlama ve hat bilgileri. Büyük yazı ve sade menüler.</p></Card>
           <Card title="İl yönetimleri için"><p>Yalnızca kendi ilinizin hat, durak, tarife ve duyuru yönetimi.</p></Card>
           <Card title="Ulusal yönetim için"><p>81 ilin izlenmesi, tarife onayı, kullanıcı ve denetim kayıtları.</p></Card>
         </div>
-      </div>
+        <SimNote>Bu bir prototiptir. Gerçek belediye entegrasyonu, NFC ödeme, canlı araç takibi ve para hareketi yoktur; her şey örnek veriyle çalışır.</SimNote>
+      </section>
     </PublicFrame>
   )
 }
 
-const DEMO: { label: string; email: string }[] = [
-  { label: 'Vatandaş (Ayşe Gür)', email: 'ayse.gur@example.com' },
-  { label: 'Ankara il yöneticisi', email: 'mehmet.kaya@ankara.rota81.example' },
-  { label: 'İzmir il yöneticisi', email: 'selin.aydin@izmir.rota81.example' },
-  { label: 'Ulusal yönetici', email: 'zeynep.arslan@merkez.rota81.example' },
+const DEMO: { label: string; role: string; email: string; icon: string }[] = [
+  { label: 'Ayşe Gür', role: 'Vatandaş', email: 'ayse.gur@example.com', icon: '🧑' },
+  { label: 'Mehmet Kaya', role: 'Ankara il yöneticisi', email: 'mehmet.kaya@ankara.rota81.example', icon: '🏛️' },
+  { label: 'Selin Aydın', role: 'İzmir il yöneticisi', email: 'selin.aydin@izmir.rota81.example', icon: '🏛️' },
+  { label: 'Zeynep Arslan', role: 'Ulusal yönetici', email: 'zeynep.arslan@merkez.rota81.example', icon: '🇹🇷' },
 ]
 
+export function Emblem({ size = 64, light = false }: { size?: number; light?: boolean }) {
+  const a = light ? '#fff' : '#0B2D6B'
+  return (
+    <svg viewBox="0 0 120 90" width={size} height={size * 0.75} aria-hidden="true">
+      <circle cx="30" cy="11" r="9" fill={a} /><circle cx="90" cy="11" r="9" fill="#FF7A00" />
+      <path d="M60 58 C47 28 9 28 9 59 C9 90 47 88 60 58" fill="none" stroke={a} strokeWidth="11" strokeLinecap="round" />
+      <path d="M60 58 C73 28 111 28 111 59 C111 90 73 88 60 58" fill="none" stroke="#FF7A00" strokeWidth="11" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function Login() {
-  const { api, signIn, store } = useApp()
+  const { api, signIn, store, user } = useApp()
   const nav = useNavigate()
   const [email, setEmail] = useState('')
   const [pw, setPw] = useState('')
+  const [show, setShow] = useState(false)
   const [err, setErr] = useState<string | null>(null)
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const go = (em: string, pass: string) => {
     setErr(null)
     try {
-      const s = api.auth.login(email, pw)
+      const s = api.auth.login(em, pass)
       signIn(s)
       const u = store.data.users.find((x) => x.id === s.userId)!
       nav(ROLE_HOME[u.role], { replace: true })
     } catch (x) { setErr(x instanceof AuthError ? x.message : 'Giriş yapılamadı.') }
   }
+  const submit = (e: React.FormEvent) => { e.preventDefault(); go(email, pw) }
+  void user
   return (
-    <PublicFrame>
-      <div className="stack" style={{ maxWidth: 480, margin: '0 auto' }}>
-        <h1>Giriş yap</h1>
-        <form className="card flat stack" onSubmit={submit} noValidate>
-          <TextField label="E-posta" type="email" value={email} onChange={setEmail} autoComplete="username" />
-          <TextField label="Parola" type="password" value={pw} onChange={setPw} autoComplete="current-password" />
-          {err && <p className="err" role="alert">{err}</p>}
-          <button className="btn primary" type="submit">Giriş yap</button>
-          <p className="small">Hesabınız yok mu? <Link to="/kayit">Hesap oluşturun</Link></p>
-        </form>
-        <Card title="Demo hesapları">
-          <p className="hint" style={{ marginBottom: '0.6rem' }}>Prototipte tüm demo hesapların parolası <b>demo1234</b>. Bir hesaba dokunarak bilgileri doldurun.</p>
-          <div className="stack">
-            {DEMO.map((d) => <button key={d.email} className="btn" onClick={() => { setEmail(d.email); setPw('demo1234') }}>{d.label}</button>)}
+    <div className="loginpage">
+      <aside className="loginhero">
+        <Link to="/" className="loginbrand"><Emblem size={56} light /><span>ROTA 81</span></Link>
+        <h1>81 il, bir kart,<br />hep beraber.</h1>
+        <p>Ulaşım kartınızı ve bakiyenizi katılımcı şehirlerde tek hesaptan kullanın.</p>
+        <ul>
+          <li>Tek bakiye, tüm katılımcı şehirlerde</li>
+          <li>Rota planlama ve canlı olmayan örnek sefer bilgisi</li>
+          <li>Her şehir kendi tarifesini korur</li>
+        </ul>
+        <small>Prototip: gerçek ödeme ve kimlik doğrulama yoktur.</small>
+      </aside>
+      <main className="loginmain" id="main">
+        <div className="loginbox">
+          <div className="loginmobilebrand"><Emblem size={44} /><b>ROTA 81</b></div>
+          <h2>Tekrar hoş geldiniz</h2>
+          <p className="muted">Hesabınıza giriş yapın.</p>
+          <form className="stack" onSubmit={submit} noValidate>
+            <TextField label="E-posta" type="email" value={email} onChange={setEmail} autoComplete="username" />
+            <div className="pwwrap">
+              <TextField label="Parola" type={show ? 'text' : 'password'} value={pw} onChange={setPw} autoComplete="current-password" />
+              <button type="button" className="pwtoggle" onClick={() => setShow(!show)} aria-pressed={show}>{show ? 'Gizle' : 'Göster'}</button>
+            </div>
+            {err && <p className="err" role="alert">{err}</p>}
+            <button className="btn primary" type="submit">Giriş yap</button>
+            <p className="small">Hesabınız yok mu? <Link to="/kayit">Hesap oluşturun</Link></p>
+          </form>
+          <div className="demobox">
+            <h3>Hızlı demo girişi</h3>
+            <p className="hint">Bir kişiye dokunun, doğrudan giriş yapılır. Parola: <b>demo1234</b></p>
+            <div className="demogrid">
+              {DEMO.map((d) => (
+                <button key={d.email} className="demo" onClick={() => { setEmail(d.email); setPw('demo1234'); go(d.email, 'demo1234') }}>
+                  <span aria-hidden="true">{d.icon}</span><b>{d.label}</b><small>{d.role}</small>
+                </button>
+              ))}
+            </div>
           </div>
-        </Card>
-      </div>
-    </PublicFrame>
+        </div>
+        <Toasts />
+      </main>
+    </div>
   )
 }
 
