@@ -172,3 +172,15 @@ export function DataTable<T>({ rows, cols, rowKey, searchText, empty = 'Kayıt b
     </div>
   )
 }
+
+export function Emblem({ size = 64, light = false }: { size?: number; light?: boolean }) {
+  const a = light ? '#fff' : '#0B2D6B'
+  return (
+    <svg viewBox="0 0 120 90" width={size} height={size * 0.75} aria-hidden="true">
+      <circle cx="30" cy="11" r="9" fill={a} /><circle cx="90" cy="11" r="9" fill="#FF7A00" />
+      <path d="M60 58 C47 28 9 28 9 59 C9 90 47 88 60 58" fill="none" stroke={a} strokeWidth="11" strokeLinecap="round" />
+      <path d="M60 58 C73 28 111 28 111 59 C111 90 73 88 60 58" fill="none" stroke="#FF7A00" strokeWidth="11" strokeLinecap="round" />
+    </svg>
+  )
+}
+

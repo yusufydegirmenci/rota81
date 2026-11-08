@@ -4,7 +4,8 @@ import { useApp } from '../app/context'
 import type { NavItem } from '../app/layout'
 import type { Journey, ModeId, WalletTransaction } from '../domain/types'
 import { MODE_LABEL, TL } from '../services/api'
-import { Badge, Card, DataTable, Empty, Modal, PageHeader, SelectField, SimNote, Stat, Tabs, TextField, type Col } from '../ui/ui'
+export { CitiesGuide } from './geo'
+import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, SimNote, Stat, Tabs, TextField, type Col } from '../ui/ui'
 
 export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas', label: 'Ana sayfa', icon: '🏠', bottom: true },
@@ -15,6 +16,7 @@ export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas/islemler', label: 'İşlem geçmişi', icon: '🧾' },
   { to: '/vatandas/hatlar', label: 'Hatlar', icon: '🚌' },
   { to: '/vatandas/duraklar', label: 'Duraklar', icon: '📍' },
+  { to: '/vatandas/sehirler', label: 'İller ve ilçeler', icon: '🗺️' },
   { to: '/vatandas/bildirimler', label: 'Bildirimler', icon: '🔔' },
   { to: '/vatandas/kart-yonetimi', label: 'Kart yönetimi', icon: '⚙️' },
   { to: '/vatandas/profil', label: 'Profilim', icon: '👤' },
@@ -31,7 +33,7 @@ function DigitalCard({ number, status, name }: { number: string; status: string;
   return (
     <div className={`tcard ${status === 'frozen' ? 'frozen' : ''}`} aria-label={`Ulaşım kartı ${number}, ${status === 'frozen' ? 'dondurulmuş' : 'aktif'}`}>
       <div className="row" style={{ position: 'relative', zIndex: 1 }}>
-        <b style={{ fontSize: '1.4rem' }}>ROTA 81</b><div className="sp" />
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.6rem' }}><Emblem size={44} light /><b style={{ fontSize: '1.4rem' }}>FORADAŞ</b></span><div className="sp" />
         <span className="badge" style={{ color: status === 'frozen' ? '#b3261e' : '#12683f' }}>{status === 'frozen' ? 'DONDURULDU' : 'AKTİF'}</span>
       </div>
       <div style={{ position: 'relative', zIndex: 1 }}>

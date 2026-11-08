@@ -1,24 +1,24 @@
 @import 'tailwindcss';
 
-/* ROTA 81 tasarım sistemi: renk, yazı ve aralık değerleri burada tek yerde tanımlanır. */
+/* FORADAŞ tasarım sistemi: renk, yazı ve aralık değerleri burada tek yerde tanımlanır. */
 @theme {
-  --color-brand-50: #f1f9f5;
-  --color-brand-100: #dff1e8;
-  --color-brand-200: #b9e1cd;
-  --color-brand-600: #137454;
-  --color-brand-700: #0e5c43;
-  --color-brand-900: #0a3a2c;
-  --color-accent: #c9f23a;
-  --color-ink: #13201a;
-  --color-muted: #475a51;
-  --color-line: #cbd8d0;
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #dce6f6;
+  --color-brand-200: #b4c8ea;
+  --color-brand-600: #1a4a9b;
+  --color-brand-700: #0B2D6B;
+  --color-brand-900: #06214F;
+  --color-accent: #FF7A00;
+  --color-ink: #0f1a2e;
+  --color-muted: #46526a;
+  --color-line: #cfd8e6;
   --color-surface: #ffffff;
-  --color-page: #f4f7f5;
+  --color-page: #f5f7fb;
   --color-ok: #12683f;
   --color-warn: #8a5300;
   --color-bad: #b3261e;
-  --color-info: #0b5cad;
-  --font-sans: 'Instrument Sans', 'Segoe UI', system-ui, -apple-system, 'Noto Sans', Arial, sans-serif;
+  --color-info: #1F6FD1;
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Noto Sans', Arial, sans-serif;
   --radius-card: 16px;
 }
 
@@ -38,7 +38,7 @@ h2 { font-size: var(--step-2); }
 h3 { font-size: var(--step-1); }
 p { margin: 0; }
 a { color: var(--color-brand-700); }
-:focus-visible { outline: 3px solid #0b5cad; outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 3px solid #1F6FD1; outline-offset: 2px; border-radius: 6px; }
 button, input, select, textarea { font: inherit; color: inherit; }
 .admin { font-size: 0.94rem; }
 
@@ -46,6 +46,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; padding: 0.55rem 1.1rem; border-radius: 12px; border: 2px solid var(--color-brand-700); background: var(--color-surface); color: var(--color-brand-700); font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.12s; }
 .btn:hover { background: var(--color-brand-50); }
 .btn.primary { background: var(--color-brand-700); color: #fff; }
+.btn.primary:focus-visible { outline-color: #FF7A00; }
 .btn.primary:hover { background: var(--color-brand-900); }
 .btn.danger { border-color: var(--color-bad); color: var(--color-bad); }
 .btn.danger.primary { background: var(--color-bad); color: #fff; }
@@ -95,11 +96,11 @@ tbody tr:last-child td { border-bottom: 0; }
 .toast.bad { background: var(--color-bad); }
 
 .empty { text-align: center; padding: 2rem 1rem; color: var(--color-muted); }
-.skeleton { background: linear-gradient(90deg, #e5ece8, #f3f7f5, #e5ece8); height: 1.2rem; border-radius: 6px; }
+.skeleton { background: linear-gradient(90deg, #e6ebf4, #f4f6fb, #e6ebf4); height: 1.2rem; border-radius: 6px; }
 
 /* Kart görseli */
-.tcard { position: relative; border-radius: 20px; padding: 1.3rem; color: #fff; background: linear-gradient(135deg, var(--color-brand-900), var(--color-brand-600)); min-height: 190px; display: grid; align-content: space-between; overflow: hidden; }
-.tcard::after { content: ''; position: absolute; inset-inline-end: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; border: 26px solid rgba(201, 242, 58, 0.55); }
+.tcard { position: relative; border-radius: 20px; padding: 1.3rem; color: #fff; background: var(--color-brand-700); min-height: 190px; display: grid; align-content: space-between; overflow: hidden; }
+.tcard::after { content: ''; position: absolute; inset-inline-end: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; border: 26px solid rgba(255, 122, 0, 0.85); }
 .tcard.frozen { filter: grayscale(0.85); }
 .tcard .num { font: 600 1.35rem/1 ui-monospace, 'SFMono-Regular', Menlo, monospace; letter-spacing: 0.08em; }
 
@@ -108,7 +109,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .topbar { background: var(--color-brand-900); color: #fff; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
 .topbar a { color: #fff; }
 .brand { font-weight: 800; font-size: 1.25rem; text-decoration: none; letter-spacing: 0.02em; display: inline-flex; align-items: center; gap: 0.5rem; }
-.brand i { background: var(--color-accent); color: var(--color-brand-900); border-radius: 8px; padding: 0 0.4rem; font-style: normal; }
+.brand svg { flex: none; }
 .content { width: min(1180px, 100%); margin: 0 auto; padding: 1.25rem 1rem 6rem; box-sizing: border-box; }
 .sidenav { display: none; }
 .bottomnav { position: fixed; inset-inline: 0; bottom: 0; background: #fff; border-top: 1px solid var(--color-line); display: grid; grid-template-columns: repeat(5, 1fr); z-index: 40; }
@@ -131,7 +132,7 @@ tbody tr:last-child td { border-bottom: 0; }
 
 .legline { display: grid; grid-template-columns: 28px 1fr; gap: 0.6rem; padding: 0.4rem 0; }
 .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--color-brand-700); margin-top: 6px; box-shadow: 0 0 0 4px var(--color-brand-100); }
-.dot.walk { background: var(--color-muted); box-shadow: 0 0 0 4px #e7ece9; }
+.dot.walk { background: var(--color-muted); box-shadow: 0 0 0 4px #e6ebf4; }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 @media print { .topbar, .bottomnav, .sidenav { display: none; } }

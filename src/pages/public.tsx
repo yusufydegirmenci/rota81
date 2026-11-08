@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ROLE_HOME, useApp } from '../app/context'
 import { Toasts } from '../app/layout'
 import { AuthError } from '../services/authz'
-import { Card, SimNote, TextField } from '../ui/ui'
+import { Card, Emblem, SimNote, TextField } from '../ui/ui'
 
 function PublicFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="pubpage">
       <header className="pubbar">
-        <Link to="/" className="pubbrand"><Emblem size={44} /><span>ROTA 81</span></Link>
+        <Link to="/" className="pubbrand"><Emblem size={44} /><span>FORADAŞ</span></Link>
         <div className="sp" />
         <Link className="btn sm" to="/giris">Giriş yap</Link>
       </header>
@@ -60,17 +60,6 @@ const DEMO: { label: string; role: string; email: string; icon: string }[] = [
   { label: 'Zeynep Arslan', role: 'Ulusal yönetici', email: 'zeynep.arslan@merkez.rota81.example', icon: '🇹🇷' },
 ]
 
-export function Emblem({ size = 64, light = false }: { size?: number; light?: boolean }) {
-  const a = light ? '#fff' : '#0B2D6B'
-  return (
-    <svg viewBox="0 0 120 90" width={size} height={size * 0.75} aria-hidden="true">
-      <circle cx="30" cy="11" r="9" fill={a} /><circle cx="90" cy="11" r="9" fill="#FF7A00" />
-      <path d="M60 58 C47 28 9 28 9 59 C9 90 47 88 60 58" fill="none" stroke={a} strokeWidth="11" strokeLinecap="round" />
-      <path d="M60 58 C73 28 111 28 111 59 C111 90 73 88 60 58" fill="none" stroke="#FF7A00" strokeWidth="11" strokeLinecap="round" />
-    </svg>
-  )
-}
-
 export function Login() {
   const { api, signIn, store, user } = useApp()
   const nav = useNavigate()
@@ -92,7 +81,7 @@ export function Login() {
   return (
     <div className="loginpage">
       <aside className="loginhero">
-        <Link to="/" className="loginbrand"><Emblem size={56} light /><span>ROTA 81</span></Link>
+        <Link to="/" className="loginbrand"><Emblem size={56} light /><span>FORADAŞ</span></Link>
         <h1>81 il, bir kart,<br />hep beraber.</h1>
         <p>Ulaşım kartınızı ve bakiyenizi katılımcı şehirlerde tek hesaptan kullanın.</p>
         <ul>
@@ -104,7 +93,7 @@ export function Login() {
       </aside>
       <main className="loginmain" id="main">
         <div className="loginbox">
-          <div className="loginmobilebrand"><Emblem size={44} /><b>ROTA 81</b></div>
+          <div className="loginmobilebrand"><Emblem size={44} /><b>FORADAŞ</b></div>
           <h2>Tekrar hoş geldiniz</h2>
           <p className="muted">Hesabınıza giriş yapın.</p>
           <form className="stack" onSubmit={submit} noValidate>

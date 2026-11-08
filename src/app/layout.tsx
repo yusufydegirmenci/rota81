@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { Navigate, NavLink, Outlet, useLocation } from 'react-router-dom'
 import type { Role } from '../domain/types'
-import { Badge } from '../ui/ui'
+import { Badge, Emblem } from '../ui/ui'
 import { ROLE_HOME, ROLE_LABEL, useApp } from './context'
 
 export interface NavItem { to: string; label: string; icon: string; bottom?: boolean }
@@ -27,7 +27,7 @@ export function Shell({ role, nav, admin }: { role: Role; nav: NavItem[]; admin?
     <div className={`shell ${admin ? 'admin' : ''}`}>
       <header className="topbar">
         <button className="btn sm menubtn" style={{ background: 'transparent', color: '#fff', borderColor: '#fff' }} aria-expanded={open} onClick={() => setOpen(!open)}>☰ Menü</button>
-        <NavLink to={ROLE_HOME[role]} className="brand"><i>81</i> ROTA 81</NavLink>
+        <NavLink to={ROLE_HOME[role]} className="brand"><Emblem size={34} light /> FORADAŞ</NavLink>
         <Badge tone="info">{ROLE_LABEL[role]}{cityName ? ` · İl ${cityName}` : ''}</Badge>
         <div className="sp" />
         <span className="small">{user.name}</span>

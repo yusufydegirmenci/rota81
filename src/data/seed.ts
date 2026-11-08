@@ -1,3 +1,4 @@
+import { GEO } from './turkiye'
 import type { AppData, FareProduct, FareVersion, ModeId, Operator, Route, Stop } from '../domain/types'
 import { DEMO_CITY_IDS, PROVINCES } from './provinces'
 
@@ -89,7 +90,6 @@ const DEFS: Record<string, CityDef> = {
   },
 }
 
-const POPULATION: Record<string, number> = { '06': 5782285, '34': 15701602, '35': 4479525, '16': 3194720, '07': 2619832, '26': 906617 }
 
 export function createSeed(now: () => Date = () => new Date()): AppData {
   const t0 = now().toISOString()
@@ -100,7 +100,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
 
   PROVINCES.forEach((p) => {
     const demo = DEMO_CITY_IDS.includes(p.id)
-    data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: POPULATION[p.id], hasDemoData: demo })
+    data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: GEO[p.id]?.p, hasDemoData: demo })
   })
 
   Object.entries(DEFS).forEach(([cityId, def]) => {

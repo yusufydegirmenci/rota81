@@ -1,3 +1,5 @@
+import { GEO } from '../data/turkiye'
+import { CityInfo } from './geo'
 import { useState } from 'react'
 import { useApp } from '../app/context'
 import type { NavItem } from '../app/layout'
@@ -65,13 +67,15 @@ export function Provinces() {
           { key: 'id', label: 'Plaka', render: (c) => c.id, sort: (a, b) => a.id.localeCompare(b.id) },
           { key: 'n', label: 'İl', render: (c) => <b>{c.name}</b>, sort: (a, b) => a.name.localeCompare(b.name, 'tr') },
           { key: 'r', label: 'Bölge', render: (c) => c.region },
+          { key: 'pop', label: 'Nüfus', render: (c) => (GEO[c.id]?.p ?? 0).toLocaleString('tr-TR'), sort: (a, b) => (GEO[a.id]?.p ?? 0) - (GEO[b.id]?.p ?? 0) },
+          { key: 'dc', label: 'İlçe', render: (c) => GEO[c.id]?.d.length ?? 0 },
           { key: 's', label: 'Durum', render: (c) => <Badge tone={CITY_TONE[c.status]}>{CITY_LABEL[c.status]}</Badge> },
           { key: 'a', label: 'İl yöneticisi', render: (c) => users.find((u) => u.id === c.adminUserId)?.name ?? <span className="muted">Atanmadı</span> },
           { key: 'x', label: '', render: (c) => <button className="btn sm" onClick={() => setDetail(c)}>Ayrıntı</button> },
         ]} />
       <Modal open={!!detail} title={detail ? `${detail.id} · ${detail.name}` : ''} onClose={() => setDetail(null)}>
         {detail && <div className="stack">
-          <p>Bölge: {detail.region}{detail.population ? ` · Nüfus: ${detail.population.toLocaleString('tr-TR')}` : ''}</p>
+          <CityInfo id={detail.id} />
           {d ? <div className="grid3"><Stat label="Hat" value={d.routes} /><Stat label="Durak" value={d.stops} /><Stat label="İşletici" value={d.operators} /></div> : <Empty title="Ulaşım verisi tanımlı değil">Bu il, veri modelinde kayıtlı fakat henüz hat/durak/ücret verisi yok.</Empty>}
           <SelectField label="İl durumu" value={detail.status} onChange={(v) => { run(() => api.national.setCityStatus(session, detail.id, v as City['status']), 'İl durumu güncellendi.'); setDetail({ ...detail, status: v as City['status'] }) }} options={[{ value: 'planned', label: 'Planlanan' }, { value: 'pilot', label: 'Pilot' }, { value: 'active', label: 'Aktif' }]} />
         </div>}

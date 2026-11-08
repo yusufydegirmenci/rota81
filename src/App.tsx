@@ -25,6 +25,7 @@ export default function App() {
             <Route path="yolculuk" element={<C.JourneyDetail />} />
             <Route path="hatlar" element={<C.Lines />} />
             <Route path="duraklar" element={<C.Stops />} />
+            <Route path="sehirler" element={<C.CitiesGuide />} />
             <Route path="bildirimler" element={<C.Notifications />} />
             <Route path="kart-yonetimi" element={<C.CardManagement />} />
             <Route path="profil" element={<C.Profile />} />
