@@ -14,7 +14,11 @@ export class Store {
   data: AppData
   private seq = 0
   private listeners = new Set<() => void>()
-  constructor(public clock: Clock = systemClock, private persist = true, initial?: AppData) {
+  clock: Clock
+  private persist: boolean
+  constructor(clock: Clock = systemClock, persist = true, initial?: AppData) {
+    this.clock = clock
+    this.persist = persist
     this.data = initial ?? this.load() ?? createSeed(() => clock.now())
   }
   private load(): AppData | null {

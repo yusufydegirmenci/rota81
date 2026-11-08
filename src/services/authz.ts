@@ -2,8 +2,10 @@ import type { Permission, Role, Session, User } from '../domain/types'
 import type { Store } from './store'
 
 export class AuthError extends Error {
-  constructor(message: string, public code: 'unauthenticated' | 'forbidden' | 'validation' | 'conflict' | 'not_found') {
+  code: 'unauthenticated' | 'forbidden' | 'validation' | 'conflict' | 'not_found'
+  constructor(message: string, code: 'unauthenticated' | 'forbidden' | 'validation' | 'conflict' | 'not_found') {
     super(message)
+    this.code = code
   }
 }
 

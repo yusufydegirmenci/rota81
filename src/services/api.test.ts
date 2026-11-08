@@ -257,3 +257,17 @@ describe('ulusal yönetim', () => {
     throwsCode(() => api.national.setUserStatus(national(), 'u-zeynep', 'suspended'), 'validation')
   })
 })
+
+describe('tarife ürünü yönetimi', () => {
+  it('yeni ürün taslak olarak açılır, onaya kadar yürürlükte değildir', () => {
+    const m = ankara()
+    const v = api.fares.createProduct(m, '06', 'bus', 'Yaşlı', 0)
+    expect(v.status).toBe('draft')
+    expect(api.fareAt(v.productId, now)).toBeUndefined()
+    api.fares.submit(m, v.id); api.fares.decide(national(), v.id, true)
+    expect(api.fareAt(v.productId, new Date(now.getTime() + 1000))!.amount).toBe(0)
+  })
+  it('başka il adına ürün açılamaz', () => {
+    throwsCode(() => api.fares.createProduct(ankara(), '34', 'bus', 'Test', 100), 'forbidden')
+  })
+})

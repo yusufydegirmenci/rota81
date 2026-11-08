@@ -14,6 +14,9 @@ export interface RoutingService {
   plan(cityId: string, fromStopId: string, toStopId: string, opts: { modes?: ModeId[]; passenger?: 'full' | 'student' }): Journey[]
 }
 
+// PROTOTİP: güvenli olmayan basit özet. Gerçek sistemde parola sunucuda Argon2id ile saklanır / OIDC kullanılır.
+const weakHash = (pw: string) => { let h = 2166136261; for (const c of 'rota81:' + pw) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) } return (h >>> 0).toString(16) }
+
 export function createApi(store: Store) {
   const d = () => store.data
 
@@ -123,7 +126,7 @@ export function createApi(store: Store) {
     login(email: string, password: string): Session {
       const u = d().users.find((x) => x.email.toLowerCase() === email.trim().toLowerCase())
       // PROTOTİP: tüm demo hesapların parolası "demo1234". Gerçek sistemde parola özetlenir, OIDC kullanılır.
-      if (!u || password !== 'demo1234') return fail('E-posta veya parola hatalı.', 'unauthenticated')
+      if (!u || !(u.secret ? u.secret === weakHash(password) : password === 'demo1234')) return fail('E-posta veya parola hatalı.', 'unauthenticated')
       if (u.status !== 'active') return fail('Hesap askıya alınmış.', 'forbidden')
       audit(store, u, 'login', 'success'); store.commit()
       store.saveSession(u.id)
@@ -135,7 +138,7 @@ export function createApi(store: Store) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('Geçerli bir e-posta adresi girin.')
       if (password.length < 8) return fail('Parola en az 8 karakter olmalı.')
       if (d().users.some((x) => x.email === email)) return fail('Bu e-posta ile kayıtlı bir hesap var.', 'conflict')
-      const u: User = { id: store.id('u'), name, email, role: 'citizen', status: 'active', createdAt: store.nowIso() }
+      const u: User = { id: store.id('u'), name, email, role: 'citizen', status: 'active', createdAt: store.nowIso(), secret: weakHash(password) }
       d().users.push(u)
       d().cards.push({ id: store.id('card'), userId: u.id, number: `R81 ${Math.floor(1000 + Math.random() * 9000)} ${Math.floor(1000 + Math.random() * 9000)} ${Math.floor(1000 + Math.random() * 9000)}`, status: 'active', createdAt: store.nowIso() })
       d().wallets.push({ id: store.id('wal'), userId: u.id, balance: 0 })
@@ -171,7 +174,7 @@ export function createApi(store: Store) {
       if (w.balance + amount > MAX_BALANCE) return fail('Bakiye üst sınırı 5.000 ₺. Daha az tutar yükleyin.')
       w.balance += amount
       const tx: WalletTransaction = { id: store.id('tx'), walletId: w.id, type: 'topup', amount, status: 'completed', description: 'Bakiye yükleme (prototip simülasyonu, gerçek ödeme yok)', idempotencyKey: key, createdAt: store.nowIso(), simulated: true }
-      d().transactions.push(tx); audit(store, u, 'wallet.topUp', 'success', { target: tx.id }); store.commit()
+      d().transactions.push(tx); notify(u.id, `${TL(amount)} yükleme yapıldı (simülasyon).`); audit(store, u, 'wallet.topUp', 'success', { target: tx.id }); store.commit()
       return tx
     },
     spend(s: Session | null, amount: number, description: string, key: string, meta: { cityId?: string; fareVersionId?: string } = {}): WalletTransaction {
@@ -183,7 +186,7 @@ export function createApi(store: Store) {
       if (amount > w.balance) return fail('Bakiye yetersiz.')
       w.balance -= amount
       const tx: WalletTransaction = { id: store.id('tx'), walletId: w.id, type: 'spend', amount, status: 'completed', description, idempotencyKey: key, createdAt: store.nowIso(), simulated: true, ...meta }
-      d().transactions.push(tx); audit(store, u, 'wallet.spend', 'success', { target: tx.id, cityId: meta.cityId }); store.commit()
+      d().transactions.push(tx); if (w.balance < 3000) notify(u.id, `Bakiyen azaldı: ${TL(w.balance)}.`); audit(store, u, 'wallet.spend', 'success', { target: tx.id, cityId: meta.cityId }); store.commit()
       return tx
     },
     refund(s: Session | null, txId: string, key: string): WalletTransaction {
@@ -195,7 +198,7 @@ export function createApi(store: Store) {
       if (orig.type !== 'spend' || orig.status !== 'completed') return fail('Yalnızca tamamlanmış harcamalar iade edilebilir.', 'conflict')
       orig.status = 'refunded'; w.balance += orig.amount
       const tx: WalletTransaction = { id: store.id('tx'), walletId: w.id, type: 'refund', amount: orig.amount, status: 'completed', description: `İade: ${orig.description}`, idempotencyKey: key, relatedTxId: orig.id, createdAt: store.nowIso(), simulated: true, cityId: orig.cityId }
-      d().transactions.push(tx); audit(store, u, 'wallet.refund', 'success', { target: tx.id }); store.commit()
+      d().transactions.push(tx); notify(u.id, `${TL(orig.amount)} iade edildi.`); audit(store, u, 'wallet.refund', 'success', { target: tx.id }); store.commit()
       return tx
     },
     setCardFrozen(s: Session | null, frozen: boolean) {
@@ -203,6 +206,29 @@ export function createApi(store: Store) {
       cardOf(u).status = frozen ? 'frozen' : 'active'
       audit(store, u, frozen ? 'card.freeze' : 'card.unfreeze', 'success'); store.commit()
     },
+  }
+
+  const notify = (userId: string, text: string) => { d().notifications.unshift({ id: store.id('n'), userId, text, at: store.nowIso(), read: false }); if (d().notifications.length > 300) d().notifications.length = 300 }
+  const me = {
+    notifications(s: Session | null) { const u = actorOf(store, s); return d().notifications.filter((n) => n.userId === u.id) },
+    markAllRead(s: Session | null) { const u = actorOf(store, s); d().notifications.filter((n) => n.userId === u.id).forEach((n) => { n.read = true }); store.commit() },
+    favorites(s: Session | null) { const u = actorOf(store, s); return d().favorites.filter((f) => f.userId === u.id) },
+    addFavorite(s: Session | null, cityId: string, fromStopId: string, toStopId: string) {
+      const u = actorOf(store, s)
+      if (fromStopId === toStopId) return fail('Başlangıç ve varış aynı olamaz.')
+      if (d().favorites.some((f) => f.userId === u.id && f.cityId === cityId && f.fromStopId === fromStopId && f.toStopId === toStopId)) return fail('Bu rota zaten favorilerde.', 'conflict')
+      d().favorites.push({ userId: u.id, cityId, fromStopId, toStopId }); store.commit()
+    },
+    removeFavorite(s: Session | null, cityId: string, fromStopId: string, toStopId: string) {
+      const u = actorOf(store, s); d().favorites = d().favorites.filter((f) => !(f.userId === u.id && f.cityId === cityId && f.fromStopId === fromStopId && f.toStopId === toStopId)); store.commit()
+    },
+    updateName(s: Session | null, name: string) {
+      const u = actorOf(store, s); name = name.trim()
+      if (name.length < 3 || name.length > 60) return fail('Ad soyad 3 ile 60 karakter arasında olmalı.')
+      u.name = name; audit(store, u, 'profile.update', 'success'); store.commit()
+    },
+    /** PROTOTİP: parola kaydı yoktur; gerçek sistemde OIDC sağlayıcısında değişir. Yalnızca doğrulama kuralları gösterilir. */
+    checkPassword(pw: string) { return pw.length >= 8 && /[A-Za-z]/.test(pw) && /\d/.test(pw) },
   }
 
   // ---------- yolculuk ----------
@@ -329,6 +355,18 @@ export function createApi(store: Store) {
       const v: FareVersion = { id: store.id('fv'), productId, cityId: p.cityId, version: Math.max(...all.map((x) => x.version)) + 1, amount, validFrom: null, validTo: null, status: 'draft', createdBy: u.id, createdAt: store.nowIso(), note }
       d().fareVersions.push(v); audit(store, u, 'fare.draft', 'success', { cityId: p.cityId, target: `${p.id} v${v.version}` }); store.commit(); return v
     },
+    createProduct(s: Session | null, cityId: string, mode: ModeId, name: string, amount: number): FareVersion {
+      const u = actorOf(store, s); requirePermission(store, u, 'tariff:draft:own', 'fare.product')
+      requireCityAccess(store, u, cityId, 'write', 'fare.product')
+      name = name.trim()
+      if (name.length < 2) return fail('Ürün adı en az 2 karakter olmalı.')
+      if (!Number.isInteger(amount) || amount < 0 || amount > 50000) return fail('Ücret 0 ₺ ile 500 ₺ arasında olmalı.')
+      if (d().fareProducts.some((p) => p.cityId === cityId && p.mode === mode && p.name.toLocaleLowerCase('tr') === name.toLocaleLowerCase('tr'))) return fail('Bu ürün zaten var.', 'conflict')
+      const p = { id: store.id(`fp-${cityId}`), cityId, mode, name }
+      d().fareProducts.push(p)
+      const v: FareVersion = { id: store.id('fv'), productId: p.id, cityId, version: 1, amount, validFrom: null, validTo: null, status: 'draft', createdBy: u.id, createdAt: store.nowIso(), note: 'Yeni ürün' }
+      d().fareVersions.push(v); audit(store, u, 'fare.product', 'success', { cityId, target: p.id }); store.commit(); return v
+    },
     submit(s: Session | null, versionId: string) {
       const u = actorOf(store, s); requirePermission(store, u, 'tariff:draft:own', 'fare.submit')
       const v = d().fareVersions.find((x) => x.id === versionId); if (!v) return fail('Sürüm bulunamadı.', 'not_found')
@@ -400,6 +438,6 @@ export function createApi(store: Store) {
     integrations: () => d().integrations,
   }
 
-  return { auth, wallet, journeys, catalog, city, fares, national, routing, fareAt, fareFor }
+  return { auth, me, wallet, journeys, catalog, city, fares, national, routing, fareAt, fareFor }
 }
 export type Api = ReturnType<typeof createApi>

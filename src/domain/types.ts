@@ -21,6 +21,7 @@ export interface User {
   email: string
   role: Role
   cityId?: string // yalnızca cityAdmin için: yönetebildiği tek il
+  secret?: string // PROTOTİP: parola özeti (güvenli değildir). Demo hesaplarda yoktur.
   status: 'active' | 'suspended'
   createdAt: string
 }
