@@ -26,6 +26,7 @@ export default function App() {
             <Route path="hatlar" element={<C.Lines />} />
             <Route path="duraklar" element={<C.Stops />} />
             <Route path="sehirler" element={<C.CitiesGuide />} />
+            <Route path="canli" element={<C.Live />} />
             <Route path="bildirimler" element={<C.Notifications />} />
             <Route path="kart-yonetimi" element={<C.CardManagement />} />
             <Route path="profil" element={<C.Profile />} />
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/il" element={<Shell role="cityAdmin" nav={Y.CITY_NAV} admin />}>
             <Route index element={<Y.CityDashboard />} />
             <Route path="istatistik" element={<Y.CityStats />} />
+            <Route path="filo" element={<Y.CityFleet />} />
             <Route path="hatlar" element={<Y.CityRoutes />} />
             <Route path="duraklar" element={<Y.CityStops />} />
             <Route path="isleticiler" element={<Y.CityOperators />} />

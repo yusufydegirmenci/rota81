@@ -211,6 +211,7 @@ export function createApi(store: Store) {
   const notify = (userId: string, text: string) => { d().notifications.unshift({ id: store.id('n'), userId, text, at: store.nowIso(), read: false }); if (d().notifications.length > 300) d().notifications.length = 300 }
   const me = {
     notifications(s: Session | null) { const u = actorOf(store, s); return d().notifications.filter((n) => n.userId === u.id) },
+    notify(s: Session | null, text: string) { const u = actorOf(store, s); notify(u.id, text); store.commit() },
     markAllRead(s: Session | null) { const u = actorOf(store, s); d().notifications.filter((n) => n.userId === u.id).forEach((n) => { n.read = true }); store.commit() },
     favorites(s: Session | null) { const u = actorOf(store, s); return d().favorites.filter((f) => f.userId === u.id) },
     addFavorite(s: Session | null, cityId: string, fromStopId: string, toStopId: string) {

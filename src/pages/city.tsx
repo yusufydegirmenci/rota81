@@ -1,3 +1,4 @@
+import { LiveBoard } from './live'
 import { useState } from 'react'
 import { useApp } from '../app/context'
 import type { NavItem } from '../app/layout'
@@ -9,6 +10,7 @@ import { downloadCsv } from './csv'
 export const CITY_NAV: NavItem[] = [
   { to: '/il', label: 'Pano', icon: '📊' },
   { to: '/il/istatistik', label: 'İstatistikler', icon: '📈' },
+  { to: '/il/filo', label: 'Filo doluluğu', icon: '📡' },
   { to: '/il/hatlar', label: 'Hatlar', icon: '🚌' },
   { to: '/il/duraklar', label: 'Duraklar', icon: '📍' },
   { to: '/il/isleticiler', label: 'İşleticiler', icon: '🏢' },
@@ -303,4 +305,9 @@ export function CityHistory() {
       ]} empty="Bu il için kayıt yok." />
     </div>
   )
+}
+
+export function CityFleet() {
+  const { cityId } = useCityCtx()
+  return <LiveBoard lockedCity={cityId} />
 }

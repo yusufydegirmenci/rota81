@@ -5,6 +5,7 @@ import type { NavItem } from '../app/layout'
 import type { Journey, ModeId, WalletTransaction } from '../domain/types'
 import { MODE_LABEL, TL } from '../services/api'
 export { CitiesGuide } from './geo'
+export { LiveBoard as Live } from './live'
 import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, SimNote, Stat, Tabs, TextField, type Col } from '../ui/ui'
 
 export const CITIZEN_NAV: NavItem[] = [
@@ -14,6 +15,7 @@ export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas/rota', label: 'Rota', icon: '🧭', bottom: true },
   { to: '/vatandas/yukle', label: 'Bakiye yükle', icon: '➕' },
   { to: '/vatandas/islemler', label: 'İşlem geçmişi', icon: '🧾' },
+  { to: '/vatandas/canli', label: 'Canlı doluluk', icon: '📡', bottom: false },
   { to: '/vatandas/hatlar', label: 'Hatlar', icon: '🚌' },
   { to: '/vatandas/duraklar', label: 'Duraklar', icon: '📍' },
   { to: '/vatandas/sehirler', label: 'İller ve ilçeler', icon: '🗺️' },
@@ -64,6 +66,11 @@ export function Dashboard() {
   return (
     <div className="stack">
       <PageHeader title={`Merhaba, ${user!.name.split(' ')[0]}`} sub="Hesap özetiniz" />
+      <div className="tiles">
+        {[['/vatandas/rota', '🧭', 'Rota planla', 'Hızlı ve kalabalık olmayan yolu bul'], ['/vatandas/canli', '📡', 'Canlı doluluk', 'Araçlar ve duraklar'], ['/vatandas/sehirler', '🗺️', 'İller ve ilçeler', '81 il, 973 ilçe'], ['/vatandas/yukle', '➕', 'Bakiye yükle', 'Kartınıza hızlı yükleme']].map(([to, ic, t, s]) => (
+          <Link key={to} to={to} className="tile"><span className="tileic" aria-hidden="true">{ic}</span><b>{t}</b><small>{s}</small></Link>
+        ))}
+      </div>
       <div className="grid2">
         <div className="stack">
           <DigitalCard number={w.card.number} status={w.card.status} name={user!.name} />
