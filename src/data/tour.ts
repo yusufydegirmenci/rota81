@@ -77,7 +77,7 @@ export const PLACES: Record<string, Place> = {
 }
 
 export const TOUR: TourStep[] = [
-  { k: 'topup', city: '34', title: 'Yolcu kartına bakiye yükleme', amount: 500000, note: 'Turist, yabancı banka kartıyla havalimanında veya uygulamadan yükler (simülasyon).' },
+  { k: 'topup', city: '34', title: 'Yolcu kartına bakiye yükleme', amount: 200000, note: 'Turist, yabancı banka kartıyla havalimanında veya uygulamadan yükler (simülasyon).' },
   // —— GÜN 1: İSTANBUL (tramvay + metro) ——
   { k: 'local', city: '34', title: 'Tramvayla Sultanahmet\'e (T1)', to: 'sultanahmet', prefer: ['tram'], min: 25, note: 'En yakın tramvay durağı gerçek duraklardan seçilir.' },
   { k: 'sight', city: '34', place: 'sultanahmet', min: 40 },
@@ -107,6 +107,7 @@ export const TOUR: TourStep[] = [
   { k: 'food', city: '06', place: 'ankara-tava', merchant: 'Hamamönü lokantası (örnek)', item: 'Ankara tava + ayran', amount: 32000, min: 45 },
   { k: 'food', city: '06', place: 'simit', merchant: 'Kızılay simit tezgâhı (örnek)', item: 'Simit + çay', amount: 4500, min: 10 },
   // —— ANKARA → KONYA (hızlı tren) ——
+  { k: 'topup', city: '06', title: 'Bakiye yeniden yükleme (Ankara)', amount: 200000, note: 'Bakiye biterken istasyondaki kiosktan veya uygulamadan yeniden yüklenir (simülasyon).' },
   { k: 'scenario', city: '06', title: 'Hızlı trenle Konya\'ya', mode: 'rail', operator: 'TCDD Taşımacılık', from: 'Ankara garı', to: 'Konya garı', fare: 45000, min: 105, src: 'TAHMİN', note: 'Ankara–Konya yüksek hızlı tren ilişkisi; istasyonlar gerçek, saat ve ücret tahmin.' },
   // —— GÜN 4: KONYA (tramvay + otobüs) ——
   { k: 'local', city: '42', title: 'Tramvayla Alâeddin Tepesi\'ne', to: 'alaeddin', prefer: ['tram'], min: 20, note: 'Konya Büyükşehir tramvayı OSM\'de gerçek.' },
@@ -117,6 +118,7 @@ export const TOUR: TourStep[] = [
   { k: 'food', city: '42', place: 'etli-ekmek', merchant: 'Konya etli ekmek salonu (örnek)', item: 'Etli ekmek + ayran', amount: 24000, min: 35 },
   { k: 'food', city: '42', place: 'firin-kebabi', merchant: 'Konya fırın kebabı lokantası (örnek)', item: 'Fırın kebabı', amount: 52000, min: 50 },
   // —— DÖNÜŞ (aynı yöntemlerle, aynı kart) ——
+  { k: 'topup', city: '42', title: 'Bakiye yeniden yükleme (Konya)', amount: 200000, note: 'Bakiye biterken istasyondaki kiosktan veya uygulamadan yeniden yüklenir (simülasyon).' },
   { k: 'scenario', city: '42', title: 'Hızlı trenle Ankara\'ya dönüş', mode: 'rail', operator: 'TCDD Taşımacılık', from: 'Konya garı', to: 'Ankara garı', fare: 45000, min: 105, src: 'TAHMİN', note: 'Gidişle aynı kart, aynı bakiye.' },
   { k: 'scenario', city: '06', title: 'Hızlı trenle İzmit\'e dönüş', mode: 'rail', operator: 'TCDD Taşımacılık', from: 'Ankara garı', to: 'İzmit garı', fare: 60000, min: 190, src: 'TAHMİN', note: 'Saat ve ücret tahmin.' },
   { k: 'local', city: '41', title: 'Gebze\'ye (Marmaray başlangıcı)', to: [40.7937, 29.4307], prefer: ['rail', 'bus'], min: 45, note: 'İzmit–Gebze: Kocaeli yerel ulaşımı.' },
