@@ -1,0 +1,90 @@
+{
+ "ayasofya": {
+  "baslik": "Hagia Sophia",
+  "ozet_en": "Hagia Sophia, officially the Hagia Sophia Grand Mosque, is a mosque and a major cultural and historical site in Istanbul, Turkey. It was formerly a church (360–1453) and a museum (1935–2020). The last of three church buildings to be successively erected on the site by the Eastern Roman Empire, it was completed in AD 537, becoming the world's largest interior space and among the first to employ a fully pendentive dome.",
+  "resim_dosya": "ayasofya.jpg",
+  "yazar": "Adli Wahid",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_%28228968325%29.jpeg"
+ },
+ "sultanahmet": {
+  "baslik": "Blue Mosque, Istanbul",
+  "ozet_en": "The Sultan Ahmed Mosque, popularly known as the Blue Mosque, is an Ottoman-era historical imperial mosque located in Istanbul, Turkey. It was constructed between 1609 and 1617 during the rule of Ahmed I. It attracts a large number of tourists and is one of the most iconic and popular monuments of Ottoman architecture.",
+  "resim_dosya": "sultanahmet.jpg",
+  "yazar": "Pedro Szekely from Los Angeles, USA",
+  "lisans": "CC BY-SA 2.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Istanbul_%2834223582516%29_%28cropped%29.jpg"
+ },
+ "izmit-saat": {
+  "baslik": "İzmit Clock Tower",
+  "ozet_en": "The İzmit Clock Tower in İzmit, Turkey is one of many clock towers that were built throughout the Ottoman Empire as a result of the decree which was sent to the provincial governors to commemorate the 25th anniversary of Sultan Abdülhamid II's ascension to the Ottoman throne. It was designed by architect Vedat Tek upon the order of Musa Kazım Bey, the governor of İzmit, and built in 1902. Other sources name the architect of the tower as Mihran Azaryan who was an Armenian-Ottoman of Izmit origin.",
+  "resim_dosya": "izmit-saat.jpg",
+  "yazar": "Kocaeligönüllüsü (Kocaelivolunteer)",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:%C4%B0zmit_saat_kulesi_%281%29_01.jpg"
+ },
+ "ankara-anitkabir": {
+  "baslik": "Anıtkabir",
+  "ozet_en": "Anıtkabir is a complex located in the Çankaya district of Ankara that contains the mausoleum of Mustafa Kemal Atatürk. Designed by Emin Onat and Orhan Arda, construction of Anıtkabir began in 1944 and was completed in 1953. In addition to the mausoleum building and various other structures and monuments, it consists of a wooded area known as the Peace Park.",
+  "resim_dosya": "ankara-anitkabir.jpg",
+  "yazar": "William Neuheisel from DC, US",
+  "lisans": "CC BY 2.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Ataturk%27s_Mausoleum_%286225341313%29.jpg"
+ },
+ "ankara-kale": {
+  "baslik": "Ankara Castle",
+  "ozet_en": "Ankara Castle is a historic fortification in the city of Ankara, Turkey, constructed in or after the 7th century. The earliest fortification on the site was constructed in the 8th century BC by the Phrygians and rebuilt in 278 BC by the Galatians. The castle was rebuilt or renovated under the Roman, Byzantine, Seljuk, and Ottoman Empires.",
+  "resim_dosya": "ankara-kale.jpg",
+  "yazar": "Bernard Gagnon",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Ankara_Castle.jpg"
+ },
+ "ankara-augustus": {
+  "baslik": "Temple of Augustus and Rome",
+  "ozet_en": "The Temple of Augustus and Rome is an augusteum located in the Altındağ district of Ankara. It is thought to have been built around 25–20 BC. Besides being one of the most important Roman-period ruins in the city, it is also known for the Monumentum Ancyranum.",
+  "resim_dosya": "ankara-augustus.jpg",
+  "yazar": "Klaus-Peter Simon",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:AugustusAnkara2.jpg"
+ },
+ "karaman-kale": {
+  "baslik": "Karaman Castle",
+  "ozet_en": "Karaman Castle is a partly ruined castle in the city of Karaman, central Turkey.",
+  "resim_dosya": "karaman-kale.jpg",
+  "yazar": "Klaus-Peter Simon",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:KaramanKale1.jpg"
+ },
+ "karaman-yunus": {
+  "baslik": "Yunus Emre",
+  "ozet_en": "Yunus Emre, also known as Derviş Yûnus, was a Turkish folk poet and Sufi who greatly influenced Turkish culture. The UNESCO General Conference unanimously passed a resolution declaring 1991, the 750th anniversary of the poet's birth, International Yunus Emre Year.",
+  "resim_dosya": "karaman-yunus.jpg",
+  "yazar": "Dosseman",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Karaman_Yunus_Emre_monument_4725.jpg"
+ },
+ "balik-ekmek": {
+  "baslik": "Balık ekmek",
+  "ozet_en": "Balık ekmek is a common street food item in Turkish cuisine. It is a sandwich of a filet of fried or grilled fish, served along with various vegetables, inside a bun of Turkish bread. It is typically served on the Eminönü square straight from the boat on which it is prepared.",
+  "resim_dosya": "balik-ekmek.jpg",
+  "yazar": "User: (WT-shared) Shoestring at  wts wikivoyage",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Fish_sandwich%2C_Istanbul%2C_Turkey.JPG"
+ },
+ "baklava": {
+  "baslik": "Baklava",
+  "ozet_en": "Baklava is a layered pastry dessert made of filo pastry, filled with chopped nuts, and sweetened with either syrup or honey.",
+  "resim_dosya": "baklava.jpg",
+  "yazar": "Sakaman",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Baklava%281%29.png"
+ },
+ "pismaniye": {
+  "baslik": "Pişmaniye",
+  "ozet_en": "Pişmaniye is a Turkish confection made by blending flour roasted in butter into pulled sugar and then forming it into fine strands. It is sometimes garnished with ground pistachio nuts. Although it is sometimes compared to cotton candy, both the ingredients and method of preparation are significantly different.",
+  "resim_dosya": "pismaniye.jpg",
+  "yazar": "Pkuczynski",
+  "lisans": "CC BY 3.0",
+  "kaynak_url": "https://commons.wikimedia.org/wiki/File:Pismaniye_1_%28Piotr_Kuczynski%29.jpg"
+ }
+}
