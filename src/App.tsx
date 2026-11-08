@@ -4,6 +4,7 @@ import { Shell } from './app/layout'
 import * as C from './pages/citizen'
 import * as Y from './pages/city'
 import * as N from './pages/national'
+import { OneCard } from './pages/onecard'
 import { Login, Register, Welcome } from './pages/public'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/vatandas" element={<Shell role="citizen" nav={C.CITIZEN_NAV} />}>
             <Route index element={<C.Dashboard />} />
             <Route path="kart" element={<C.CardPage />} />
+            <Route path="tek-kart" element={<OneCard />} />
             <Route path="cuzdan" element={<C.Wallet />} />
             <Route path="yukle" element={<C.TopUp />} />
             <Route path="islemler" element={<C.History />} />

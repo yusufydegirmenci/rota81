@@ -16,6 +16,7 @@ import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, 
 export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas', label: 'Ana sayfa', icon: '🏠', bottom: true },
   { to: '/vatandas/kart', label: 'Kartım', icon: '💳', bottom: true },
+  { to: '/vatandas/tek-kart', label: 'Tek kart denemesi', icon: '💳' },
   { to: '/vatandas/cuzdan', label: 'Cüzdan', icon: '👛' },
   { to: '/vatandas/rota', label: 'Rota', icon: '🧭', bottom: true },
   { to: '/vatandas/gezi', label: 'Gezi planla', icon: '🧳' },
@@ -74,6 +75,7 @@ export function Dashboard() {
   const alerts = api.catalog.alerts().slice(0, 3)
   const cities = api.catalog.cities()
   const links: [string, string, string, string][] = [
+    ['/vatandas/tek-kart', 'card', 'Tek kartı dene', '81 ilin herhangi birinde okut'],
     ['/vatandas/otobus', 'pin', 'Otobüs nerede?', 'Durak kodunu yaz, sıradaki araçları gör'],
     ['/vatandas/rota', 'route', 'Rota planla', 'Hızlı ve kalabalık olmayan yol'],
     ['/vatandas/gezi', 'bag', 'Günübirlik gezi', 'Başka ile gidiş ve dönüş planı'],
@@ -98,7 +100,7 @@ export function Dashboard() {
         <DigitalCard number={w.card.number} status={w.card.status} name={user!.name} />
       </section>
       <nav className="tiles" aria-label="Hızlı erişim">
-        {links.map(([to, ic, t, sub]) => (
+        {links.slice(0, 4).map(([to, ic, t, sub]) => (
           <Link key={to} to={to} className="tile"><span className="tileic"><Icon name={ic} size={22} /></span><b>{t}</b><small>{sub}</small></Link>
         ))}
       </nav>

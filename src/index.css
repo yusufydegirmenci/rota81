@@ -407,3 +407,10 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media print { .rail, .topbar, .bottomnav { display: none; } }
+
+/* Tek kart denemesi */
+.validator { border: 1px solid var(--line); border-top: 3px solid var(--signal); border-radius: 8px; padding: var(--s5); display: grid; gap: var(--s3); background: var(--surface); min-height: 280px; align-content: start; }
+.clearing { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s2); display: grid; gap: 6px; }
+.cityGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 4px; }
+.cityGrid span { font-family: var(--f-mono); font-size: .7rem; text-align: center; padding: 6px 0; border: 1px solid var(--line2); border-radius: 3px; color: var(--mute); }
+.cityGrid span.on { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); font-weight: 600; }
