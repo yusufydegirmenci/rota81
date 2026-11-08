@@ -32,10 +32,12 @@ describe('81 il veri modeli', () => {
     expect(PROVINCES.find((p) => p.id === '06')?.name).toBe('Ankara')
     expect(PROVINCES.find((p) => p.id === '34')?.name).toBe('İstanbul')
   })
-  it('6 ilde örnek ulaşım verisi var, diğerleri boş kayıt', () => {
-    expect(store.data.cities.filter((c) => c.hasDemoData)).toHaveLength(6)
+  it('6 ilde ayrıntılı, diğer tüm illerde otomatik üretilmiş örnek ulaşım verisi var', () => {
+    expect(store.data.cities.filter((c) => c.status === 'pilot')).toHaveLength(6)
+    expect(store.data.cities.filter((c) => c.hasDemoData)).toHaveLength(81)
+    expect(store.data.routes.filter((r) => r.cityId === '65').length).toBeGreaterThan(0)
     expect(api.catalog.routes('06').length).toBeGreaterThan(0)
-    expect(api.catalog.routes('01')).toHaveLength(0)
+    expect(api.catalog.routes('01').length).toBeGreaterThan(0)
   })
 })
 

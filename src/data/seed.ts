@@ -91,6 +91,22 @@ const DEFS: Record<string, CityDef> = {
 }
 
 
+/** Ayrıntılı örnek verisi olmayan iller için ilçe merkezlerinden otomatik üretilen SİMÜLE hat ve duraklar. */
+function generatedDef(id: string, name: string): CityDef {
+  const g = GEO[id]
+  const districts = [...(g?.d ?? [])].sort((a, b) => b[1] - a[1]).map(([d]) => (d === 'Merkez' ? `${name} Merkez` : `${d} Merkez`))
+  const hub = `${name} Otogar (örnek)`
+  const names = Array.from(new Set(districts))
+  const a = names.slice(0, 7)
+  const b = names.slice(7, 14)
+  const op = `${name} Belediyesi Otobüs (örnek)`
+  const mk = (list: string[], first: string): [string, number][] => [first, ...list].map((s, i) => [s, i === 0 ? 0 : 7 + ((i * 3) % 6)] as [string, number])
+  const lines: LineDef[] = [{ code: '1', name: `${name} Merkez Hattı`, mode: 'bus', operator: op, stops: mk(a, hub), headway: 20 }]
+  if (b.length) lines.push({ code: '2', name: `${name} Çevre Hattı`, mode: 'bus', operator: op, stops: mk(b, a[0] ?? hub), headway: 30 })
+  const n = Number(id)
+  return { lat: 37 + ((n * 7) % 50) * 0.08, lon: 27 + ((n * 11) % 45) * 0.2, operators: [{ name: op, modes: ['bus'] }], fares: { bus: 1800 + (n % 8) * 100 }, lines }
+}
+
 export function createSeed(now: () => Date = () => new Date()): AppData {
   const t0 = now().toISOString()
   const data: AppData = {
@@ -100,9 +116,10 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
 
   PROVINCES.forEach((p) => {
     const demo = DEMO_CITY_IDS.includes(p.id)
-    data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: GEO[p.id]?.p, hasDemoData: demo })
+    data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: GEO[p.id]?.p, hasDemoData: true })
   })
 
+  PROVINCES.forEach((p) => { if (!DEFS[p.id]) DEFS[p.id] = generatedDef(p.id, p.name) })
   Object.entries(DEFS).forEach(([cityId, def]) => {
     const stopMap = new Map<string, Stop>()
     const opMap = new Map<string, Operator>()
