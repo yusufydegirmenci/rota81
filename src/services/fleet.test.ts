@@ -39,10 +39,9 @@ describe('araç doluluk simülasyonu', () => {
     expect(arr.some((a) => a.vehicle.dir === 1)).toBe(true)
   })
   it('doluluk seviyeleri', () => { expect(crowdOf(10)).toBe('low'); expect(crowdOf(50)).toBe('mid'); expect(crowdOf(80)).toBe('high'); expect(crowdOf(95)).toBe('full') })
-  it('durak kodları 5 hane ve şehirde tekil', () => {
+  it('durak kodları şehirde tekil', () => {
     const codes = data.stops.filter((s) => s.cityId === '06').map((s) => s.code)
     expect(new Set(codes).size).toBe(codes.length)
-    codes.forEach((c) => expect(c).toMatch(/^06\d{3}$/))
   })
   it('tarife: kalkışlar sıralı, ilk sefer 05:00 sonrası, son sefer gece yarısından önce', () => {
     const fl = firstLast(route)

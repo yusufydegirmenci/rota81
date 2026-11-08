@@ -414,3 +414,8 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 .cityGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 4px; }
 .cityGrid span { font-family: var(--f-mono); font-size: .7rem; text-align: center; padding: 6px 0; border: 1px solid var(--line2); border-radius: 3px; color: var(--mute); }
 .cityGrid span.on { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); font-weight: 600; }
+.trace { list-style: none; margin: 0; padding: 0; display: grid; }
+.trace li { display: grid; grid-template-columns: 36px 1fr; gap: var(--s3); padding: 10px 0 10px var(--s3); border-bottom: 1px solid var(--line2); border-left: 3px solid var(--line); }
+.trace li.ok { border-left-color: var(--ok); } .trace li.warn { border-left-color: var(--warn); } .trace li.fail { border-left-color: var(--bad); } .trace li.info { border-left-color: var(--info); }
+.trace .tn { font-family: var(--f-mono); font-size: .75rem; color: var(--mute); padding-top: 3px; }
+.trace p { color: var(--ink2); margin-top: 2px; }

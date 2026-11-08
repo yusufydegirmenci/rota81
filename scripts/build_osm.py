@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""OSM (Geofabrik turkey-latest.osm.pbf) -> public/data/real/{plaka}.json, intercity.json, index.json
+"""OSM (Geofabrik turkey-latest.osm.pbf) -> src/data/real/osm/{plaka}.json, intercity.json, index.json
 
-Kullanim: PYTHONUTF8=1 python scripts/build_osm.py turkey-latest.osm.pbf il-ilce.json public/data/real
+Kullanim: PYTHONUTF8=1 python scripts/build_osm.py turkey-latest.osm.pbf il-ilce.json src/data/real/osm
 Bagimlilik: pip install osmium shapely
 Veri: (c) OpenStreetMap contributors, ODbL. Uydurma veri yok; eslesmeyen/bulunamayan bos birakilir.
 

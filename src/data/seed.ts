@@ -96,36 +96,21 @@ const DEFS: Record<string, CityDef> = {
 /** Gerçek açık veri bulunan il: İstanbul (İETT otobüs hatları, İBB Açık Veri Portalı, CC BY 4.0). */
 export const REAL_CITY = '34'
 
-function districtLines(id: string, name: string, op: string, hub: string, covered: Set<string>, prefix: string): LineDef[] {
-  const g = GEO[id]
-  const all = [...(g?.d ?? [])].sort((x, y) => y[1] - x[1]).map(([d]) => d)
-  const names = Array.from(new Set(all.map((d) => (d === 'Merkez' ? `${name} Merkez` : `${d} Merkez`))))
-    .filter((s) => !covered.has(s))
-  const mk = (list: string[]): [string, number][] => [hub, ...list].map((s, i) => [s, i === 0 ? 0 : 7 + ((i * 3) % 6)] as [string, number])
-  const lines: LineDef[] = []
-  for (let i = 0; i * 8 < names.length; i++) {
-    const part = names.slice(i * 8, i * 8 + 8)
-    lines.push({ code: `${prefix}${i + 1}`, name: i === 0 && prefix === '' ? `${name} Merkez Hattı` : `${name} İlçe Hattı ${i + 1}`, mode: 'bus', operator: op, stops: mk(part), headway: 20 + (i % 3) * 5 })
-  }
-  return lines
-}
-
-/** Ayrıntılı örnek verisi olmayan iller için ilçe merkezlerinden otomatik üretilen SİMÜLE hat ve duraklar (her ilçede en az bir durak). */
+/** Gerçek veri olmayan illerde hat UYDURULMAZ: yalnızca örnek tarife ve işletmeci kaydı üretilir; durak/hat OpenStreetMap'ten gelir. */
 function generatedDef(id: string, name: string): CityDef {
-  const hub = `${name} Otogar (örnek)`
   const op = `${name} Belediyesi Otobüs (örnek)`
-  const lines = districtLines(id, name, op, hub, new Set(), '')
   const n = Number(id)
-  return { lat: 37 + ((n * 7) % 50) * 0.08, lon: 27 + ((n * 11) % 45) * 0.2, operators: [{ name: op, modes: ['bus'] }], fares: { bus: 1800 + (n % 8) * 100 }, lines }
+  return { lat: 37 + ((n * 7) % 50) * 0.08, lon: 27 + ((n * 11) % 45) * 0.2, operators: [{ name: op, modes: ['bus'] }], fares: { bus: 1800 + (n % 8) * 100 }, lines: [] }
 }
 
-/** Ayrıntılı örnek şehirlerde duraksız kalan ilçelere ek simüle hatlar ekler. */
-function coverDistricts(id: string, name: string, def: CityDef): void {
-  const have = new Set(def.lines.flatMap((l) => l.stops.map(([s]) => s)))
-  const hub = def.lines[0]?.stops[0]?.[0] ?? `${name} Otogar (örnek)`
-  const op = def.operators.find((o) => o.modes.includes('bus'))?.name ?? def.operators[0].name
-  def.lines.push(...districtLines(id, name, op, hub, have, 'D'))
-}
+const OSM = import.meta.glob('./real/osm/[0-9][0-9].json', { eager: true, import: 'default' }) as Record<string, OsmCity>
+export const OSM_INDEX = (Object.values(import.meta.glob('./real/osm/index.json', { eager: true, import: 'default' }))[0] ?? { il: {} }) as { il: Record<string, { ad: string; durak: number; hat: number; ilceDurakYok: string[] }> }
+export const OSM_INTERCITY = (Object.values(import.meta.glob('./real/osm/intercity.json', { eager: true, import: 'default' }))[0] ?? { otogar: [], hatlar: [] }) as { otogar: [string, number, number, string, string][]; hatlar: { ref: string; ad: string; mod: string; isletmeci: string; il: string[]; d: [string, string][] }[] }
+interface OsmCity { s: [string, number, number, string, string, string][]; l: [string, string, string, string, number[], [string, string]?][] }
+const OSM_MODE: Record<string, ModeId> = { bus: 'bus', trolleybus: 'bus', tram: 'tram', subway: 'metro', light_rail: 'metro', train: 'rail', ferry: 'ferry' }
+const SAMPLE_FARE: Partial<Record<ModeId, number>> = { bus: 1800, metro: 2500, tram: 2200, rail: 3000, ferry: 2800 }
+const SPEED: Record<ModeId, number> = { bus: 18, metro: 35, tram: 20, rail: 50, ferry: 25 }
+const osmCityFile = (id: string) => OSM[`./real/osm/${id}.json`]
 
 export function createSeed(now: () => Date = () => new Date()): AppData {
   const t0 = now().toISOString()
@@ -139,7 +124,10 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
     data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: GEO[p.id]?.p, hasDemoData: true })
   })
 
-  PROVINCES.forEach((p) => { if (!DEFS[p.id]) DEFS[p.id] = generatedDef(p.id, p.name); else if (p.id !== REAL_CITY) coverDistricts(p.id, p.name, DEFS[p.id]) })
+  PROVINCES.forEach((p) => { if (!DEFS[p.id]) DEFS[p.id] = generatedDef(p.id, p.name); })
+  DEFS[REAL_CITY].lines = [] // İstanbul: örnek hatlar yerine İETT + OSM raylı sistem/vapur
+  PROVINCES.forEach((p) => osmCityFile(p.id)?.l.forEach((l) => { const m = OSM_MODE[l[2]]; if (m && DEFS[p.id].fares[m] === undefined) DEFS[p.id].fares[m] = SAMPLE_FARE[m] }))
+  
   Object.entries(DEFS).forEach(([cityId, def]) => {
     const stopMap = new Map<string, Stop>()
     const opMap = new Map<string, Operator>()
@@ -183,6 +171,38 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
     })
   })
 
+  // GERÇEK VERİ: OpenStreetMap (© OpenStreetMap contributors, ODbL). Sıklık yoktur; yalnızca tahmini sıklık gösterilir.
+  PROVINCES.forEach((p) => {
+    const f = osmCityFile(p.id)
+    if (!f) return
+    const cityId = p.id
+    const ids = f.s.map((_, i) => `st-${cityId}-o${i}`)
+    const taken = new Set(data.stops.filter((x) => x.cityId === cityId).map((x) => x.code))
+    f.s.forEach(([name, lat, lon, , code], i) => {
+      let c = code && !taken.has(code) ? code : `${cityId}${String(i + 1).padStart(5, '0')}`
+      if (taken.has(c)) c = `${cityId}x${i}`
+      taken.add(c)
+      data.stops.push({ id: ids[i], cityId, code: c, name, lat, lon, accessible: true, real: true })
+    })
+    const ops = new Map<string, Operator>()
+    f.l.forEach(([ref, name, mode, opName, idx, ft]) => {
+      const m = OSM_MODE[mode]
+      if (!m || idx.length < 2) return
+      const label = opName || 'İşletmeci OSM\'de belirtilmemiş'
+      let op = ops.get(label)
+      if (!op) { op = { id: `op-${cityId}-o${ops.size + 1}`, cityId, name: label, modes: [m], status: 'active' }; ops.set(label, op); data.operators.push(op) }
+      if (!op.modes.includes(m)) op.modes.push(m)
+      const km = (a: number, b: number) => {
+        const dy = (f.s[a][1] - f.s[b][1]) * 111, dx = (f.s[a][2] - f.s[b][2]) * 111 * Math.cos((f.s[a][1] * Math.PI) / 180)
+        return Math.hypot(dx, dy)
+      }
+      data.routes.push({
+        id: `rt-${cityId}-o${data.routes.length}`, cityId, operatorId: op.id, code: ref || name.slice(0, 6), name: ft ? `${ft[0]} – ${ft[1]}` : name, mode: m, stopIds: idx.map((i) => ids[i]),
+        minutesBetween: idx.slice(1).map((v, k) => Math.max(1, Math.round((km(idx[k], v) / SPEED[m]) * 60))), headwayMin: m === 'bus' ? 20 : 10, status: 'active', real: true,
+      })
+    })
+  })
+
   // GERÇEK VERİ: İstanbul otobüs durak ve hatları (İETT GTFS, İBB Açık Veri Lisansı). Sıklık sefer sayısından, süre mesafeden tahmindir.
   {
     const cityId = REAL_CITY
@@ -190,7 +210,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
     data.operators.push(op)
     const st = IST.stops as [string, string, number, number][]
     const ids = st.map(([code]) => `st-${cityId}-r${code}`)
-    st.forEach(([code, name, lat, lon], i) => data.stops.push({ id: ids[i], cityId, code, name, lat, lon, accessible: true }))
+    st.forEach(([code, name, lat, lon], i) => data.stops.push({ id: ids[i], cityId, code, name, lat, lon, accessible: true, real: true }))
     const km = (a: number, b: number) => {
       const dy = (st[a][2] - st[b][2]) * 111, dx = (st[a][3] - st[b][3]) * 111 * Math.cos((st[a][2] * Math.PI) / 180)
       return Math.hypot(dx, dy)
@@ -202,7 +222,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
       seen.add(id)
       data.routes.push({
         id, cityId, operatorId: op.id, code, name, mode: 'bus', stopIds: idx.map((i) => ids[i]),
-        minutesBetween: idx.slice(1).map((v, k) => Math.max(1, Math.round((km(idx[k], v) / 18) * 60))), headwayMin: headway, status: 'active',
+        minutesBetween: idx.slice(1).map((v, k) => Math.max(1, Math.round((km(idx[k], v) / 18) * 60))), headwayMin: headway, status: 'active', real: true,
       })
     })
   }
@@ -228,8 +248,8 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
     data.wallets.push({ id: `wal-${uid}`, userId: uid, balance: 0 })
   })
   const w = data.wallets[0]
-  w.balance = 20000
-  data.transactions.push({ id: 'tx-seed-1', walletId: w.id, type: 'topup', amount: 20000, status: 'completed', description: 'İlk yükleme (simülasyon)', idempotencyKey: 'seed-1', createdAt: t0, simulated: true })
+  w.balance = 150000
+  data.transactions.push({ id: 'tx-seed-1', walletId: w.id, type: 'topup', amount: 150000, status: 'completed', description: 'İlk yükleme (simülasyon)', idempotencyKey: 'seed-1', createdAt: t0, simulated: true })
   data.wallets[1].balance = 10000
   data.transactions.push({ id: 'tx-seed-2', walletId: data.wallets[1].id, type: 'topup', amount: 10000, status: 'completed', description: 'İlk yükleme (simülasyon)', idempotencyKey: 'seed-2', createdAt: t0, simulated: true })
 

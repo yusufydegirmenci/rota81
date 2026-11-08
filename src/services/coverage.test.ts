@@ -1,21 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { GEO } from '../data/turkiye'
-import { createSeed } from '../data/seed'
+import { createSeed, OSM_INDEX } from '../data/seed'
 
-describe('ilçe kapsamı', () => {
-  it('her ilçenin en az bir (örnek) durağı vardır', () => {
+describe('gerçek veri', () => {
+  it('uydurma hat yok: gerçek olmayan hatlar yalnızca elle yazılmış örnek şehirlerde', () => {
     const d = createSeed()
-    let total = 0
-    for (const [id, g] of Object.entries(GEO)) {
-      if (id === '34') continue // İstanbul: gerçek İETT durakları
-      const names = d.stops.filter((s) => s.cityId === id).map((s) => s.name)
-      for (const [dist] of g.d) {
-        total++
-        const key = dist === 'Merkez' ? '' : dist
-        expect(names.some((n) => n.includes(key)), `${id} ${dist}`).toBe(true)
-      }
-    }
-    expect(total).toBeGreaterThan(900)
-    expect(d.stops.filter((s) => s.cityId === '34').length).toBeGreaterThan(10000)
+    const fake = d.routes.filter((r) => !r.real)
+    expect(new Set(fake.map((r) => r.cityId))).toEqual(new Set(['06', '35', '16', '07', '26']))
+  })
+  it('İstanbul İETT durakları ve 81 ilin OSM durakları yüklenir', () => {
+    const d = createSeed()
+    expect(d.stops.filter((s) => s.cityId === '34' && s.real).length).toBeGreaterThan(10000)
+    expect(Object.keys(OSM_INDEX.il).length).toBe(81)
+    expect(d.stops.filter((s) => s.real).length).toBeGreaterThan(35000)
   })
 })

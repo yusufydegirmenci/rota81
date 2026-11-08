@@ -54,6 +54,7 @@ export interface Stop {
   lat: number
   lon: number
   accessible: boolean
+  real?: boolean // gerçek kaynaktan (İETT / OpenStreetMap) geldiyse true
 }
 
 export interface Route {
@@ -67,6 +68,7 @@ export interface Route {
   minutesBetween: number[] // ardışık duraklar arası dakika (stopIds.length - 1)
   headwayMin: number
   status: 'active' | 'maintenance' | 'closed'
+  real?: boolean
 }
 
 export interface FareProduct {

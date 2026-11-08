@@ -3,9 +3,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ROLE_HOME, useApp } from '../app/context'
 import { Toasts } from '../app/layout'
 import { AuthError } from '../services/authz'
+import { OSM_INDEX } from '../data/seed'
+import { DISTRICT_COUNT } from '../data/turkiye'
 import { CENTROIDS } from '../data/places'
 import { DEMO_CITY_IDS, PROVINCES } from '../data/provinces'
 import { Emblem, LangSwitch, SimNote, TextField, ThemeSwitch } from '../ui/ui'
+
+const OSM_STOPS = Object.values(OSM_INDEX.il).reduce((a, c) => a + c.durak, 0)
+const REAL_STOPS = OSM_STOPS + 10350
+const MISSING = Object.entries(OSM_INDEX.il).filter(([k]) => k !== '34').reduce((a, [, c]) => a + c.ilceDurakYok.length, 0)
+const DISTRICTS_WITH_DATA = DISTRICT_COUNT - MISSING
 
 function PublicFrame({ children }: { children: React.ReactNode }) {
   return (
@@ -74,8 +81,8 @@ export function Welcome() {
         </div>
         <div className="facts">
           <div className="fact"><p className="v">81</p><p>il</p></div>
-          <div className="fact"><p className="v">973</p><p>ilçede en az bir durak</p></div>
-          <div className="fact"><p className="v">10.350</p><p>gerçek İETT durağı (İstanbul)</p></div>
+          <div className="fact"><p className="v">{REAL_STOPS.toLocaleString('tr-TR')}</p><p>gerçek durak (İETT + OpenStreetMap)</p></div>
+          <div className="fact"><p className="v">{DISTRICTS_WITH_DATA}</p><p>ilçede gerçek durak verisi var; kalanında "veri yok" yazar</p></div>
           <div className="fact"><p className="v">1</p><p>kart, bakiye ve hesap</p></div>
         </div>
       </section>
