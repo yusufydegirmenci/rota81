@@ -5,7 +5,7 @@ import { Icon } from '../ui/icons'
 import { Emblem, LangSwitch, ThemeSwitch } from '../ui/ui'
 import { ROLE_HOME, ROLE_LABEL, useApp } from './context'
 
-export interface NavItem { to: string; label: string; icon: string; bottom?: boolean }
+export interface NavItem { to: string; label: string; icon: string; bottom?: boolean; group?: string }
 
 export function Toasts() {
   const { toasts } = useApp()
@@ -59,8 +59,13 @@ export function Shell({ role, nav, admin }: { role: Role; nav: NavItem[]; admin?
   if (!user) return <Navigate to="/giris" replace state={{ from: loc.pathname }} />
   if (user.role !== role) return <Forbidden role={role} />
   const end = (to: string) => to.split('/').length <= 2
-  const links = nav.map((n) => (
-    <NavLink key={n.to} to={n.to} end={end(n.to)} className="navlink"><Icon name={n.icon} size={18} />{n.label}</NavLink>
+  const groups: { name?: string; items: NavItem[] }[] = []
+  nav.forEach((n) => { const g = groups[groups.length - 1]; if (g && g.name === n.group) g.items.push(n); else groups.push({ name: n.group, items: [n] }) })
+  const links = groups.map((g, i) => (
+    <div className="navgroup" key={i}>
+      {g.name && <div className="navhead">{g.name}</div>}
+      {g.items.map((n) => <NavLink key={n.to} to={n.to} end={end(n.to)} className="navlink"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}
+    </div>
   ))
   const current = nav.find((n) => (end(n.to) ? loc.pathname === n.to : loc.pathname.startsWith(n.to)))
   const initials = user.name.split(' ').map((p) => p[0]).slice(0, 2).join('')

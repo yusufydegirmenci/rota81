@@ -3,24 +3,24 @@
    Kart yığını yerine ince çizgilerle ayrılmış bölümler; sayılar ve kodlar tek aralıklı (mono). */
 
 :root {
-  --bg: #f4f3ee;
+  --bg: #fdf8ef;
   --surface: #ffffff;
-  --sunk: #ebe9e1;
-  --ink: #0d1220;
-  --ink2: #424a5e;
-  --mute: #6f7689;
-  --line: #d9d6cb;
-  --line2: #e8e5dc;
-  --navy: #0f1f3d;
-  --signal: #ff5a1f;
+  --sunk: #f4ebd9;
+  --ink: #14323f;
+  --ink2: #3f5963;
+  --mute: #66808a;
+  --line: #e6dcc6;
+  --line2: #f0e8d6;
+  --navy: #0e4d5c;
+  --signal: #ef5f26;
   --signal-ink: #ffffff;
   --ok: #0c7a49;
   --warn: #a35f00;
   --bad: #c62d24;
-  --info: #1f4fc4;
-  --sel: #0d1220;
-  --sel-ink: #f4f3ee;
-  --focus: #1f4fc4;
+  --info: #0e7c86;
+  --sel: #14323f;
+  --sel-ink: #fdf8ef;
+  --focus: #0e7c86;
   --f-ui: 'Geist', 'Segoe UI', system-ui, -apple-system, 'Noto Sans', Arial, sans-serif;
   --f-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --f-disp: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
@@ -34,22 +34,22 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0a0d14; --surface: #10141d; --sunk: #151a26; --ink: #eceef4; --ink2: #b4bacb; --mute: #8189a0;
-    --line: #262d3f; --line2: #1b2130; --navy: #0a0d14; --signal: #ff6a33; --signal-ink: #0a0d14;
-    --ok: #3ccf8e; --warn: #f0ad3c; --bad: #ff7b6e; --info: #7aa2ff; --sel: #eceef4; --sel-ink: #0a0d14; --focus: #7aa2ff;
+    --bg: #0d2029; --surface: #132c37; --sunk: #183743; --ink: #f4f0e6; --ink2: #c4d4d8; --mute: #8fa9b1;
+    --line: #2a4f5c; --line2: #1d3d49; --navy: #0d2029; --signal: #ff8a4c; --signal-ink: #1a1208;
+    --ok: #4fd9a0; --warn: #f4b84a; --bad: #ff8a7c; --info: #5fd0d8; --sel: #f4f0e6; --sel-ink: #0d2029; --focus: #5fd0d8;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --bg: #0a0d14; --surface: #10141d; --sunk: #151a26; --ink: #eceef4; --ink2: #b4bacb; --mute: #8189a0;
-  --line: #262d3f; --line2: #1b2130; --navy: #0a0d14; --signal: #ff6a33; --signal-ink: #0a0d14;
-  --ok: #3ccf8e; --warn: #f0ad3c; --bad: #ff7b6e; --info: #7aa2ff; --sel: #eceef4; --sel-ink: #0a0d14; --focus: #7aa2ff;
+  --bg: #0d2029; --surface: #132c37; --sunk: #183743; --ink: #f4f0e6; --ink2: #c4d4d8; --mute: #8fa9b1;
+  --line: #2a4f5c; --line2: #1d3d49; --navy: #0d2029; --signal: #ff8a4c; --signal-ink: #1a1208;
+  --ok: #4fd9a0; --warn: #f4b84a; --bad: #ff8a7c; --info: #5fd0d8; --sel: #f4f0e6; --sel-ink: #0d2029; --focus: #5fd0d8;
   color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; line-height: 1.55; font-feature-settings: 'ss01', 'cv11'; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg) radial-gradient(1200px 500px at 85% -10%, color-mix(in srgb, var(--signal) 9%, transparent), transparent 70%); color: var(--ink); font-family: var(--f-ui); font-size: 15px; line-height: 1.55; font-feature-settings: 'ss01', 'cv11'; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, p, ul, ol { margin: 0; }
 h1 { font-family: var(--f-disp); font-weight: 700; font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.08; letter-spacing: -.025em; text-wrap: balance; }
 h2 { font-family: var(--f-disp); font-weight: 700; font-size: 1.45rem; letter-spacing: -.02em; line-height: 1.15; }
@@ -159,7 +159,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--sunk) 55%, transparent)
 
 /* ——— Kabuk: sol ray + üst şerit ——— */
 .shell { min-height: 100vh; display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); grid-template-rows: auto 1fr; grid-template-areas: 'rail top' 'rail main'; }
-.rail { grid-area: rail; position: sticky; top: 0; height: 100vh; border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: var(--s5) var(--s3) var(--s4); gap: var(--s5); background: var(--bg); overflow-y: auto; }
+.rail { grid-area: rail; position: sticky; top: 0; height: 100vh; border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: var(--s5) var(--s3) var(--s4); gap: var(--s5); background: linear-gradient(180deg, color-mix(in srgb, var(--info) 11%, var(--bg)), var(--bg) 60%); overflow-y: auto; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-disp); font-weight: 800; font-size: 1.15rem; letter-spacing: .02em; padding: 0 var(--s3); }
 .brand small { font-family: var(--f-mono); font-weight: 400; font-size: .62rem; letter-spacing: .1em; color: var(--mute); display: block; margin-top: 1px; }
 .sidenav { display: grid; gap: 1px; }
@@ -446,3 +446,11 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 .pic.ph span { position: relative; font-family: var(--f-mono); font-size: .65rem; letter-spacing: .12em; color: var(--signal); }
 .pic.ph b { position: relative; font-family: var(--f-disp); font-size: 1.05rem; }
 @media (max-width: 700px) { .placecard { grid-template-columns: 1fr; } .statsrow { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); } }
+
+/* Menü grupları */
+.navgroup { display: grid; gap: 1px; }
+.navgroup + .navgroup { margin-top: var(--s3); }
+.navhead { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); padding: 0 var(--s3) 4px; }
+.rail { gap: var(--s4); padding-top: var(--s4); }
+.rail .sidenav { gap: 0; }
+.navlink { min-height: 34px; font-size: .9rem; }
