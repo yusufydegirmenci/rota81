@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ROLE_HOME, useApp } from '../app/context'
 import { Toasts } from '../app/layout'
 import { AuthError } from '../services/authz'
-import { Card, Emblem, SimNote, TextField } from '../ui/ui'
+import { Card, Emblem, LangSwitch, SimNote, TextField } from '../ui/ui'
 
 function PublicFrame({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +11,7 @@ function PublicFrame({ children }: { children: React.ReactNode }) {
       <header className="pubbar">
         <Link to="/" className="pubbrand"><Emblem size={44} /><span>FORADAŞ</span></Link>
         <div className="sp" />
+        <LangSwitch />
         <Link className="btn sm" to="/giris">Giriş yap</Link>
       </header>
       <main id="main">{children}</main>
@@ -93,7 +94,7 @@ export function Login() {
       </aside>
       <main className="loginmain" id="main">
         <div className="loginbox">
-          <div className="loginmobilebrand"><Emblem size={44} /><b>FORADAŞ</b></div>
+          <div className="loginmobilebrand"><Emblem size={44} /><b>FORADAŞ</b><div className="sp" /><LangSwitch /></div><div className="loginlang"><LangSwitch /></div>
           <h2>Tekrar hoş geldiniz</h2>
           <p className="muted">Hesabınıza giriş yapın.</p>
           <form className="stack" onSubmit={submit} noValidate>

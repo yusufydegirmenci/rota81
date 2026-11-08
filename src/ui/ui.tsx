@@ -1,3 +1,4 @@
+import { savedLang, setLanguage, type Lang } from '../app/i18n'
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
 
 export function Badge({ tone = 'mute', children }: { tone?: 'ok' | 'warn' | 'bad' | 'info' | 'mute'; children: ReactNode }) {
@@ -184,3 +185,13 @@ export function Emblem({ size = 64, light = false }: { size?: number; light?: bo
   )
 }
 
+
+export function LangSwitch() {
+  const [lang, setLang] = useState<Lang>(savedLang)
+  useEffect(() => { setLanguage(lang) }, [lang])
+  return (
+    <div className="langsw" role="group" aria-label="Dil / Language">
+      {(['tr', 'en'] as Lang[]).map((l) => <button key={l} type="button" className={lang === l ? 'on' : ''} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
+    </div>
+  )
+}

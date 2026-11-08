@@ -6,6 +6,8 @@ import type { Journey, ModeId, WalletTransaction } from '../domain/types'
 import { MODE_LABEL, TL } from '../services/api'
 export { CitiesGuide } from './geo'
 export { LiveBoard as Live } from './live'
+export { GeziPage } from './trip'
+export { Guide } from './guide'
 import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, SimNote, Stat, Tabs, TextField, type Col } from '../ui/ui'
 
 export const CITIZEN_NAV: NavItem[] = [
@@ -13,6 +15,7 @@ export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas/kart', label: 'Kartım', icon: '💳', bottom: true },
   { to: '/vatandas/cuzdan', label: 'Cüzdan', icon: '👛', bottom: true },
   { to: '/vatandas/rota', label: 'Rota', icon: '🧭', bottom: true },
+  { to: '/vatandas/gezi', label: 'Gezi planla', icon: '🧳' },
   { to: '/vatandas/yukle', label: 'Bakiye yükle', icon: '➕' },
   { to: '/vatandas/islemler', label: 'İşlem geçmişi', icon: '🧾' },
   { to: '/vatandas/canli', label: 'Canlı doluluk', icon: '📡', bottom: false },
@@ -23,6 +26,7 @@ export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas/kart-yonetimi', label: 'Kart yönetimi', icon: '⚙️' },
   { to: '/vatandas/profil', label: 'Profilim', icon: '👤' },
   { to: '/vatandas/guvenlik', label: 'Güvenlik', icon: '🔒' },
+  { to: '/vatandas/kilavuz', label: 'Kullanım kılavuzu', icon: '📖' },
   { to: '/vatandas/yardim', label: 'Yardım', icon: '❓' },
 ]
 
@@ -66,11 +70,12 @@ export function Dashboard() {
   return (
     <div className="stack">
       <PageHeader title={`Merhaba, ${user!.name.split(' ')[0]}`} sub="Hesap özetiniz" />
-      <div className="tiles">
-        {[['/vatandas/rota', '🧭', 'Rota planla', 'Hızlı ve kalabalık olmayan yolu bul'], ['/vatandas/canli', '📡', 'Canlı doluluk', 'Araçlar ve duraklar'], ['/vatandas/sehirler', '🗺️', 'İller ve ilçeler', '81 il, 973 ilçe'], ['/vatandas/yukle', '➕', 'Bakiye yükle', 'Kartınıza hızlı yükleme']].map(([to, ic, t, s]) => (
-          <Link key={to} to={to} className="tile"><span className="tileic" aria-hidden="true">{ic}</span><b>{t}</b><small>{s}</small></Link>
+      <div className="quickbar">
+        {[['/vatandas/yukle', '➕', 'Bakiye yükle', 'Kartınıza hızlı yükleme'], ['/vatandas/rota', '🧭', 'Rota', 'Hızlı ve kalabalık olmayan yolu bul'], ['/vatandas/canli', '📡', 'Canlı doluluk', 'Araçlar ve duraklar'], ['/vatandas/gezi', '🧳', 'Gezi', 'Başka şehre günübirlik gezi'], ['/vatandas/kilavuz', '📖', 'Kılavuz', 'Nasıl kullanılır?']].map(([to, ic, t, s]) => (
+          <Link key={to} to={to} className="qpill" title={s}><span aria-hidden="true">{ic}</span>{t}</Link>
         ))}
       </div>
+      {w.wallet.balance < 3000 && <div className="lowbal" role="alert"><b>Bakiyeniz düşük ({TL(w.wallet.balance)}).</b> Araca binmeden önce yükleyin; yetersiz bakiye en sık yaşanan sorundur. <Link to="/vatandas/yukle">Hemen yükle</Link></div>}
       <div className="grid2">
         <div className="stack">
           <DigitalCard number={w.card.number} status={w.card.status} name={user!.name} />
@@ -411,20 +416,39 @@ export function Lines() {
 
 export function Stops() {
   const { api } = useApp()
-  const [city, setCity] = useState('06'); const [acc, setAcc] = useState(false)
+  const [city, setCity] = useState('06'); const [acc, setAcc] = useState(false); const [openStop, setOpenStop] = useState<string | null>(null)
   const stops = api.catalog.stops(city).filter((s) => !acc || s.accessible)
   const routes = api.catalog.routes(city)
   const cols: Col<(typeof stops)[number]>[] = [
     { key: 'n', label: 'Durak', render: (s) => <b>{s.name}</b>, sort: (a, b) => a.name.localeCompare(b.name, 'tr') },
     { key: 'r', label: 'Hatlar', render: (s) => routes.filter((r) => r.stopIds.includes(s.id)).map((r) => r.code).join(', ') },
     { key: 'a', label: 'Erişilebilirlik', render: (s) => <Badge tone={s.accessible ? 'ok' : 'warn'}>{s.accessible ? 'Erişilebilir' : 'Sınırlı'}</Badge> },
+    { key: 'd', label: '', render: (s) => <button className="btn sm" onClick={() => setOpenStop(s.id)}>Hatlar ve güzergâhlar</button> },
   ]
+  const sd = stops.find((s) => s.id === openStop)
+  const allStops = api.catalog.stops(city)
+  const nm = (id: string) => allStops.find((x) => x.id === id)?.name ?? id
   return (
     <div className="stack">
       <PageHeader title="Duraklar" />
       <SelectField label="Şehir" value={city} onChange={setCity} options={api.catalog.cities().map((c) => ({ value: c.id, label: c.name }))} />
       <label className="row" style={{ minHeight: 44 }}><input type="checkbox" style={{ width: 22, height: 22 }} checked={acc} onChange={(e) => setAcc(e.target.checked)} /> Yalnızca erişilebilir duraklar</label>
       <DataTable rows={stops} cols={cols} rowKey={(s) => s.id} searchText={(s) => s.name} empty="Bu ilde durak verisi yok." />
+      <Modal open={!!sd} title={sd ? `${sd.name} durağı` : ''} onClose={() => setOpenStop(null)}>
+        {sd && <div className="stack">
+          {routes.filter((r) => r.stopIds.includes(sd.id)).map((r) => {
+            const i = r.stopIds.indexOf(sd.id)
+            return (
+              <div key={r.id} className="card flat">
+                <p><b>{r.code}</b> · {MODE_LABEL[r.mode]} · {r.name}</p>
+                <p className="small muted">Güzergâh: {r.stopIds.map((id, k) => <span key={id}>{k > 0 && ' → '}{id === sd.id ? <b>{nm(id)}</b> : nm(id)}</span>)}</p>
+                <p className="small">{i < r.stopIds.length - 1 ? <>{nm(r.stopIds[r.stopIds.length - 1])} yönü: sonraki durak <b>{nm(r.stopIds[i + 1])}</b> (+{r.minutesBetween[i]} dk)</> : 'Hattın son durağı'}{i > 0 && <> · {nm(r.stopIds[0])} yönü: sonraki durak <b>{nm(r.stopIds[i - 1])}</b></>} · sefer aralığı ~{r.headwayMin} dk</p>
+              </div>
+            )
+          })}
+          <Link className="btn sm" to="/vatandas/canli">📡 Bu durağın canlı panosu</Link>
+        </div>}
+      </Modal>
     </div>
   )
 }

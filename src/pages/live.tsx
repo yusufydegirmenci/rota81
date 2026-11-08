@@ -114,6 +114,7 @@ export function LiveBoard({ lockedCity }: { lockedCity?: string }) {
 function Alternatives({ from, to, city, now }: { from: string; to: string; city: string; now: Date }) {
   const { api } = useApp()
   const routes = api.catalog.routes(city).filter((r) => r.status === 'active')
+  const stops = api.catalog.stops(city)
   const rows = routes.flatMap((r) => {
     const a = r.stopIds.indexOf(from), b = r.stopIds.indexOf(to)
     if (a < 0 || b < 0) return []
@@ -125,6 +126,7 @@ function Alternatives({ from, to, city, now }: { from: string; to: string; city:
     const score = arr.etaMin + out.etaMin + out.peak / 8
     return [{ r, arr, out, score }]
   }).sort((x, y) => x.score - y.score)
+  const transfer = rows.length === 0 ? (() => { try { return api.journeys.plan(city, from, to, {})[0] } catch { return undefined } })() : undefined
   return (
     <Card title="Bu iki durak arasındaki seçenekler">
       {rows.length ? rows.map((x, i) => (
@@ -134,7 +136,16 @@ function Alternatives({ from, to, city, now }: { from: string; to: string; city:
             <small className="muted">Bekleme {x.arr.etaMin} dk · yolculuk {x.out.etaMin} dk · en yoğun nokta %{x.out.peak}</small></div>
           <div className="arrright">{i === 0 && <Badge tone="ok">Önerilen</Badge>}<small>{x.out.trend === 'artacak' ? 'yoğunluk artacak' : x.out.trend === 'azalacak' ? 'yoğunluk azalacak' : 'yoğunluk benzer'}</small></div>
         </div>
-      )) : <Empty title="Doğrudan hat yok">Bu iki durak arasında tek hatla gidilemiyor. Aktarmalı seçenekler için Rota sayfasını kullanın.</Empty>}
+      )) : transfer ? (
+        <div className="stack">
+          <p><b>Aktarmalı seçenek:</b> {transfer.totalMinutes} dk · {transfer.transfers} aktarma</p>
+          {transfer.legs.map((l, i) => (
+            <div key={i} className="legline"><span className="dot" /><div>
+              {l.kind === 'ride' ? `${MODE_LABEL[l.mode!]} ${routes.find((r) => r.id === l.routeId)?.code ?? ''}` : l.kind === 'walk' ? 'Yürüyüş' : 'Aktarma'}: {stops.find((s) => s.id === l.fromStopId)?.name} → {stops.find((s) => s.id === l.toStopId)?.name} <span className="hint">· {l.minutes} dk</span>
+            </div></div>
+          ))}
+        </div>
+      ) : <Empty title="Bu iki durak arasında yol bulunamadı">Başka bir durak seçin veya Rota sayfasında yürüyüş seçeneklerine bakın.</Empty>}
     </Card>
   )
 }
