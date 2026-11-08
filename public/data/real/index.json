@@ -1,0 +1,1172 @@
+{
+ "kaynak": "OpenStreetMap contributors, ODbL",
+ "mod": {
+  "b": "otobus",
+  "t": "tramvay",
+  "m": "metro",
+  "l": "hafif raylı",
+  "r": "tren",
+  "f": "vapur",
+  "o": "otogar"
+ },
+ "il": {
+  "01": {
+   "ad": "Adana",
+   "durak": 489,
+   "hat": 10,
+   "bayt": 31198,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ALADAĞ",
+    "FEKE",
+    "İMAMOĞLU",
+    "KARATAŞ",
+    "SAİMBEYLİ",
+    "YUMURTALIK"
+   ]
+  },
+  "02": {
+   "ad": "Adıyaman",
+   "durak": 12,
+   "hat": 0,
+   "bayt": 669,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ÇELİKHAN",
+    "GERGER",
+    "SAMSAT",
+    "SİNCİK",
+    "TUT"
+   ]
+  },
+  "03": {
+   "ad": "Afyonkarahisar",
+   "durak": 46,
+   "hat": 0,
+   "bayt": 2574,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAŞMAKÇI",
+    "BAYAT",
+    "ÇOBANLAR",
+    "HOCALAR",
+    "İSCEHİSAR",
+    "ŞUHUT"
+   ]
+  },
+  "04": {
+   "ad": "Ağrı",
+   "durak": 7,
+   "hat": 0,
+   "bayt": 461,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "DİYADİN",
+    "ELEŞKİRT",
+    "HAMUR",
+    "PATNOS",
+    "TAŞLIÇAY",
+    "TUTAK"
+   ]
+  },
+  "05": {
+   "ad": "Amasya",
+   "durak": 39,
+   "hat": 1,
+   "bayt": 2301,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "GÖYNÜCEK",
+    "HAMAMÖZÜ"
+   ]
+  },
+  "06": {
+   "ad": "Ankara",
+   "durak": 6102,
+   "hat": 343,
+   "bayt": 531233,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ÇAMLIDERE",
+    "KAHRAMANKAZAN",
+    "KIZILCAHAMAM"
+   ]
+  },
+  "07": {
+   "ad": "Antalya",
+   "durak": 3938,
+   "hat": 25,
+   "bayt": 251843,
+   "sinir": true,
+   "ilceDurakYok": [
+    "İBRADI"
+   ]
+  },
+  "08": {
+   "ad": "Artvin",
+   "durak": 19,
+   "hat": 4,
+   "bayt": 1683,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ARDANUÇ",
+    "BORÇKA",
+    "MURGUL"
+   ]
+  },
+  "09": {
+   "ad": "Aydın",
+   "durak": 99,
+   "hat": 4,
+   "bayt": 5825,
+   "sinir": true,
+   "ilceDurakYok": [
+    "KARPUZLU",
+    "KOÇARLI",
+    "YENİPAZAR"
+   ]
+  },
+  "10": {
+   "ad": "Balıkesir",
+   "durak": 361,
+   "hat": 54,
+   "bayt": 29203,
+   "sinir": true,
+   "ilceDurakYok": [
+    "GÖMEÇ",
+    "HAVRAN",
+    "SINDIRGI"
+   ]
+  },
+  "11": {
+   "ad": "Bilecik",
+   "durak": 53,
+   "hat": 2,
+   "bayt": 3263,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "GÖLPAZARI",
+    "İNHİSAR",
+    "SÖĞÜT",
+    "YENİPAZAR"
+   ]
+  },
+  "12": {
+   "ad": "Bingöl",
+   "durak": 13,
+   "hat": 0,
+   "bayt": 660,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ADAKLI",
+    "KARLIOVA",
+    "KİĞI",
+    "YAYLADERE",
+    "YEDİSU"
+   ]
+  },
+  "13": {
+   "ad": "Bitlis",
+   "durak": 12,
+   "hat": 0,
+   "bayt": 668,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "HİZAN",
+    "MUTKİ"
+   ]
+  },
+  "14": {
+   "ad": "Bolu",
+   "durak": 7,
+   "hat": 0,
+   "bayt": 461,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "DÖRTDİVAN",
+    "KIBRISCIK",
+    "SEBEN",
+    "YENİÇAĞA"
+   ]
+  },
+  "15": {
+   "ad": "Burdur",
+   "durak": 17,
+   "hat": 0,
+   "bayt": 1092,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALTINYAYLA",
+    "ÇAVDIR",
+    "ÇELTİKÇİ",
+    "GÖLHİSAR",
+    "KARAMANLI",
+    "KEMER",
+    "TEFENNİ",
+    "YEŞİLOVA"
+   ]
+  },
+  "16": {
+   "ad": "Bursa",
+   "durak": 622,
+   "hat": 22,
+   "bayt": 42561,
+   "sinir": true,
+   "ilceDurakYok": [
+    "KELES"
+   ]
+  },
+  "17": {
+   "ad": "Çanakkale",
+   "durak": 50,
+   "hat": 0,
+   "bayt": 3023,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAYRAMİÇ",
+    "YENİCE"
+   ]
+  },
+  "18": {
+   "ad": "Çankırı",
+   "durak": 20,
+   "hat": 0,
+   "bayt": 1094,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAYRAMÖREN",
+    "ELDİVAN",
+    "ILGAZ",
+    "KIZILIRMAK",
+    "YAPRAKLI"
+   ]
+  },
+  "19": {
+   "ad": "Çorum",
+   "durak": 8,
+   "hat": 0,
+   "bayt": 504,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALACA",
+    "BAYAT",
+    "BOĞAZKALE",
+    "DODURGA",
+    "KARGI",
+    "LAÇİN",
+    "MECİTÖZÜ",
+    "OĞUZLAR",
+    "ORTAKÖY",
+    "UĞURLUDAĞ"
+   ]
+  },
+  "20": {
+   "ad": "Denizli",
+   "durak": 130,
+   "hat": 2,
+   "bayt": 8813,
+   "sinir": true,
+   "ilceDurakYok": [
+    "BABADAĞ",
+    "BAKLAN",
+    "BEKİLLİ",
+    "BEYAĞAÇ",
+    "BULDAN",
+    "ÇAL",
+    "ÇAMELİ",
+    "ÇİVRİL",
+    "GÜNEY",
+    "KALE",
+    "SERİNHİSAR",
+    "TAVAS"
+   ]
+  },
+  "21": {
+   "ad": "Diyarbakır",
+   "durak": 37,
+   "hat": 0,
+   "bayt": 2000,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ÇERMİK",
+    "ÇÜNGÜŞ",
+    "DİCLE",
+    "HANİ",
+    "HAZRO",
+    "KOCAKÖY",
+    "KULP",
+    "LİCE"
+   ]
+  },
+  "22": {
+   "ad": "Edirne",
+   "durak": 405,
+   "hat": 39,
+   "bayt": 34831,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ENEZ",
+    "İPSALA",
+    "LALAPAŞA",
+    "SÜLOĞLU"
+   ]
+  },
+  "23": {
+   "ad": "Elazığ",
+   "durak": 112,
+   "hat": 1,
+   "bayt": 7300,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AĞIN",
+    "ALACAKAYA",
+    "ARICAK",
+    "KARAKOÇAN",
+    "KEBAN"
+   ]
+  },
+  "24": {
+   "ad": "Erzincan",
+   "durak": 24,
+   "hat": 0,
+   "bayt": 1247,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "OTLUKBELİ",
+    "REFAHİYE"
+   ]
+  },
+  "25": {
+   "ad": "Erzurum",
+   "durak": 20,
+   "hat": 0,
+   "bayt": 1079,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ÇAT",
+    "HINIS",
+    "İSPİR",
+    "KARAÇOBAN",
+    "KARAYAZI",
+    "NARMAN",
+    "OLTU",
+    "OLUR",
+    "PAZARYOLU",
+    "ŞENKAYA",
+    "TEKMAN",
+    "TORTUM",
+    "UZUNDERE"
+   ]
+  },
+  "26": {
+   "ad": "Eskişehir",
+   "durak": 189,
+   "hat": 5,
+   "bayt": 11162,
+   "sinir": true,
+   "ilceDurakYok": [
+    "GÜNYÜZÜ",
+    "HAN",
+    "MAHMUDİYE",
+    "MİHALGAZİ",
+    "SARICAKAYA",
+    "SEYİTGAZİ"
+   ]
+  },
+  "27": {
+   "ad": "Gaziantep",
+   "durak": 133,
+   "hat": 8,
+   "bayt": 8556,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ARABAN"
+   ]
+  },
+  "28": {
+   "ad": "Giresun",
+   "durak": 15,
+   "hat": 0,
+   "bayt": 1017,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALUCRA",
+    "ÇAMOLUK",
+    "ÇANAKÇI",
+    "DOĞANKENT",
+    "EYNESİL",
+    "GÖRELE",
+    "GÜCE",
+    "PİRAZİZ",
+    "YAĞLIDERE"
+   ]
+  },
+  "29": {
+   "ad": "Gümüşhane",
+   "durak": 4,
+   "hat": 0,
+   "bayt": 278,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "KÖSE",
+    "KÜRTÜN",
+    "ŞİRAN",
+    "TORUL"
+   ]
+  },
+  "30": {
+   "ad": "Hakkari",
+   "durak": 5,
+   "hat": 0,
+   "bayt": 337,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ÇUKURCA",
+    "DERECİK",
+    "ŞEMDİNLİ"
+   ]
+  },
+  "31": {
+   "ad": "Hatay",
+   "durak": 29,
+   "hat": 0,
+   "bayt": 1583,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ALTINÖZÜ",
+    "ARSUZ",
+    "BELEN",
+    "DEFNE",
+    "HASSA",
+    "KUMLU",
+    "REYHANLI",
+    "SAMANDAĞ",
+    "YAYLADAĞI"
+   ]
+  },
+  "32": {
+   "ad": "Isparta",
+   "durak": 138,
+   "hat": 3,
+   "bayt": 9478,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AKSU",
+    "ATABEY",
+    "GELENDOST",
+    "SÜTÇÜLER",
+    "ŞARKİKARAAĞAÇ",
+    "YENİŞARBADEMLİ"
+   ]
+  },
+  "33": {
+   "ad": "Mersin",
+   "durak": 173,
+   "hat": 1,
+   "bayt": 10313,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AYDINCIK",
+    "ÇAMLIYAYLA",
+    "GÜLNAR",
+    "MEZİTLİ"
+   ]
+  },
+  "34": {
+   "ad": "İstanbul",
+   "durak": 726,
+   "hat": 56,
+   "bayt": 47634,
+   "sinir": true,
+   "ilceDurakYok": [
+    "BÜYÜKÇEKMECE",
+    "ESENYURT",
+    "ŞİLE"
+   ]
+  },
+  "35": {
+   "ad": "İzmir",
+   "durak": 3533,
+   "hat": 54,
+   "bayt": 205668,
+   "sinir": true,
+   "ilceDurakYok": []
+  },
+  "36": {
+   "ad": "Kars",
+   "durak": 31,
+   "hat": 2,
+   "bayt": 1915,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "DİGOR",
+    "KAĞIZMAN"
+   ]
+  },
+  "37": {
+   "ad": "Kastamonu",
+   "durak": 102,
+   "hat": 0,
+   "bayt": 6548,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ABANA",
+    "AĞLI",
+    "AZDAVAY",
+    "CİDE",
+    "ÇATALZEYTİN",
+    "DADAY",
+    "DEVREKANİ",
+    "DOĞANYURT",
+    "HANÖNÜ",
+    "İHSANGAZİ",
+    "KÜRE",
+    "SEYDİLER",
+    "ŞENPAZAR",
+    "TAŞKÖPRÜ",
+    "TOSYA"
+   ]
+  },
+  "38": {
+   "ad": "Kayseri",
+   "durak": 2080,
+   "hat": 66,
+   "bayt": 149413,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AKKIŞLA",
+    "FELAHİYE",
+    "ÖZVATAN",
+    "SARIZ",
+    "YAHYALI"
+   ]
+  },
+  "39": {
+   "ad": "Kırklareli",
+   "durak": 106,
+   "hat": 2,
+   "bayt": 6570,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "KOFÇAZ"
+   ]
+  },
+  "40": {
+   "ad": "Kırşehir",
+   "durak": 3,
+   "hat": 0,
+   "bayt": 201,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AKÇAKENT",
+    "AKPINAR",
+    "BOZTEPE",
+    "KAMAN",
+    "MUCUR"
+   ]
+  },
+  "41": {
+   "ad": "Kocaeli",
+   "durak": 2343,
+   "hat": 28,
+   "bayt": 152469,
+   "sinir": true,
+   "ilceDurakYok": []
+  },
+  "42": {
+   "ad": "Konya",
+   "durak": 841,
+   "hat": 13,
+   "bayt": 54043,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AHIRLI",
+    "AKÖREN",
+    "ALTINEKİN",
+    "BOZKIR",
+    "ÇELTİK",
+    "DERBENT",
+    "DEREBUCAK",
+    "DOĞANHİSAR",
+    "EMİRGAZİ",
+    "GÜNEYSINIR",
+    "HADİM",
+    "HALKAPINAR",
+    "HÜYÜK",
+    "TAŞKENT",
+    "TUZLUKÇU",
+    "YALIHÜYÜK",
+    "YUNAK"
+   ]
+  },
+  "43": {
+   "ad": "Kütahya",
+   "durak": 40,
+   "hat": 0,
+   "bayt": 2321,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALTINTAŞ",
+    "ASLANAPA",
+    "ÇAVDARHİSAR",
+    "DOMANİÇ",
+    "EMET",
+    "HİSARCIK",
+    "PAZARLAR",
+    "ŞAPHANE"
+   ]
+  },
+  "44": {
+   "ad": "Malatya",
+   "durak": 207,
+   "hat": 6,
+   "bayt": 14900,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ARAPGİR",
+    "ARGUVAN",
+    "DARENDE",
+    "DOĞANYOL",
+    "KALE",
+    "KULUNCAK",
+    "PÜTÜRGE"
+   ]
+  },
+  "45": {
+   "ad": "Manisa",
+   "durak": 879,
+   "hat": 40,
+   "bayt": 68377,
+   "sinir": true,
+   "ilceDurakYok": [
+    "GÖLMARMARA",
+    "KÖPRÜBAŞI",
+    "KULA",
+    "SARIGÖL",
+    "YUNUSEMRE"
+   ]
+  },
+  "46": {
+   "ad": "Kahramanmaraş",
+   "durak": 43,
+   "hat": 0,
+   "bayt": 2634,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ÇAĞLAYANCERİT",
+    "EKİNÖZÜ",
+    "NURHAK"
+   ]
+  },
+  "47": {
+   "ad": "Mardin",
+   "durak": 15,
+   "hat": 0,
+   "bayt": 845,
+   "sinir": true,
+   "ilceDurakYok": [
+    "DERİK",
+    "ÖMERLİ",
+    "SAVUR",
+    "YEŞİLLİ"
+   ]
+  },
+  "48": {
+   "ad": "Muğla",
+   "durak": 256,
+   "hat": 39,
+   "bayt": 18937,
+   "sinir": true,
+   "ilceDurakYok": [
+    "KAVAKLIDERE"
+   ]
+  },
+  "49": {
+   "ad": "Muş",
+   "durak": 21,
+   "hat": 0,
+   "bayt": 1146,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BULANIK",
+    "HASKÖY",
+    "MALAZGİRT",
+    "VARTO"
+   ]
+  },
+  "50": {
+   "ad": "Nevşehir",
+   "durak": 43,
+   "hat": 7,
+   "bayt": 3198,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ACIGÖL"
+   ]
+  },
+  "51": {
+   "ad": "Niğde",
+   "durak": 15,
+   "hat": 0,
+   "bayt": 754,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALTUNHİSAR",
+    "ÇAMARDI",
+    "ÇİFTLİK"
+   ]
+  },
+  "52": {
+   "ad": "Ordu",
+   "durak": 17,
+   "hat": 0,
+   "bayt": 1057,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AYBASTI",
+    "ÇAMAŞ",
+    "ÇATALPINAR",
+    "ÇAYBAŞI",
+    "GÖLKÖY",
+    "GÜRGENTEPE",
+    "İKİZCE",
+    "KABATAŞ",
+    "KUMRU",
+    "MESUDİYE",
+    "PERŞEMBE",
+    "ULUBEY"
+   ]
+  },
+  "53": {
+   "ad": "Rize",
+   "durak": 129,
+   "hat": 14,
+   "bayt": 10153,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ÇAMLIHEMŞİN",
+    "DEREPAZARI",
+    "GÜNEYSU",
+    "HEMŞİN",
+    "İYİDERE",
+    "KALKANDERE"
+   ]
+  },
+  "54": {
+   "ad": "Sakarya",
+   "durak": 111,
+   "hat": 4,
+   "bayt": 6702,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AKYAZI",
+    "ERENLER",
+    "KARAPÜRÇEK",
+    "SÖĞÜTLÜ",
+    "TARAKLI"
+   ]
+  },
+  "55": {
+   "ad": "Samsun",
+   "durak": 154,
+   "hat": 7,
+   "bayt": 9174,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ALAÇAM",
+    "ASARCIK",
+    "AYVACIK",
+    "SALIPAZARI",
+    "YAKAKENT"
+   ]
+  },
+  "56": {
+   "ad": "Siirt",
+   "durak": 8,
+   "hat": 0,
+   "bayt": 446,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAYKAN",
+    "ERUH",
+    "PERVARİ",
+    "ŞİRVAN",
+    "TİLLO"
+   ]
+  },
+  "57": {
+   "ad": "Sinop",
+   "durak": 14,
+   "hat": 0,
+   "bayt": 840,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AYANCIK",
+    "BOYABAT",
+    "DİKMEN",
+    "DURAĞAN",
+    "SARAYDÜZÜ",
+    "TÜRKELİ"
+   ]
+  },
+  "58": {
+   "ad": "Sivas",
+   "durak": 770,
+   "hat": 8,
+   "bayt": 50387,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AKINCILAR",
+    "ALTINYAYLA",
+    "DOĞANŞAR",
+    "GÖLOVA",
+    "HAFİK",
+    "İMRANLI",
+    "KOYULHİSAR"
+   ]
+  },
+  "59": {
+   "ad": "Tekirdağ",
+   "durak": 478,
+   "hat": 15,
+   "bayt": 33432,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MARMARAEREĞLİSİ"
+   ]
+  },
+  "60": {
+   "ad": "Tokat",
+   "durak": 31,
+   "hat": 1,
+   "bayt": 1736,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ALMUS",
+    "BAŞÇİFTLİK",
+    "PAZAR",
+    "SULUSARAY"
+   ]
+  },
+  "61": {
+   "ad": "Trabzon",
+   "durak": 87,
+   "hat": 5,
+   "bayt": 6134,
+   "sinir": true,
+   "ilceDurakYok": [
+    "ARSİN",
+    "BEŞİKDÜZÜ",
+    "ÇARŞIBAŞI",
+    "DERNEKPAZARI",
+    "DÜZKÖY",
+    "HAYRAT",
+    "KÖPRÜBAŞI",
+    "ŞALPAZARI",
+    "TONYA",
+    "VAKFIKEBİR",
+    "YOMRA"
+   ]
+  },
+  "62": {
+   "ad": "Tunceli",
+   "durak": 4,
+   "hat": 0,
+   "bayt": 249,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "HOZAT",
+    "MAZGİRT",
+    "NAZIMİYE",
+    "OVACIK",
+    "PÜLÜMÜR"
+   ]
+  },
+  "63": {
+   "ad": "Şanlıurfa",
+   "durak": 14,
+   "hat": 0,
+   "bayt": 884,
+   "sinir": true,
+   "ilceDurakYok": [
+    "AKÇAKALE",
+    "BOZOVA",
+    "CEYLANPINAR",
+    "EYYÜBİYE",
+    "HALFETİ",
+    "HARRAN",
+    "HİLVAN"
+   ]
+  },
+  "64": {
+   "ad": "Uşak",
+   "durak": 24,
+   "hat": 0,
+   "bayt": 1328,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "KARAHALLI",
+    "SİVASLI"
+   ]
+  },
+  "65": {
+   "ad": "Van",
+   "durak": 20,
+   "hat": 0,
+   "bayt": 1032,
+   "sinir": true,
+   "ilceDurakYok": [
+    "BAHÇESARAY",
+    "BAŞKALE",
+    "ÇALDIRAN",
+    "ÇATAK",
+    "EDREMİT",
+    "ERCİŞ",
+    "GÜRPINAR",
+    "MURADİYE"
+   ]
+  },
+  "66": {
+   "ad": "Yozgat",
+   "durak": 41,
+   "hat": 0,
+   "bayt": 2156,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AYDINCIK",
+    "ÇANDIR",
+    "ÇAYIRALAN",
+    "ÇEKEREK",
+    "KADIŞEHRİ",
+    "SARAYKENT",
+    "SARIKAYA"
+   ]
+  },
+  "67": {
+   "ad": "Zonguldak",
+   "durak": 122,
+   "hat": 0,
+   "bayt": 6802,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ"
+   ]
+  },
+  "68": {
+   "ad": "Aksaray",
+   "durak": 24,
+   "hat": 0,
+   "bayt": 1648,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AĞAÇÖREN",
+    "ESKİL",
+    "GÜLAĞAÇ",
+    "GÜZELYURT",
+    "SARIYAHŞİ",
+    "SULTANHANI"
+   ]
+  },
+  "69": {
+   "ad": "Bayburt",
+   "durak": 1,
+   "hat": 0,
+   "bayt": 75,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "AYDINTEPE",
+    "DEMİRÖZÜ"
+   ]
+  },
+  "70": {
+   "ad": "Karaman",
+   "durak": 12,
+   "hat": 0,
+   "bayt": 720,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAŞYAYLA",
+    "ERMENEK",
+    "KAZIMKARABEKİR"
+   ]
+  },
+  "71": {
+   "ad": "Kırıkkale",
+   "durak": 16,
+   "hat": 0,
+   "bayt": 908,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BAHŞILI",
+    "BALIŞEYH",
+    "ÇELEBİ",
+    "KARAKEÇİLİ",
+    "KESKİN",
+    "SULAKYURT"
+   ]
+  },
+  "72": {
+   "ad": "Batman",
+   "durak": 112,
+   "hat": 0,
+   "bayt": 6958,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "GERCÜŞ",
+    "KOZLUK",
+    "SASON"
+   ]
+  },
+  "73": {
+   "ad": "Şırnak",
+   "durak": 3,
+   "hat": 0,
+   "bayt": 210,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "BEYTÜŞŞEBAP",
+    "GÜÇLÜKONAK",
+    "İDİL",
+    "ULUDERE"
+   ]
+  },
+  "74": {
+   "ad": "Bartın",
+   "durak": 103,
+   "hat": 5,
+   "bayt": 8301,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ"
+   ]
+  },
+  "75": {
+   "ad": "Ardahan",
+   "durak": 7,
+   "hat": 0,
+   "bayt": 432,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "DAMAL",
+    "HANAK"
+   ]
+  },
+  "76": {
+   "ad": "Iğdır",
+   "durak": 7,
+   "hat": 0,
+   "bayt": 435,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "ARALIK",
+    "KARAKOYUNLU"
+   ]
+  },
+  "77": {
+   "ad": "Yalova",
+   "durak": 26,
+   "hat": 0,
+   "bayt": 1831,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ"
+   ]
+  },
+  "78": {
+   "ad": "Karabük",
+   "durak": 37,
+   "hat": 0,
+   "bayt": 2122,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "EFLANİ",
+    "OVACIK"
+   ]
+  },
+  "79": {
+   "ad": "Kilis",
+   "durak": 2,
+   "hat": 0,
+   "bayt": 119,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "MUSABEYLİ",
+    "POLATELİ"
+   ]
+  },
+  "80": {
+   "ad": "Osmaniye",
+   "durak": 15,
+   "hat": 0,
+   "bayt": 791,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "HASANBEYLİ",
+    "SUMBAS"
+   ]
+  },
+  "81": {
+   "ad": "Düzce",
+   "durak": 52,
+   "hat": 0,
+   "bayt": 3820,
+   "sinir": true,
+   "ilceDurakYok": [
+    "MERKEZ",
+    "CUMAYERİ",
+    "GÜMÜŞOVA",
+    "YIĞILCA"
+   ]
+  }
+ },
+ "toplamBayt": 1960572,
+ "illerArasiHat": 19,
+ "otogar": 676
+}
