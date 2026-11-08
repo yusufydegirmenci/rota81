@@ -16,7 +16,7 @@ const FLOW = [
   ['Makbuz ve bildirim', 'Yolcuya kalan bakiye ve gerekirse uyarı gönderilir.'],
 ]
 
-function Trace({ steps }: { steps: Step[] }) {
+export function Trace({ steps }: { steps: Step[] }) {
   return (
     <ol className="trace">
       {steps.map((s) => (

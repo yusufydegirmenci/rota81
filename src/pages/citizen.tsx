@@ -16,6 +16,7 @@ import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, 
 export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas', label: 'Ana sayfa', icon: '🏠', bottom: true },
   { to: '/vatandas/kart', label: 'Kartım', icon: '💳', bottom: true },
+  { to: '/vatandas/tur', label: 'Türkiye turu (rehber)', icon: '🧳', bottom: false },
   { to: '/vatandas/tek-kart', label: 'Tek kart nasıl işler?', icon: '💳' },
   { to: '/vatandas/cuzdan', label: 'Cüzdan', icon: '👛' },
   { to: '/vatandas/rota', label: 'Rota', icon: '🧭', bottom: true },
@@ -75,6 +76,7 @@ export function Dashboard() {
   const alerts = api.catalog.alerts().slice(0, 3)
   const cities = api.catalog.cities()
   const links: [string, string, string, string][] = [
+    ['/vatandas/tur', 'bag', 'Türkiye turu', 'Tek kartla 4 şehir, rehber'],
     ['/vatandas/tek-kart', 'card', 'Tek kart nasıl işler?', '81 ilde ve iller arası, adım adım'],
     ['/vatandas/otobus', 'pin', 'Otobüs nerede?', 'Durak kodunu yaz, sıradaki araçları gör'],
     ['/vatandas/rota', 'route', 'Rota planla', 'Hızlı ve kalabalık olmayan yol'],

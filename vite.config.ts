@@ -4,6 +4,7 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   base: './',
+  build: { assetsInlineLimit: 200000 },
   plugins: [react(), tailwindcss()],
   test: { environment: 'jsdom', globals: true, setupFiles: ['./src/test-setup.ts'] },
 })

@@ -120,3 +120,67 @@ export function processIntercity(api: Api, session: Parameters<Api['wallet']['ge
   if (ok) run(`3. bacak · ${name(to)} içi`, b, to, `${key}-b`)
   return { legs, total, ok }
 }
+
+const dist = (a: { lat: number; lon: number }, lat: number, lon: number) => {
+  const dy = (a.lat - lat) * 111, dx = (a.lon - lon) * 111 * Math.cos((lat * Math.PI) / 180)
+  return Math.hypot(dx, dy)
+}
+
+/** Bir noktaya (gezilecek yer) en yakın, hat bağlantısı olan gerçek durağı ve hattı bulur. Hat yoksa en yakın durak döner. */
+export function findBoarding(api: Api, cityId: string, lat: number, lon: number, prefer: ModeId[] = []): { stop: Stop; routeId?: string; km: number; mode: ModeId | null } | null {
+  const stops = api.catalog.stops(cityId)
+  const routes = api.catalog.routes(cityId)
+  if (!stops.length) return null
+  const served = new Map<string, string[]>()
+  routes.forEach((r) => r.stopIds.forEach((id) => { const a = served.get(id); if (a) a.push(r.id); else served.set(id, [r.id]) }))
+  const score = (s: Stop) => {
+    const rs = served.get(s.id)
+    const best = rs?.map((id) => routes.find((r) => r.id === id)!).sort((a, b) => prefer.indexOf(a.mode) - prefer.indexOf(b.mode))[0]
+    const pref = best && prefer.includes(best.mode) ? 0 : 1.5
+    return dist(s, lat, lon) + (rs ? pref : 3) // hattı olmayan durak 3 km "ceza" alır
+  }
+  const s = [...stops].sort((a, b) => score(a) - score(b))[0]
+  const rs = served.get(s.id)
+  const r = rs?.map((id) => routes.find((x) => x.id === id)!).sort((a, b) => prefer.indexOf(a.mode) - prefer.indexOf(b.mode))[0]
+  return { stop: s, routeId: r?.id, km: dist(s, lat, lon), mode: r?.mode ?? null }
+}
+
+/** Hat verisi olmayan (ya da doğrulanamayan) bir bacağı tarifeyle işler; kaynak etiketi arayüzde gösterilir. */
+export function processScenarioLeg(api: Api, session: Parameters<Api['wallet']['get']>[0], leg: { cityId: string; mode: ModeId; operator: string; from: string; to: string; fare: number; note: string }, key: string): TapResult {
+  const steps: Step[] = []
+  const add = (title: string, detail: string, state: Step['state'] = 'ok') => { steps.push({ n: steps.length + 1, title, detail, state }) }
+  const w = api.wallet.get(session)
+  const cityName = api.catalog.cities().find((c) => c.id === leg.cityId)?.name ?? leg.cityId
+  const base: TapResult = { ok: false, steps, paid: 0, fare: leg.fare, discount: 0, cityId: leg.cityId, cityName, operator: leg.operator, mode: leg.mode, left: w.wallet.balance }
+  if (w.card.status !== 'active') { add('Kart okunur', 'Kart dondurulmuş; geçiş reddedildi.', 'fail'); return base }
+  add('Kart okunur', `Kart ${w.card.number} aktif. Biniş noktası: ${leg.from}.`)
+  add('Hat ve işletmeci', `${MODE_LABEL[leg.mode]} · ${leg.from} → ${leg.to}. İşletmeci: ${leg.operator}. ${leg.note}`, 'warn')
+  add('Tarife', `${TL(leg.fare)} (senaryo/tahmin tarifesi). Gerçek sistemde ilgili işletmecinin onaylı tarifesi okunur.`, 'info')
+  if (w.wallet.balance < leg.fare) { add('Bakiye kontrolü', `Gerekli ${TL(leg.fare)}, bakiye ${TL(w.wallet.balance)}: yetersiz.`, 'fail'); return base }
+  add('Bakiye kontrolü', `Yeterli (${TL(w.wallet.balance)}). Aynı bakiye, aynı kart.`)
+  const tx = api.wallet.spend(session, leg.fare, `${cityName} · ${MODE_LABEL[leg.mode]}: ${leg.from} → ${leg.to}`, key, { cityId: leg.cityId })
+  add('Defter kaydı', `İşlem ${tx.id.slice(0, 14)}… yazıldı (tekil anahtarlı).`)
+  add('Mahsuplaşma (gün sonu)', `${TL(leg.fare)} → ${leg.operator}.`, 'info')
+  const left = api.wallet.get(session).wallet.balance
+  add('Makbuz ve bildirim', `Kalan bakiye ${TL(left)}.`)
+  return { ...base, ok: true, paid: leg.fare, left }
+}
+
+/** Kartla işyerinde ödeme (yemek, müze girişi vb.). Aynı cüzdan, aynı defter. */
+export function processPurchase(api: Api, session: Parameters<Api['wallet']['get']>[0], p: { cityId: string; merchant: string; item: string; amount: number }, key: string): TapResult {
+  const steps: Step[] = []
+  const add = (title: string, detail: string, state: Step['state'] = 'ok') => { steps.push({ n: steps.length + 1, title, detail, state }) }
+  const w = api.wallet.get(session)
+  const cityName = api.catalog.cities().find((c) => c.id === p.cityId)?.name ?? p.cityId
+  const base: TapResult = { ok: false, steps, paid: 0, fare: p.amount, discount: 0, cityId: p.cityId, cityName, operator: p.merchant, mode: null, left: w.wallet.balance }
+  add('Kart yaklaştırılır (NFC/QR)', `${p.merchant} (${cityName}) ödeme cihazı kart kimliğini okur. Kart numarası işyerine gösterilmez; tek kullanımlık ödeme kodu üretilir.`)
+  add('Tutar', `${p.item}: ${TL(p.amount)} (örnek fiyat).`, 'info')
+  if (w.card.status !== 'active' || w.wallet.balance < p.amount) { add('Bakiye kontrolü', `Gerekli ${TL(p.amount)}, bakiye ${TL(w.wallet.balance)}: ödeme reddedildi.`, 'fail'); return base }
+  add('Bakiye kontrolü', `Yeterli (${TL(w.wallet.balance)}). Ulaşımda kullandığınız aynı bakiyeden ödenir.`)
+  const tx = api.wallet.spend(session, p.amount, `${cityName} · ${p.merchant}: ${p.item}`, key, { cityId: p.cityId })
+  add('Defter kaydı', `İşlem ${tx.id.slice(0, 14)}… yazıldı.`)
+  add('Mahsuplaşma', `${TL(p.amount)} gün sonunda ${p.merchant} hesabına, ödeme kuruluşu üzerinden aktarılır (işyeri komisyonu bu prototipte yok).`, 'info')
+  const left = api.wallet.get(session).wallet.balance
+  add('Makbuz', `Dijital fiş uygulamanızda. Kalan bakiye ${TL(left)}.`)
+  return { ...base, ok: true, paid: p.amount, left }
+}
