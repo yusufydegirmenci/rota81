@@ -27,6 +27,8 @@ export default function App() {
             <Route path="duraklar" element={<C.Stops />} />
             <Route path="sehirler" element={<C.CitiesGuide />} />
             <Route path="canli" element={<C.Live />} />
+            <Route path="otobus" element={<C.StopBoardPage />} />
+            <Route path="favoriler" element={<C.FavoritesPage />} />
             <Route path="gezi" element={<C.GeziPage />} />
             <Route path="kilavuz" element={<C.Guide />} />
             <Route path="bildirimler" element={<C.Notifications />} />

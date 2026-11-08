@@ -212,6 +212,19 @@ export function createApi(store: Store) {
   const me = {
     notifications(s: Session | null) { const u = actorOf(store, s); return d().notifications.filter((n) => n.userId === u.id) },
     notify(s: Session | null, text: string) { const u = actorOf(store, s); notify(u.id, text); store.commit() },
+    favoriteStops(s: Session | null) { const u = actorOf(store, s); return (d().favoriteStops ?? []).filter((f) => f.userId === u.id) },
+    toggleFavoriteStop(s: Session | null, cityId: string, stopId: string, label = '') {
+      const u = actorOf(store, s)
+      if (!d().favoriteStops) d().favoriteStops = []
+      const i = d().favoriteStops.findIndex((f) => f.userId === u.id && f.stopId === stopId)
+      if (i >= 0) d().favoriteStops.splice(i, 1)
+      else { if (!d().stops.some((x) => x.id === stopId && x.cityId === cityId)) fail('Durak bulunamadı.'); d().favoriteStops.push({ userId: u.id, cityId, stopId, label: label.trim().slice(0, 30) }) }
+      store.commit()
+    },
+    renameFavoriteStop(s: Session | null, stopId: string, label: string) {
+      const u = actorOf(store, s); const f = (d().favoriteStops ?? []).find((x) => x.userId === u.id && x.stopId === stopId)
+      if (f) { f.label = label.trim().slice(0, 30); store.commit() }
+    },
     markAllRead(s: Session | null) { const u = actorOf(store, s); d().notifications.filter((n) => n.userId === u.id).forEach((n) => { n.read = true }); store.commit() },
     favorites(s: Session | null) { const u = actorOf(store, s); return d().favorites.filter((f) => f.userId === u.id) },
     addFavorite(s: Session | null, cityId: string, fromStopId: string, toStopId: string) {
@@ -280,7 +293,8 @@ export function createApi(store: Store) {
       if (name.length < 2) return fail('Durak adı en az 2 karakter olmalı.')
       if (!(lat >= 35 && lat <= 43 && lon >= 25 && lon <= 45)) return fail('Koordinatlar Türkiye sınırları içinde olmalı.')
       if (d().stops.some((x) => x.cityId === cityId && x.name.toLocaleLowerCase('tr') === name.toLocaleLowerCase('tr'))) return fail('Bu adda bir durak zaten var.', 'conflict')
-      const st: Stop = { id: store.id(`st-${cityId}`), cityId, name, lat, lon, accessible }
+      const maxCode = Math.max(0, ...d().stops.filter((x) => x.cityId === cityId).map((x) => Number(x.code.slice(2)) || 0))
+      const st: Stop = { id: store.id(`st-${cityId}`), cityId, code: `${cityId}${String(maxCode + 1).padStart(3, '0')}`, name, lat, lon, accessible }
       d().stops.push(st); audit(store, u, 'stop.add', 'success', { cityId, target: st.id }); store.commit(); return st
     },
     removeStop(s: Session | null, stopId: string) {

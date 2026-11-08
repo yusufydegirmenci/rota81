@@ -151,3 +151,56 @@ export function tripOutlook(route: Route, v: VehicleState, boardIdx: number, des
 
 /** Bir araç şu anki durağından hedef durağa uzaklıkça ilerliyor mu (aynı yönde, önünde mi)? */
 export const vehicleHeadsTo = (v: VehicleState, idx: number): boolean => (v.dir === 1 ? idx >= v.nextIndex : idx <= v.nextIndex)
+
+// ---- Tarife (kalkış saatleri): araç simülasyonuyla aynı ızgara kullanılır ----
+export interface CycleInfo { oneWay: number; dwell: number; cycle: number; count: number; step: number }
+export function cycleInfo(route: Route): CycleInfo {
+  const seg = route.minutesBetween.map((m) => Math.max(1, m))
+  const oneWay = seg.reduce((a, b) => a + b, 0), dwell = 3, cycle = 2 * (oneWay + dwell)
+  const count = Math.max(1, Math.min(8, Math.round(cycle / route.headwayMin)))
+  return { oneWay, dwell, cycle, count, step: cycle / count }
+}
+const cum = (route: Route, dir: 1 | -1, idx: number): number => {
+  const seg = route.minutesBetween.map((m) => Math.max(1, m))
+  const n = route.stopIds.length
+  const order = dir === 1 ? seg : [...seg].reverse()
+  const k = dir === 1 ? idx : n - 1 - idx
+  return order.slice(0, k).reduce((a, b) => a + b, 0)
+}
+export interface StopService { dir: 1 | -1; headsignIdx: number; originIdx: number; /** dakika cinsinden günün saati */ originDep: number; atStop: number; minutesFromNow: number; originInMin: number; onRoute: boolean }
+
+/** Bir hattın bir duraktaki sonraki seferleri (aynı yönde, bugün). */
+export function serviceAtStop(route: Route, stopIdx: number, now: Date, count = 3): { dir: 1 | -1; services: StopService[]; last: boolean }[] {
+  const n = route.stopIds.length
+  const ci = cycleInfo(route)
+  const m = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60
+  const out: { dir: 1 | -1; services: StopService[]; last: boolean }[] = []
+  for (const dir of [1, -1] as const) {
+    const lastIdx = dir === 1 ? n - 1 : 0
+    if (stopIdx === lastIdx) continue
+    const base = dir === 1 ? 0 : ci.oneWay + ci.dwell
+    const off = cum(route, dir, stopIdx)
+    const services: StopService[] = []
+    const first = Math.ceil((300 - base) / ci.step)
+    for (let k = first; services.length < count + 6 && base + k * ci.step < 24 * 60; k++) {
+      const dep = base + k * ci.step
+      const at = dep + off
+      if (at < m - 0.5) continue
+      services.push({ dir, headsignIdx: lastIdx, originIdx: dir === 1 ? 0 : n - 1, originDep: dep, atStop: at, minutesFromNow: Math.max(0, Math.round(at - m)), originInMin: Math.round(dep - m), onRoute: dep <= m })
+    }
+    out.push({ dir, services: services.slice(0, count), last: services.length === 0 })
+  }
+  return out
+}
+export const hhmm = (min: number): string => `${String(Math.floor(min / 60) % 24).padStart(2, '0')}:${String(Math.floor(min % 60)).padStart(2, '0')}`
+
+/** Bir hattın ilk ve son seferi (çıkış durakları). */
+export function firstLast(route: Route): { dir: 1 | -1; first: number; last: number }[] {
+  const ci = cycleInfo(route)
+  return ([1, -1] as const).map((dir) => {
+    const base = dir === 1 ? 0 : ci.oneWay + ci.dwell
+    const k0 = Math.ceil((300 - base) / ci.step)
+    let k1 = k0; while (base + (k1 + 1) * ci.step < 24 * 60) k1++
+    return { dir, first: base + k0 * ci.step, last: base + k1 * ci.step }
+  })
+}

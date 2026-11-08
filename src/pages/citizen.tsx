@@ -7,17 +7,21 @@ import { MODE_LABEL, TL } from '../services/api'
 export { CitiesGuide } from './geo'
 export { LiveBoard as Live } from './live'
 export { GeziPage } from './trip'
+export { StopBoardPage, FavoritesPage } from './stopboard'
+import { LineSchedule } from './stopboard'
 export { Guide } from './guide'
 import { Badge, Emblem, Card, DataTable, Empty, Modal, PageHeader, SelectField, SimNote, Stat, Tabs, TextField, type Col } from '../ui/ui'
 
 export const CITIZEN_NAV: NavItem[] = [
   { to: '/vatandas', label: 'Ana sayfa', icon: '🏠', bottom: true },
   { to: '/vatandas/kart', label: 'Kartım', icon: '💳', bottom: true },
-  { to: '/vatandas/cuzdan', label: 'Cüzdan', icon: '👛', bottom: true },
+  { to: '/vatandas/cuzdan', label: 'Cüzdan', icon: '👛' },
   { to: '/vatandas/rota', label: 'Rota', icon: '🧭', bottom: true },
   { to: '/vatandas/gezi', label: 'Gezi planla', icon: '🧳' },
   { to: '/vatandas/yukle', label: 'Bakiye yükle', icon: '➕' },
   { to: '/vatandas/islemler', label: 'İşlem geçmişi', icon: '🧾' },
+  { to: '/vatandas/otobus', label: 'Otobüs nerede?', icon: '🚏', bottom: true },
+  { to: '/vatandas/favoriler', label: 'Favorilerim', icon: '⭐' },
   { to: '/vatandas/canli', label: 'Canlı doluluk', icon: '📡', bottom: false },
   { to: '/vatandas/hatlar', label: 'Hatlar', icon: '🚌' },
   { to: '/vatandas/duraklar', label: 'Duraklar', icon: '📍' },
@@ -407,6 +411,7 @@ export function Lines() {
       <Modal open={!!r} title={r ? `${r.code} · ${r.name}` : ''} onClose={() => setOpen(null)}>
         {r && <div className="stack">
           <p>Sefer aralığı: yaklaşık <b>{r.headwayMin} dk</b></p>
+          <LineSchedule route={r} name={(id) => stops.find((s) => s.id === id)?.name ?? id} />
           {r.stopIds.map((id, i) => <div key={id} className="legline"><span className="dot" /><div>{stops.find((s) => s.id === id)?.name}{i > 0 && <span className="hint"> · +{r.minutesBetween[i - 1]} dk</span>}</div></div>)}
         </div>}
       </Modal>
@@ -420,6 +425,7 @@ export function Stops() {
   const stops = api.catalog.stops(city).filter((s) => !acc || s.accessible)
   const routes = api.catalog.routes(city)
   const cols: Col<(typeof stops)[number]>[] = [
+    { key: 'c', label: 'Kod', render: (s) => <span className="codechip">{s.code}</span> },
     { key: 'n', label: 'Durak', render: (s) => <b>{s.name}</b>, sort: (a, b) => a.name.localeCompare(b.name, 'tr') },
     { key: 'r', label: 'Hatlar', render: (s) => routes.filter((r) => r.stopIds.includes(s.id)).map((r) => r.code).join(', ') },
     { key: 'a', label: 'Erişilebilirlik', render: (s) => <Badge tone={s.accessible ? 'ok' : 'warn'}>{s.accessible ? 'Erişilebilir' : 'Sınırlı'}</Badge> },

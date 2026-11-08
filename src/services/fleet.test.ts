@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createSeed } from '../data/seed'
-import { arrivalsAt, crowdOf, demandAt, vehiclesOn } from './fleet'
+import { arrivalsAt, crowdOf, demandAt, firstLast, serviceAtStop, vehiclesOn } from './fleet'
 
 const at = (h: number, m = 0) => new Date(2026, 10, 9, h, m, 0)
 describe('araç doluluk simülasyonu', () => {
@@ -39,4 +39,24 @@ describe('araç doluluk simülasyonu', () => {
     expect(arr.some((a) => a.vehicle.dir === 1)).toBe(true)
   })
   it('doluluk seviyeleri', () => { expect(crowdOf(10)).toBe('low'); expect(crowdOf(50)).toBe('mid'); expect(crowdOf(80)).toBe('high'); expect(crowdOf(95)).toBe('full') })
+  it('durak kodları 5 hane ve şehirde tekil', () => {
+    const codes = data.stops.filter((s) => s.cityId === '06').map((s) => s.code)
+    expect(new Set(codes).size).toBe(codes.length)
+    codes.forEach((c) => expect(c).toMatch(/^06\d{3}$/))
+  })
+  it('tarife: kalkışlar sıralı, ilk sefer 05:00 sonrası, son sefer gece yarısından önce', () => {
+    const fl = firstLast(route)
+    fl.forEach((x) => { expect(x.first).toBeGreaterThanOrEqual(300); expect(x.last).toBeLessThan(1440) })
+    const s = serviceAtStop(route, 0, at(9), 3)
+    const dir1 = s.find((x) => x.dir === 1)!
+    expect(dir1.services.length).toBe(3)
+    for (let i = 1; i < 3; i++) expect(dir1.services[i].atStop).toBeGreaterThan(dir1.services[i - 1].atStop)
+    expect(s.find((x) => x.dir === -1)).toBeUndefined()
+  })
+  it('geç saatte son servis bitince "bugün başka servis yok" durumu oluşur', () => {
+    const s = serviceAtStop(route, 1, new Date(2026, 10, 9, 23, 59, 30), 3)
+    s.forEach((x) => x.services.forEach((v) => expect(v.originDep).toBeLessThan(1440)))
+    const night = serviceAtStop(route, 1, new Date(2026, 10, 9, 23, 59, 59), 3)
+    expect(night.length).toBeGreaterThan(0)
+  })
 })

@@ -111,7 +111,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
   const t0 = now().toISOString()
   const data: AppData = {
     users: [], cities: [], operators: [], stops: [], routes: [], fareProducts: [], fareVersions: [],
-    cards: [], wallets: [], transactions: [], alerts: [], audit: [], notifications: [], favorites: [], policies: [], integrations: [], journeys: [],
+    cards: [], wallets: [], transactions: [], alerts: [], audit: [], notifications: [], favorites: [], favoriteStops: [], policies: [], integrations: [], journeys: [],
   }
 
   PROVINCES.forEach((p) => {
@@ -134,7 +134,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
         if (!stopMap.has(name)) {
           const k = n++
           stopMap.set(name, {
-            id: `st-${cityId}-${slug(name)}`, cityId, name,
+            id: `st-${cityId}-${slug(name)}`, cityId, code: `${cityId}${String(k + 1).padStart(3, '0')}`, name,
             lat: Number((def.lat + ((k * 37) % 17) * 0.004 - 0.03).toFixed(4)),
             lon: Number((def.lon + ((k * 53) % 19) * 0.005 - 0.04).toFixed(4)),
             accessible: !(def.inaccessible ?? []).includes(name),

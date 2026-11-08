@@ -49,6 +49,7 @@ export interface Operator {
 export interface Stop {
   id: string
   cityId: string
+  code: string // 5 haneli durak kodu (örn. 06003)
   name: string
   lat: number
   lon: number
@@ -180,6 +181,7 @@ export interface AppData {
   audit: AuditLog[]
   notifications: { id: string; userId: string; text: string; at: string; read: boolean }[]
   favorites: { userId: string; cityId: string; fromStopId: string; toStopId: string }[]
+  favoriteStops: { userId: string; cityId: string; stopId: string; label: string }[]
   policies: { id: string; title: string; body: string; updatedAt: string }[]
   integrations: { id: string; name: string; status: 'planned' | 'simulated' | 'unavailable'; note: string }[]
   journeys: { id: string; userId: string; at: string; cityId: string; totalFare: number; fareVersionIds: string[]; legs: number }[]
