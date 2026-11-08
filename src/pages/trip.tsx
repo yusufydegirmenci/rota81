@@ -9,7 +9,6 @@ import { Badge, Card, Empty, PageHeader, SelectField, SimNote, Stat } from '../u
 
 interface Step { kind: 'local' | 'bus' | 'walk' | 'wait'; title: string; detail: string; minutes: number; fare: number; cityId: string }
 
-const CATEGORY_ICON: Record<string, string> = { Tarih: '🏛️', Doğa: '🌿', Müze: '🖼️', Din: '🕌', 'Yeme-içme': '🍽️', Eğlence: '🎡' }
 
 export function GeziPage() {
   const { api, session, toast } = useApp()
@@ -104,7 +103,7 @@ export function GeziPage() {
       <div className="places">
         {places.map((p, i) => (
           <button key={p.n} className={`place ${i === placeIdx ? 'sel' : ''}`} onClick={() => { setPlaceIdx(i); setFollow(null) }} aria-pressed={i === placeIdx}>
-            <span className="placeic" aria-hidden="true">{CATEGORY_ICON[p.c] ?? '📍'}</span><b>{p.n}</b><small>{p.d === 'Merkez' ? cityName(toCity) : p.d} · {p.c}</small>
+            <span className="placeic" aria-hidden="true">{p.c.slice(0, 1)}</span><b>{p.n}</b><small>{p.d === 'Merkez' ? cityName(toCity) : p.d} · {p.c}</small>
           </button>
         ))}
       </div>
@@ -115,7 +114,7 @@ export function GeziPage() {
             <Stat label="Tahmini ücret" value={TL(totalFare)} />
             <Stat label="Adım" value={plan.length} />
           </div>
-          <Card title={`${place?.n} için yol tarifi`} right={!follow ? <button className="btn primary sm" onClick={startFollow}>📍 Canlı takibi başlat</button> : <button className="btn sm" onClick={() => setFollow(null)}>Takibi bitir</button>}>
+          <Card title={`${place?.n} için yol tarifi`} right={!follow ? <button className="btn primary sm" onClick={startFollow}>Canlı takibi başlat</button> : <button className="btn sm" onClick={() => setFollow(null)}>Takibi bitir</button>}>
             <ol className="steps">
               {plan.map((s, i) => {
                 const state = !follow ? '' : finished || i < cur ? 'done' : i === cur ? 'now' : ''
@@ -130,7 +129,7 @@ export function GeziPage() {
                 )
               })}
             </ol>
-            {follow && <p className="small"><b>{finished ? 'Hedefe ulaştınız 🎉' : `Şu an: ${follow.steps[cur].title}`}</b> · hızlandırılmış demo: 1 sn = 1 dk</p>}
+            {follow && <p className="small"><b>{finished ? 'Hedefe ulaştınız ' : `Şu an: ${follow.steps[cur].title}`}</b> · hızlandırılmış demo: 1 sn = 1 dk</p>}
           </Card>
         </>
       ) : <Empty title="Plan bulunamadı" />}

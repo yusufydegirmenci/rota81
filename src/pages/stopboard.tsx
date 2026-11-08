@@ -1,3 +1,4 @@
+import { Icon } from '../ui/icons'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../app/context'
@@ -69,7 +70,7 @@ export function StopBoardPage() {
         <>
           <div className="stophead">
             <div><span className="codechip">{stop.code}</span> <b>{up(stop.name)}</b></div>
-            <button className="starbtn" aria-pressed={isFav} aria-label={isFav ? 'Favorilerden çıkar' : 'Favorilere ekle'} onClick={() => { api.me.toggleFavoriteStop(session, city, stop.id); toast(isFav ? 'Favorilerden çıkarıldı.' : 'Favori duraklara eklendi.') }}>{isFav ? '★' : '☆'}</button>
+            <button className="starbtn" aria-pressed={isFav} aria-label={isFav ? 'Favorilerden çıkar' : 'Favorilere ekle'} onClick={() => { api.me.toggleFavoriteStop(session, city, stop.id); toast(isFav ? 'Favorilerden çıkarıldı.' : 'Favori duraklara eklendi.') }}><Icon name="star" size={22} className={isFav ? 'filled' : ''} /></button>
           </div>
           <div className="chiprow" role="group" aria-label="Hat filtresi">
             <button className={`chip ${lineFilter === 'all' ? 'on' : ''}`} onClick={() => setLineFilter('all')}>Tümü</button>
@@ -128,7 +129,7 @@ export function FavoritesPage() {
               <div key={f.stopId} className="favrow">
                 <span className="codechip big">{s?.code}</span>
                 <div className="favmain"><b>{f.label ? up(f.label) : up(s?.name ?? '')}</b>{f.label && <p className="muted small">{up(s?.name ?? '')}</p>}</div>
-                <button className="gearbtn" aria-label="Düzenle" onClick={() => { setEdit(f.stopId); setLabel(f.label) }}>⚙</button>
+                <button className="gearbtn" aria-label="Düzenle" onClick={() => { setEdit(f.stopId); setLabel(f.label) }}><Icon name="cog" size={20} /></button>
               </div>
             )
           })}

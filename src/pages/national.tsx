@@ -138,7 +138,7 @@ export function RolesPage() {
   return (
     <div className="stack">
       <PageHeader title="Roller ve yetkiler" sub="Yetki kontrolleri servis katmanında uygulanır ve testlerle doğrulanır." />
-      <div className="grid3">{roles.map(([r, l]) => <Card key={r} title={l}>{permissionsFor(r).map((p) => <p key={p} style={{ padding: '0.2rem 0' }}>✓ {desc[p] ?? p}</p>)}</Card>)}</div>
+      <div className="grid3">{roles.map(([r, l]) => <Card key={r} title={l}>{permissionsFor(r).map((p) => <p key={p} style={{ padding: '0.2rem 0' }}>{desc[p] ?? p}</p>)}</Card>)}</div>
     </div>
   )
 }

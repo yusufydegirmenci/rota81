@@ -1,3 +1,4 @@
+import { Icon } from '../ui/icons'
 import { useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../app/context'
@@ -42,14 +43,15 @@ const fdate = (iso: string) => new Date(iso).toLocaleString('tr-TR', { day: 'num
 function DigitalCard({ number, status, name }: { number: string; status: string; name: string }) {
   return (
     <div className={`tcard ${status === 'frozen' ? 'frozen' : ''}`} aria-label={`Ulaşım kartı ${number}, ${status === 'frozen' ? 'dondurulmuş' : 'aktif'}`}>
-      <div className="row" style={{ position: 'relative', zIndex: 1 }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.6rem' }}><Emblem size={44} light /><b style={{ fontSize: '1.4rem' }}>FORADAŞ</b></span><div className="sp" />
-        <span className="badge" style={{ color: status === 'frozen' ? '#b3261e' : '#12683f' }}>{status === 'frozen' ? 'DONDURULDU' : 'AKTİF'}</span>
+      <span className="rt" aria-hidden="true" />
+      <div className="row">
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}><Emblem size={34} light /><b style={{ fontFamily: 'var(--f-disp)', fontSize: '1.15rem' }}>FORADAŞ</b></span><div className="sp" />
+        <span className="badge">{status === 'frozen' ? 'DONDURULDU' : 'AKTİF'}</span>
       </div>
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div>
         <div className="num">{number}</div>
-        <p style={{ marginTop: '0.4rem' }}>{name.toLocaleUpperCase('tr')}</p>
-        <p className="small" style={{ opacity: 0.85 }}>Simüle edilmiş kart numarası</p>
+        <p style={{ marginTop: 6, fontSize: '.85rem', letterSpacing: '.06em' }}>{name.toLocaleUpperCase('tr')}</p>
+        <p style={{ fontFamily: 'var(--f-mono)', fontSize: '.65rem', opacity: .65, marginTop: 2 }}>81 İL · TEK KART · SİMÜLE NUMARA</p>
       </div>
     </div>
   )
@@ -71,46 +73,53 @@ export function Dashboard() {
   const favs = api.me.favorites(session)
   const alerts = api.catalog.alerts().slice(0, 3)
   const cities = api.catalog.cities()
+  const links: [string, string, string, string][] = [
+    ['/vatandas/otobus', 'pin', 'Otobüs nerede?', 'Durak kodunu yaz, sıradaki araçları gör'],
+    ['/vatandas/rota', 'route', 'Rota planla', 'Hızlı ve kalabalık olmayan yol'],
+    ['/vatandas/gezi', 'bag', 'Günübirlik gezi', 'Başka ile gidiş ve dönüş planı'],
+    ['/vatandas/canli', 'signal', 'Canlı doluluk', 'Araç ve durak yoğunluğu'],
+  ]
   return (
     <div className="stack">
-      <PageHeader title={`Merhaba, ${user!.name.split(' ')[0]}`} sub="Hesap özetiniz" />
-      <div className="quickbar">
-        {[['/vatandas/yukle', '➕', 'Bakiye yükle', 'Kartınıza hızlı yükleme'], ['/vatandas/rota', '🧭', 'Rota', 'Hızlı ve kalabalık olmayan yolu bul'], ['/vatandas/canli', '📡', 'Canlı doluluk', 'Araçlar ve duraklar'], ['/vatandas/gezi', '🧳', 'Gezi', 'Başka şehre günübirlik gezi'], ['/vatandas/kilavuz', '📖', 'Kılavuz', 'Nasıl kullanılır?']].map(([to, ic, t, s]) => (
-          <Link key={to} to={to} className="qpill" title={s}><span aria-hidden="true">{ic}</span>{t}</Link>
-        ))}
-      </div>
-      {w.wallet.balance < 3000 && <div className="lowbal" role="alert"><b>Bakiyeniz düşük ({TL(w.wallet.balance)}).</b> Araca binmeden önce yükleyin; yetersiz bakiye en sık yaşanan sorundur. <Link to="/vatandas/yukle">Hemen yükle</Link></div>}
-      <div className="grid2">
-        <div className="stack">
-          <DigitalCard number={w.card.number} status={w.card.status} name={user!.name} />
+      <section className="heroband">
+        <div className="stack" style={{ gap: 'var(--s4)' }}>
+          <div>
+            <p className="eyebrow">Merhaba, {user!.name.split(' ')[0]}</p>
+            <p className="muted small" style={{ marginTop: 6 }}>Ortak bakiye · tüm katılımcı şehirlerde geçerli</p>
+          </div>
+          <p className="balance">{TL(w.wallet.balance)}</p>
+          {w.wallet.balance < 3000 && <div className="lowbal" role="alert"><b>Bakiyeniz düşük.</b> Araca binmeden önce yükleyin. <Link to="/vatandas/yukle">Hemen yükle</Link></div>}
+          <QuickLoad />
           <div className="row">
-            <Link className="btn primary" to="/vatandas/yukle">➕ Bakiye yükle</Link>
+            <Link className="btn accent" to="/vatandas/yukle">Bakiye yükle</Link>
             <Link className="btn" to="/vatandas/kart">Kartımı göster</Link>
           </div>
         </div>
-        <div className="stack">
-          <Stat label="Güncel bakiye" value={TL(w.wallet.balance)} sub="Ortak cüzdan (simülasyon)" />
-          <QuickLoad />
-        </div>
-      </div>
+        <DigitalCard number={w.card.number} status={w.card.status} name={user!.name} />
+      </section>
+      <nav className="tiles" aria-label="Hızlı erişim">
+        {links.map(([to, ic, t, sub]) => (
+          <Link key={to} to={to} className="tile"><span className="tileic"><Icon name={ic} size={22} /></span><b>{t}</b><small>{sub}</small></Link>
+        ))}
+      </nav>
       <div className="grid2">
-        <Card title="Son işlemler" right={<Link to="/vatandas/islemler">Tümü</Link>}>
+        <Card title="Son işlemler" right={<Link to="/vatandas/islemler" className="small">Tümü</Link>}>
           {w.transactions.length === 0 ? <Empty title="Henüz işlem yok" /> : w.transactions.slice(0, 5).map((t) => (
-            <div key={t.id} className="row" style={{ padding: '0.45rem 0', borderBottom: '1px solid var(--color-line)' }}>
-              <div><b>{typeLabel[t.type]}</b><p className="hint">{t.description}</p></div><div className="sp" />
-              <span className="money" style={{ color: t.type === 'spend' ? 'var(--color-bad)' : 'var(--color-ok)' }}>{t.type === 'spend' ? '−' : '+'}{TL(t.amount)}</span>
+            <div key={t.id} className="row" style={{ padding: '10px 0', borderBottom: '1px solid var(--line2)' }}>
+              <div><b style={{ fontWeight: 500 }}>{typeLabel[t.type]}</b><p className="hint">{t.description}</p></div><div className="sp" />
+              <span className="money" style={{ color: t.type === 'spend' ? 'var(--bad)' : 'var(--ok)' }}>{t.type === 'spend' ? '−' : '+'}{TL(t.amount)}</span>
             </div>
           ))}
         </Card>
-        <Card title="Favori rotalar" right={<Link to="/vatandas/rota">Rota planla</Link>}>
+        <Card title="Favori rotalar" right={<Link to="/vatandas/rota" className="small">Rota planla</Link>}>
           {favs.length === 0 ? <Empty title="Favori rota yok">Rota planlayıcıda bir yolculuğu yıldızlayın.</Empty> : favs.map((f, i) => <FavRow key={i} cityId={f.cityId} from={f.fromStopId} to={f.toStopId} />)}
         </Card>
       </div>
       <Card title="Servis duyuruları">
         {alerts.length === 0 ? <Empty title="Duyuru yok" /> : alerts.map((a) => (
-          <div key={a.id} className="row" style={{ padding: '0.4rem 0' }}>
+          <div key={a.id} className="row" style={{ padding: '10px 0', borderBottom: '1px solid var(--line2)', alignItems: 'flex-start' }}>
             <Badge tone={a.severity === 'critical' ? 'bad' : a.severity === 'warning' ? 'warn' : 'info'}>{cities.find((c) => c.id === a.cityId)?.name}</Badge>
-            <div><b>{a.title}</b><p className="hint">{a.body}</p></div>
+            <div style={{ flex: 1, minWidth: 200 }}><b style={{ fontWeight: 500 }}>{a.title}</b><p className="hint">{a.body}</p></div>
           </div>
         ))}
       </Card>
@@ -127,7 +136,7 @@ function FavRow({ cityId, from, to }: { cityId: string; from: string; to: string
     <div className="row" style={{ padding: '0.4rem 0' }}>
       <span>{n(from)} → {n(to)}</span><div className="sp" />
       <button className="btn sm" onClick={() => { const js = run(() => api.journeys.plan(cityId, from, to, {})); if (js?.[0]) { setJourney(js[0]); nav('/vatandas/yolculuk') } }}>Planla</button>
-      <button className="btn sm ghost" aria-label="Favoriden çıkar" onClick={() => api.me.removeFavorite(session, cityId, from, to)}>✕</button>
+      <button className="btn sm ghost" aria-label="Favoriden çıkar" onClick={() => api.me.removeFavorite(session, cityId, from, to)}><Icon name="x" size={16} /></button>
     </div>
   )
 }
@@ -171,7 +180,7 @@ function FreezeButton() {
   const { api, session, run } = useApp()
   const w = api.wallet.get(session)
   const frozen = w.card.status === 'frozen'
-  return <button className={`btn ${frozen ? 'primary' : 'danger'}`} onClick={() => run(() => api.wallet.setCardFrozen(session, !frozen), frozen ? 'Kartınız tekrar kullanıma açıldı.' : 'Kartınız donduruldu. Bakiyeniz güvende.')}>{frozen ? '🔓 Kartı çöz' : '🧊 Kartı dondur'}</button>
+  return <button className={`btn ${frozen ? 'primary' : 'danger'}`} onClick={() => run(() => api.wallet.setCardFrozen(session, !frozen), frozen ? 'Kartınız tekrar kullanıma açıldı.' : 'Kartınız donduruldu. Bakiyeniz güvende.')}>{frozen ? 'Kartı çöz' : 'Kartı dondur'}</button>
 }
 
 export function Wallet() {
@@ -181,7 +190,7 @@ export function Wallet() {
   const spends = w.transactions.filter((t) => t.type === 'spend' && t.status === 'completed')
   return (
     <div className="stack">
-      <PageHeader title="Cüzdan" sub="Tüm katılımcı şehirlerde geçerli ortak bakiye" actions={<Link className="btn primary" to="/vatandas/yukle">➕ Bakiye yükle</Link>} />
+      <PageHeader title="Cüzdan" sub="Tüm katılımcı şehirlerde geçerli ortak bakiye" actions={<Link className="btn primary" to="/vatandas/yukle">Bakiye yükle</Link>} />
       <div className="grid3">
         <Stat label="Bakiye" value={TL(w.wallet.balance)} />
         <Stat label="Toplam harcama" value={TL(w.transactions.filter((t) => t.type === 'spend').reduce((a, t) => a + t.amount, 0))} />
@@ -328,8 +337,8 @@ export function Planner() {
           <div className="row">{availModes.map((m) => <label key={m} className="row" style={{ gap: '0.4rem', minHeight: 44 }}><input type="checkbox" style={{ width: 22, height: 22 }} checked={modes.includes(m)} onChange={(e) => setModes(e.target.checked ? [...modes, m] : modes.filter((x) => x !== m))} />{MODE_LABEL[m]}</label>)}</div>
         </fieldset>
         <div className="row">
-          <button className="btn primary" onClick={search}>🔎 Yolculuk bul</button>
-          <button className="btn" disabled={!from || !to || from === to} onClick={() => run(() => isFav ? api.me.removeFavorite(session, city, from, to) : api.me.addFavorite(session, city, from, to), isFav ? 'Favoriden çıkarıldı.' : 'Favorilere eklendi.')}>{isFav ? '★ Favoride' : '☆ Favori yap'}</button>
+          <button className="btn primary" onClick={search}>Yolculuk bul</button>
+          <button className="btn" disabled={!from || !to || from === to} onClick={() => run(() => isFav ? api.me.removeFavorite(session, city, from, to) : api.me.addFavorite(session, city, from, to), isFav ? 'Favoriden çıkarıldı.' : 'Favorilere eklendi.')}>{isFav ? 'Favoride' : 'Favori yap'}</button>
         </div>
         {msg && <p className="err" role="alert" style={{ marginTop: '0.6rem' }}>{msg}</p>}
       </Card>
@@ -338,7 +347,7 @@ export function Planner() {
           <Tabs<Sort> value={sort} onChange={setSort} items={[{ id: 'fastest', label: 'En hızlı' }, { id: 'fewest', label: 'En az aktarma' }, { id: 'cheapest', label: 'En ekonomik' }]} />
           {ordered.map((j, i) => (
             <Card key={i} title={<>{i === 0 && <Badge tone="ok">Önerilen</Badge>} {j.totalMinutes} dk · <span className="money">{TL(j.totalFare)}</span></>} right={<span className="muted">{j.transfers} aktarma</span>}>
-              <p className="muted">{j.legs.map((l) => l.kind === 'walk' ? '🚶 Yürüyüş' : `${MODE_LABEL[l.mode!]} ${api.catalog.routes(city).find((r) => r.id === l.routeId)?.code}`).join('  →  ')}</p>
+              <p className="muted">{j.legs.map((l) => l.kind === 'walk' ? 'Yürüyüş' : `${MODE_LABEL[l.mode!]} ${api.catalog.routes(city).find((r) => r.id === l.routeId)?.code}`).join('  →  ')}</p>
               <p className="hint">{stopName(j.legs[0].fromStopId)} → {stopName(j.legs[j.legs.length - 1].toStopId)}</p>
               <button className="btn sm primary" style={{ marginTop: '0.6rem' }} onClick={() => { setJourney(j); nav('/vatandas/yolculuk') }}>Ayrıntılar</button>
             </Card>
@@ -378,7 +387,7 @@ export function JourneyDetail() {
       </Card>
       <SimNote>Yolculuğu tamamlamak bakiyenizden simüle edilmiş bir ücret düşer. Duraklar arası süreler örnektir.</SimNote>
       <div className="row">
-        <button className="btn primary" disabled={done} onClick={() => { if (run(() => api.journeys.complete(session, journey, key.current), 'Yolculuk tamamlandı, ücret bakiyeden düşüldü (simülasyon).')) setDone(true) }}>{done ? '✓ Tamamlandı' : 'Yolculuğu tamamla'}</button>
+        <button className="btn primary" disabled={done} onClick={() => { if (run(() => api.journeys.complete(session, journey, key.current), 'Yolculuk tamamlandı, ücret bakiyeden düşüldü (simülasyon).')) setDone(true) }}>{done ? 'Tamamlandı' : 'Yolculuğu tamamla'}</button>
         <button className="btn" onClick={() => nav('/vatandas/rota')}>Geri dön</button>
       </div>
     </div>
@@ -452,7 +461,7 @@ export function Stops() {
               </div>
             )
           })}
-          <Link className="btn sm" to="/vatandas/canli">📡 Bu durağın canlı panosu</Link>
+          <Link className="btn sm" to="/vatandas/canli">Bu durağın canlı panosu</Link>
         </div>}
       </Modal>
     </div>

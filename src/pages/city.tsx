@@ -100,7 +100,7 @@ export function CityRoutes() {
   const opsForMode = ops.filter((o) => o.modes.includes(f.mode))
   return (
     <div className="stack">
-      <PageHeader title="Hat yönetimi" actions={<button className="btn primary" onClick={() => { setAdd(true); setF((x) => ({ ...x, operatorId: ops.find((o) => o.modes.includes(x.mode))?.id ?? '' })) }}>➕ Hat ekle</button>} />
+      <PageHeader title="Hat yönetimi" actions={<button className="btn primary" onClick={() => { setAdd(true); setF((x) => ({ ...x, operatorId: ops.find((o) => o.modes.includes(x.mode))?.id ?? '' })) }}>Hat ekle</button>} />
       <DataTable rows={routes} cols={cols} rowKey={(r) => r.id} searchText={(r) => `${r.code} ${r.name}`} />
       <Modal open={add} title="Yeni hat" onClose={() => setAdd(false)}>
         <div className="stack">
@@ -135,7 +135,7 @@ export function CityStops() {
   const submit = () => { setErr(null); try { api.city.addStop(session, cityId, f.name, Number(f.lat), Number(f.lon), f.acc); setAdd(false); setF({ name: '', lat: '', lon: '', acc: true }); run(() => undefined, 'Durak eklendi.') } catch (e) { setErr((e as Error).message) } }
   return (
     <div className="stack">
-      <PageHeader title="Durak yönetimi" actions={<button className="btn primary" onClick={() => setAdd(true)}>➕ Durak ekle</button>} />
+      <PageHeader title="Durak yönetimi" actions={<button className="btn primary" onClick={() => setAdd(true)}>Durak ekle</button>} />
       <DataTable rows={stops} cols={cols} rowKey={(s) => s.id} searchText={(s) => s.name} />
       <Modal open={add} title="Yeni durak" onClose={() => setAdd(false)}>
         <div className="stack">
@@ -157,7 +157,7 @@ export function CityOperators() {
   const [add, setAdd] = useState(false); const [name, setName] = useState(''); const [modes, setModes] = useState<ModeId[]>([]); const [err, setErr] = useState<string | null>(null)
   return (
     <div className="stack">
-      <PageHeader title="İşleticiler" actions={<button className="btn primary" onClick={() => setAdd(true)}>➕ İşletici ekle</button>} />
+      <PageHeader title="İşleticiler" actions={<button className="btn primary" onClick={() => setAdd(true)}>İşletici ekle</button>} />
       <DataTable rows={ops} rowKey={(o) => o.id} searchText={(o) => o.name} cols={[
         { key: 'n', label: 'İşletici', render: (o) => <b>{o.name}</b> },
         { key: 'm', label: 'Türler', render: (o) => o.modes.map((m) => MODE_LABEL[m]).join(', ') },
@@ -189,7 +189,7 @@ export function CityFares() {
   const all = list.flatMap((l) => l.versions.map((v) => ({ v, p: l.product })))
   return (
     <div className="stack">
-      <PageHeader title="Tarifeler ve onay" sub="Değişiklikler taslak olarak başlar, ulusal onayla yürürlüğe girer; eski sürümler saklanır." actions={<button className="btn primary" onClick={() => setNp(true)}>➕ Tarife ürünü ekle</button>} />
+      <PageHeader title="Tarifeler ve onay" sub="Değişiklikler taslak olarak başlar, ulusal onayla yürürlüğe girer; eski sürümler saklanır." actions={<button className="btn primary" onClick={() => setNp(true)}>Tarife ürünü ekle</button>} />
       <Tabs value={tab} onChange={setTab} items={[{ id: 'now', label: 'Güncel tarife' }, { id: 'drafts', label: 'Taslak ve onay' }, { id: 'history', label: 'Sürüm geçmişi' }]} />
       {tab === 'now' && (
         <DataTable rows={list} rowKey={(l) => l.product.id} searchText={(l) => l.product.name} cols={[

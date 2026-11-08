@@ -1,4 +1,5 @@
 import { savedLang, setLanguage, type Lang } from '../app/i18n'
+import { Icon } from './icons'
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
 
 export function Badge({ tone = 'mute', children }: { tone?: 'ok' | 'warn' | 'bad' | 'info' | 'mute'; children: ReactNode }) {
@@ -22,10 +23,10 @@ export function Card({ title, right, children, className = '' }: { title?: React
 
 export function PageHeader({ title, sub, actions }: { title: string; sub?: ReactNode; actions?: ReactNode }) {
   return (
-    <header className="row" style={{ marginBottom: '1.1rem' }}>
+    <header className="pagehead">
       <div>
-        <h1 style={{ fontSize: 'var(--step-2)' }}>{title}</h1>
-        {sub && <p className="muted">{sub}</p>}
+        <h1>{title}</h1>
+        {sub && <p>{sub}</p>}
       </div>
       <div className="sp" />
       {actions}
@@ -39,9 +40,9 @@ export function SimNote({ children }: { children?: ReactNode }) {
 
 export function Stat({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
-    <div className="card flat">
-      <p className="muted small">{label}</p>
-      <p style={{ fontSize: 'var(--step-2)', fontWeight: 800 }} className="money">{value}</p>
+    <div className="statbox">
+      <h3>{label}</h3>
+      <p className="v">{value}</p>
       {sub && <p className="hint">{sub}</p>}
     </div>
   )
@@ -103,7 +104,7 @@ export function Modal({ open, title, onClose, children }: { open: boolean; title
         <div className="row" style={{ marginBottom: '0.8rem' }}>
           <h3>{title}</h3>
           <div className="sp" />
-          <button className="btn sm ghost" onClick={onClose} aria-label="Kapat">✕ Kapat</button>
+          <button className="iconbtn" onClick={onClose} aria-label="Kapat"><Icon name="x" size={18} /></button>
         </div>
         {children}
       </div>
@@ -175,12 +176,12 @@ export function DataTable<T>({ rows, cols, rowKey, searchText, empty = 'Kayıt b
 }
 
 export function Emblem({ size = 64, light = false }: { size?: number; light?: boolean }) {
-  const a = light ? '#fff' : '#0B2D6B'
+  const a = light ? '#fff' : 'currentColor'
   return (
     <svg viewBox="0 0 120 90" width={size} height={size * 0.75} aria-hidden="true">
-      <circle cx="30" cy="11" r="9" fill={a} /><circle cx="90" cy="11" r="9" fill="#FF7A00" />
+      <circle cx="30" cy="11" r="9" fill={a} /><circle cx="90" cy="11" r="9" fill="var(--signal, #FF5A1F)" />
       <path d="M60 58 C47 28 9 28 9 59 C9 90 47 88 60 58" fill="none" stroke={a} strokeWidth="11" strokeLinecap="round" />
-      <path d="M60 58 C73 28 111 28 111 59 C111 90 73 88 60 58" fill="none" stroke="#FF7A00" strokeWidth="11" strokeLinecap="round" />
+      <path d="M60 58 C73 28 111 28 111 59 C111 90 73 88 60 58" fill="none" stroke="var(--signal, #FF5A1F)" strokeWidth="11" strokeLinecap="round" />
     </svg>
   )
 }
@@ -194,4 +195,24 @@ export function LangSwitch() {
       {(['tr', 'en'] as Lang[]).map((l) => <button key={l} type="button" className={lang === l ? 'on' : ''} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
     </div>
   )
+}
+
+export type ThemePref = 'system' | 'light' | 'dark'
+export function applyTheme(t: ThemePref) {
+  const r = document.documentElement
+  if (t === 'system') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', t)
+}
+export function savedTheme(): ThemePref {
+  try { const v = localStorage.getItem('foradas-theme'); return v === 'light' || v === 'dark' ? v : 'system' } catch { return 'system' }
+}
+export function ThemeSwitch() {
+  const [t, setT] = useState<ThemePref>(savedTheme)
+  useEffect(() => { applyTheme(t) }, [t])
+  const dark = t === 'dark' || (t === 'system' && typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches)
+  const flip = () => {
+    const n: ThemePref = dark ? 'light' : 'dark'
+    setT(n)
+    try { localStorage.setItem('foradas-theme', n) } catch { /* yoksay */ }
+  }
+  return <button type="button" className="iconbtn" onClick={flip} aria-label={dark ? 'Açık temaya geç' : 'Koyu temaya geç'}><Icon name={dark ? 'sun' : 'moon'} size={18} /></button>
 }

@@ -70,7 +70,7 @@ export function LiveBoard({ lockedCity }: { lockedCity?: string }) {
                 {route.stopIds.map((id, i) => (
                   <div key={id}>
                     <div className="lmrow"><span className={`lmdot ${at(i).length ? 'on' : ''}`} /><span className="lmname">{stopName(id)}</span>
-                      {at(i).map((v) => <Badge key={v.id} tone={TONE[v.crowd]}>🚌 {v.id} · %{v.pct}</Badge>)}</div>
+                      {at(i).map((v) => <Badge key={v.id} tone={TONE[v.crowd]}>{v.id} · %{v.pct}</Badge>)}</div>
                     {i < route.stopIds.length - 1 && <div className="lmseg">{between(i).map((v) => <Badge key={v.id} tone={TONE[v.crowd]}>{v.dir === 1 ? '↓' : '↑'} {v.id} · %{v.pct}</Badge>)}</div>}
                   </div>
                 ))}
@@ -196,7 +196,7 @@ function RidePanel({ city, now, setCity }: { city: string; now: Date; setCity: (
               <SelectField label="Bindiğim durak" value={boardId || route.stopIds[0]} onChange={setBoardId} options={route.stopIds.map((id) => ({ value: id, label: name(id) }))} />
               <SelectField label="İneceğim durak" value={destId || route.stopIds[route.stopIds.length - 1]} onChange={setDestId} options={route.stopIds.map((id) => ({ value: id, label: name(id) }))} />
             </>}
-            <button className="btn primary" onClick={start}>💳 Kartı okut (simülasyon)</button>
+            <button className="btn primary" onClick={start}>Kartı okut (simülasyon)</button>
           </div>
         </Card>
       )}

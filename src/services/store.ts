@@ -4,7 +4,7 @@ import { createSeed } from '../data/seed'
 // Prototip veri deposu: bellek içi + localStorage. Gerçek sistemde bu katman PostgreSQL erişimidir.
 // Tüm servisler yalnızca bu arayüz üzerinden veri okur/yazar; arayüz (UI) deponun içine doğrudan yazmaz.
 
-const KEY = 'rota81-proto-data-v3'
+const KEY = 'rota81-proto-data-v4'
 const SESSION_KEY = 'rota81-proto-session-v1'
 
 export interface Clock { now(): Date }

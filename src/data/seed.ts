@@ -1,6 +1,7 @@
 import { GEO } from './turkiye'
 import type { AppData, FareProduct, FareVersion, ModeId, Operator, Route, Stop } from '../domain/types'
 import { DEMO_CITY_IDS, PROVINCES } from './provinces'
+import IST from './real/istanbul.json'
 
 // TÜM VERİLER SİMÜLEDİR. Hat, durak, ücret ve operatör bilgileri resmî değildir.
 
@@ -92,19 +93,38 @@ const DEFS: Record<string, CityDef> = {
 
 
 /** Ayrıntılı örnek verisi olmayan iller için ilçe merkezlerinden otomatik üretilen SİMÜLE hat ve duraklar. */
-function generatedDef(id: string, name: string): CityDef {
+/** Gerçek açık veri bulunan il: İstanbul (İETT otobüs hatları, İBB Açık Veri Portalı, CC BY 4.0). */
+export const REAL_CITY = '34'
+
+function districtLines(id: string, name: string, op: string, hub: string, covered: Set<string>, prefix: string): LineDef[] {
   const g = GEO[id]
-  const districts = [...(g?.d ?? [])].sort((a, b) => b[1] - a[1]).map(([d]) => (d === 'Merkez' ? `${name} Merkez` : `${d} Merkez`))
+  const all = [...(g?.d ?? [])].sort((x, y) => y[1] - x[1]).map(([d]) => d)
+  const names = Array.from(new Set(all.map((d) => (d === 'Merkez' ? `${name} Merkez` : `${d} Merkez`))))
+    .filter((s) => !covered.has(s))
+  const mk = (list: string[]): [string, number][] => [hub, ...list].map((s, i) => [s, i === 0 ? 0 : 7 + ((i * 3) % 6)] as [string, number])
+  const lines: LineDef[] = []
+  for (let i = 0; i * 8 < names.length; i++) {
+    const part = names.slice(i * 8, i * 8 + 8)
+    lines.push({ code: `${prefix}${i + 1}`, name: i === 0 && prefix === '' ? `${name} Merkez Hattı` : `${name} İlçe Hattı ${i + 1}`, mode: 'bus', operator: op, stops: mk(part), headway: 20 + (i % 3) * 5 })
+  }
+  return lines
+}
+
+/** Ayrıntılı örnek verisi olmayan iller için ilçe merkezlerinden otomatik üretilen SİMÜLE hat ve duraklar (her ilçede en az bir durak). */
+function generatedDef(id: string, name: string): CityDef {
   const hub = `${name} Otogar (örnek)`
-  const names = Array.from(new Set(districts))
-  const a = names.slice(0, 7)
-  const b = names.slice(7, 14)
   const op = `${name} Belediyesi Otobüs (örnek)`
-  const mk = (list: string[], first: string): [string, number][] => [first, ...list].map((s, i) => [s, i === 0 ? 0 : 7 + ((i * 3) % 6)] as [string, number])
-  const lines: LineDef[] = [{ code: '1', name: `${name} Merkez Hattı`, mode: 'bus', operator: op, stops: mk(a, hub), headway: 20 }]
-  if (b.length) lines.push({ code: '2', name: `${name} Çevre Hattı`, mode: 'bus', operator: op, stops: mk(b, a[0] ?? hub), headway: 30 })
+  const lines = districtLines(id, name, op, hub, new Set(), '')
   const n = Number(id)
   return { lat: 37 + ((n * 7) % 50) * 0.08, lon: 27 + ((n * 11) % 45) * 0.2, operators: [{ name: op, modes: ['bus'] }], fares: { bus: 1800 + (n % 8) * 100 }, lines }
+}
+
+/** Ayrıntılı örnek şehirlerde duraksız kalan ilçelere ek simüle hatlar ekler. */
+function coverDistricts(id: string, name: string, def: CityDef): void {
+  const have = new Set(def.lines.flatMap((l) => l.stops.map(([s]) => s)))
+  const hub = def.lines[0]?.stops[0]?.[0] ?? `${name} Otogar (örnek)`
+  const op = def.operators.find((o) => o.modes.includes('bus'))?.name ?? def.operators[0].name
+  def.lines.push(...districtLines(id, name, op, hub, have, 'D'))
 }
 
 export function createSeed(now: () => Date = () => new Date()): AppData {
@@ -119,7 +139,7 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
     data.cities.push({ id: p.id, name: p.name, region: p.region, status: demo ? 'pilot' : 'planned', population: GEO[p.id]?.p, hasDemoData: true })
   })
 
-  PROVINCES.forEach((p) => { if (!DEFS[p.id]) DEFS[p.id] = generatedDef(p.id, p.name) })
+  PROVINCES.forEach((p) => { if (!DEFS[p.id]) DEFS[p.id] = generatedDef(p.id, p.name); else if (p.id !== REAL_CITY) coverDistricts(p.id, p.name, DEFS[p.id]) })
   Object.entries(DEFS).forEach(([cityId, def]) => {
     const stopMap = new Map<string, Stop>()
     const opMap = new Map<string, Operator>()
@@ -162,6 +182,30 @@ export function createSeed(now: () => Date = () => new Date()): AppData {
       })
     })
   })
+
+  // GERÇEK VERİ: İstanbul otobüs durak ve hatları (İETT GTFS, İBB Açık Veri Lisansı). Sıklık sefer sayısından, süre mesafeden tahmindir.
+  {
+    const cityId = REAL_CITY
+    const op: Operator = { id: `op-${cityId}-iett`, cityId, name: 'İETT (gerçek hat verisi)', modes: ['bus'], status: 'active' }
+    data.operators.push(op)
+    const st = IST.stops as [string, string, number, number][]
+    const ids = st.map(([code]) => `st-${cityId}-r${code}`)
+    st.forEach(([code, name, lat, lon], i) => data.stops.push({ id: ids[i], cityId, code, name, lat, lon, accessible: true }))
+    const km = (a: number, b: number) => {
+      const dy = (st[a][2] - st[b][2]) * 111, dx = (st[a][3] - st[b][3]) * 111 * Math.cos((st[a][2] * Math.PI) / 180)
+      return Math.hypot(dx, dy)
+    }
+    const seen = new Set<string>()
+    ;(IST.lines as [string, string, number[], number][]).forEach(([code, name, idx, headway]) => {
+      const id = `rt-${cityId}-iett-${slug(code)}`
+      if (seen.has(id)) return
+      seen.add(id)
+      data.routes.push({
+        id, cityId, operatorId: op.id, code, name, mode: 'bus', stopIds: idx.map((i) => ids[i]),
+        minutesBetween: idx.slice(1).map((v, k) => Math.max(1, Math.round((km(idx[k], v) / 18) * 60))), headwayMin: headway, status: 'active',
+      })
+    })
+  }
 
   const admins: [string, string, string, string][] = [
     ['u-mehmet', 'Mehmet Kaya', 'mehmet.kaya@ankara.rota81.example', '06'],
