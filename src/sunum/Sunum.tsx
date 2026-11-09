@@ -9,6 +9,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+const Rental = lazy(() => import('./three/RentalView').then((m) => ({ default: m.RentalView })))
 const Replay = lazy(() => import('./three/ReplayLab').then((m) => ({ default: m.ReplayLab })))
 const Resto = lazy(() => import('./three/RestaurantView').then((m) => ({ default: m.RestaurantView })))
 const Journey = lazy(() => import('./three/JourneyView').then((m) => ({ default: m.JourneyView })))
@@ -36,6 +37,7 @@ function beep(on: boolean, ok = true) {
 
 export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slide; step: number; view: 'tech' | 'real' | '3d' | 'lab'; quality?: 'auto' | 'low' | 'high' }) {
   const sc = slide.scene
+  if (slide.id === 'usecases') return <><SceneView slide={{ ...slide, id: 'usecases-base' }} step={step} view={view} quality={quality} /><Suspense fallback={<p className="sn-hint">Loading 3D car rental…</p>}><Rental quality={quality} /></Suspense></>
   if (slide.id === 'tap' && view === 'lab') return <Suspense fallback={<p className="sn-hint">Loading 3D lab…</p>}><TapLab quality={quality} /></Suspense>
   const [fault, setFault] = useState(FAULTS[0].id)
   const [mm, setMm] = useState('2D'); const [pick, setPick] = useState('Old Town')

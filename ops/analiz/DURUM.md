@@ -50,3 +50,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum Faz 5 TAMAM: restoran 3D (rest-tour 5 adim, rest-pay 6 adim, 5 serit, menu foto facts.json okuma). Rapor ops/raporlar/faz-5.md. Siradaki: Faz 6.
 
 - 2026-11-09 Sunum Faz 6 TAMAM: replay lab (5 senaryo, neon mimari 3D, ileri/geri). Rapor ops/raporlar/faz-6.md. Siradaki: Faz 7.
+
+- 2026-11-09 Sunum Faz 7 TAMAM: araba kiralama 3D (9 adim, ucret motoru, hold/capture/release, mutabakat). Rapor ops/raporlar/faz-7.md. Siradaki: Faz 8.
