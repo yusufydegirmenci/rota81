@@ -85,3 +85,4 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:16 Sunum: izleyici 'hiçbir şey anlamadım' dedi. DUZELTME.md'ye ANLAŞILIRLIK bölümü eklendi (hikâye iskeleti, Ana hat modu, sade İngilizce, altyazılı 3D, özetler).
 
 - 2026-11-09 07:18 Sunum: ANLAŞILIRLIK ek maddeleri (hikâye modu, sözlük, 3/10 dk yol, 10 sn testi) eklendi.
+- 2026-11-09 Sunum DÜZELTME CANLI: nd1pet ffe05bf, Actions başarılı, canlı #/sunum, #/sunum/pdf (42 sayfa), rota81-sunum.pdf, tur sunum modu doğrulandı, konsol hatası 0.
