@@ -86,3 +86,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 
 - 2026-11-09 07:18 Sunum: ANLAŞILIRLIK ek maddeleri (hikâye modu, sözlük, 3/10 dk yol, 10 sn testi) eklendi.
 - 2026-11-09 Sunum DÜZELTME CANLI: nd1pet ffe05bf, Actions başarılı, canlı #/sunum, #/sunum/pdf (42 sayfa), rota81-sunum.pdf, tur sunum modu doğrulandı, konsol hatası 0.
+
+- 2026-11-09 07:27 Sunum: tur sayfası sunum modu ekran görüntüsü 'zayıf' bulundu (ops/hedef/mevcut-tur-sayfasi-zayif.png); DUZELTME.md'ye 8 maddelik denetim eklendi.
