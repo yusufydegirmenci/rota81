@@ -76,3 +76,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:07 Sunum: veri şeması GUIDE (src/data/guide) DUZELTME.md'ye işlendi.
 
 - 2026-11-09 07:10 Sunum: restoran dış sahnesi 'kaçınılacak örnek' (ops/hedef/kacinilacak-restoran-dis.png) ve düzeltme kuralları DUZELTME.md'ye eklendi.
+
+- 2026-11-09 07:12 Sunum: 'gerçek fotoğraf esası' DUZELTME.md'ye eklendi (hero=gerçek lisanslı foto, 3D ikinci katman, kurgusal restoran etiketli).
