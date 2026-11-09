@@ -9,6 +9,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+const Resto = lazy(() => import('./three/RestaurantView').then((m) => ({ default: m.RestaurantView })))
 const Journey = lazy(() => import('./three/JourneyView').then((m) => ({ default: m.JourneyView })))
 const TapLab = lazy(() => import('./three/TapView').then((m) => ({ default: m.TapView })))
 const Bench = lazy(() => import('./three/BenchView').then((m) => ({ default: m.BenchView })))
@@ -48,12 +49,14 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
     case 'street': return slide.id === 'journey'
       ? <><StreetScene steps={sc.steps} step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D journey…</p>}><Journey quality={quality} /></Suspense></>
       : <StreetScene steps={sc.steps} step={step} />
-    case 'flow': return <FlowView flow={sc.flow} step={step} />
+    case 'flow': return slide.id === 'rest-pay'
+      ? <><FlowView flow={sc.flow} step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D payment…</p>}><Resto quality={quality} part="pay" /></Suspense></>
+      : <FlowView flow={sc.flow} step={step} />
     case 'card': return slide.id === 'card-anatomy'
       ? <><CardScene step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D parts…</p>}><Bench quality={quality} /></Suspense></>
       : <CardScene step={step} />
     case 'nfc': return <NfcScene step={step} />
-    case 'restaurant': return <RestaurantScene step={step} />
+    case 'restaurant': return <><RestaurantScene step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D restaurant…</p>}><Resto quality={quality} part="tour" /></Suspense></>
     case 'tech': return <TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />
     case 'map': return <MapScene mode={mm} setMode={setMm} pick={pick} setPick={setPick} />
     case 'dash': return <DashScene step={step} />
