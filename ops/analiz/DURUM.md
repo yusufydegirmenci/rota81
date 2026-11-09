@@ -81,3 +81,7 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:12 Sunum: 'gerçek fotoğraf esası' DUZELTME.md'ye eklendi (hero=gerçek lisanslı foto, 3D ikinci katman, kurgusal restoran etiketli).
 
 - 2026-11-09 07:14 Sunum: Google Haritalar fotoğrafları telifli, kopyalanmaz; 'Haritalar'da aç' linki/embed + Unsplash/Pexels/Flickr CC kaynakları DUZELTME.md'ye eklendi. Veri thread'i bu ek kaynakları da kullanabilir.
+
+- 2026-11-09 07:16 Sunum: izleyici 'hiçbir şey anlamadım' dedi. DUZELTME.md'ye ANLAŞILIRLIK bölümü eklendi (hikâye iskeleti, Ana hat modu, sade İngilizce, altyazılı 3D, özetler).
+
+- 2026-11-09 07:18 Sunum: ANLAŞILIRLIK ek maddeleri (hikâye modu, sözlük, 3/10 dk yol, 10 sn testi) eklendi.
