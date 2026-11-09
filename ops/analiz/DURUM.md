@@ -27,3 +27,5 @@ Sunum dalı, `claude/project-thread-nd1pet` üzerinden açılsın: `git fetch or
 
 ## Sunum fazları (sunum thread'i)
 Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması) veri thread'inde bitti. Sıradaki: Faz 2 (yeniden kullanılabilir 3D bileşenler, src/sunum/three/). Sunum dalı nd1pet tabanını içeriyor (merge edildi). facts.json'a sunum yazmaz; yeni kayıt gerekirse veri thread'ine yazılır.
+
+- 2026-11-09 Sunum thread: Faz 2-10 tek prompt ops/promptlar/HEPSI.md (kullanıcı PC'de akıtacak). Canlı: nd1pet'e merge (main yok).
