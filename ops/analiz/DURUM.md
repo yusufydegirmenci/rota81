@@ -74,3 +74,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:05 Sunum: DUZELTME.md 0+: >=8 hazır tur, kurgusal rehber profilleri+etiketli örnek yorumlar, kültür notları, galeri. Veri thread'inden istenen: daha fazla yer/yemek/kültür notu/lisanslı foto (VERİ İSTEĞİ).
 
 - 2026-11-09 07:07 Sunum: veri şeması GUIDE (src/data/guide) DUZELTME.md'ye işlendi.
+
+- 2026-11-09 07:10 Sunum: restoran dış sahnesi 'kaçınılacak örnek' (ops/hedef/kacinilacak-restoran-dis.png) ve düzeltme kuralları DUZELTME.md'ye eklendi.
