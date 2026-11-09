@@ -8,6 +8,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
+const Bench = lazy(() => import('./three/BenchView').then((m) => ({ default: m.BenchView })))
 const STEP_SHOT = [2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8]
 type Mode = 'present' | 'rehearse' | 'explore'
 const KEY = 'foradas-sunum-v1'
@@ -42,7 +43,9 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
   switch (sc.k) {
     case 'street': return <StreetScene steps={sc.steps} step={step} />
     case 'flow': return <FlowView flow={sc.flow} step={step} />
-    case 'card': return <CardScene step={step} />
+    case 'card': return slide.id === 'card-anatomy'
+      ? <><CardScene step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D parts…</p>}><Bench quality={quality} /></Suspense></>
+      : <CardScene step={step} />
     case 'nfc': return <NfcScene step={step} />
     case 'restaurant': return <RestaurantScene step={step} />
     case 'tech': return <TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />
@@ -194,7 +197,7 @@ export default function Sunum() {
       </div>
       <div className="sn-progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: pct + '%' }} /></div>
 
-      {mode === 'present' && <main className="sn-stage" onClick={(e) => { const t = e.target as HTMLElement; if (t.closest('button,a,summary,details,input,select,.sn-drawer')) return; go(next) }}>{deck}</main>}
+      {mode === 'present' && <main className="sn-stage" onClick={(e) => { const t = e.target as HTMLElement; if (t.closest('button,a,summary,details,input,select,.sn-drawer,.sn-3d')) return; go(next) }}>{deck}</main>}
 
       {mode === 'rehearse' && (
         <main className="sn-rehearse">
