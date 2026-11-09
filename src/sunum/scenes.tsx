@@ -289,11 +289,39 @@ export function DashScene({ step }: { step: number }) {
   )
 }
 
-export function CardsGrid({ items }: { items: { h: string; t: string; tag?: Tag }[] }) {
-  return <div className="sn-grid">{items.map((c) => <article key={c.h}><h4>{c.h}</h4><p>{c.t}</p><TagPill t={c.tag} /></article>)}</div>
+/** With `step` set, items appear one at a time; without it everything is visible. */
+const shown = (i: number, step?: number) => (step === undefined || i <= step ? 'sn-pop' : 'sn-hid')
+export function CardsGrid({ items, step }: { items: { h: string; t: string; tag?: Tag }[]; step?: number }) {
+  return <div className="sn-grid">{items.map((c, i) => <article key={c.h} className={shown(i, step)}><h4>{c.h}</h4><p>{c.t}</p><TagPill t={c.tag} /></article>)}</div>
 }
-export function TableView({ head, rows }: { head: string[]; rows: string[][] }) {
-  return <div className="sn-tablewrap"><table><thead><tr>{head.map((h) => <th key={h}>{h}</th>)}</tr></thead><tbody>{rows.map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}</tbody></table></div>
+export function TableView({ head, rows, step }: { head: string[]; rows: string[][]; step?: number }) {
+  return <div className="sn-tablewrap"><table><thead><tr>{head.map((h) => <th key={h}>{h}</th>)}</tr></thead><tbody>{rows.map((r, i) => <tr key={i} className={shown(i, step)}>{r.map((c, j) => <td key={j}>{c}</td>)}</tr>)}</tbody></table></div>
+}
+
+/* ───────────── Route map: cities light up one by one (real coordinates, schematic projection) ───────────── */
+export const ROUTE_CITIES = [
+  { n: 'İstanbul', lon: 28.98, lat: 41.01, d: 'Ferries across the Bosphorus, tram to Sultanahmet and Eminönü.' },
+  { n: 'Ankara', lon: 32.86, lat: 39.93, d: 'Anıtkabir, the Anatolian Civilizations Museum and Hamamönü.' },
+  { n: 'Eskişehir', lon: 30.52, lat: 39.78, d: 'Tram city: Odunpazarı, the Porsuk river and Sazova Park.' },
+  { n: 'İzmir', lon: 27.14, lat: 38.42, d: 'Kordon waterfront, Konak, the Agora and a day trip to Ephesus.' },
+  { n: 'Antalya', lon: 30.71, lat: 36.89, d: 'Kaleiçi old town, the heritage tram and Düden waterfalls.' },
+]
+export function RouteScene({ step }: { step: number }) {
+  const i = Math.min(step, ROUTE_CITIES.length - 1)
+  const p = (c: { lon: number; lat: number }) => [40 + (c.lon - 26.5) * 125, 400 - (c.lat - 36.5) * 80] as const
+  return (
+    <div className="sn-flow">
+      <svg viewBox="0 0 960 440" role="img" aria-label="Five demo cities on a schematic map of Türkiye">
+        <rect width="960" height="440" fill="#e8efe6" />
+        {ROUTE_CITIES.slice(1, i + 1).map((c, k) => { const [x1, y1] = p(ROUTE_CITIES[k]), [x2, y2] = p(c); return <line key={c.n} x1={x1} y1={y1} x2={x2} y2={y2} className="sn-routeline" /> })}
+        {ROUTE_CITIES.map((c, k) => { const [x, y] = p(c), on = k <= i; return (
+          <g key={c.n} className={`sn-city ${on ? 'on' : ''} ${k === i ? 'now' : ''}`}><circle cx={x} cy={y} r={k === i ? 11 : 8} /><text x={x + 16} y={y + 5}>{c.n}</text></g>
+        ) })}
+        <text x="20" y="425" fontSize="11" fill="#3f5963">Schematic positions from real coordinates, not a surveyed map.</text>
+      </svg>
+      <div className="sn-caption" aria-live="polite"><div className="sn-capn">City {i + 1} / {ROUTE_CITIES.length}</div><h3>{ROUTE_CITIES[i].n}</h3><p>{ROUTE_CITIES[i].d}</p></div>
+    </div>
+  )
 }
 
 export function maxSteps(s: Scene, faultN = 4): number {
@@ -305,6 +333,9 @@ export function maxSteps(s: Scene, faultN = 4): number {
     case 'restaurant': return ROOMS.length
     case 'tech': return faultN + 2
     case 'dash': return 4
+    case 'route': return ROUTE_CITIES.length
+    case 'cards': return s.reveal ? s.items.length : 1
+    case 'table': return s.reveal ? s.rows.length : 1
     default: return 1
   }
 }

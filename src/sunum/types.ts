@@ -16,8 +16,9 @@ export type Scene =
   | { k: 'dash' }
   | { k: 'tours' }
   | { k: 'design' }
-  | { k: 'cards'; items: { h: string; t: string; tag?: Tag }[] }
-  | { k: 'table'; head: string[]; rows: string[][] }
+  | { k: 'route' }
+  | { k: 'cards'; items: { h: string; t: string; tag?: Tag }[]; reveal?: boolean }
+  | { k: 'table'; head: string[]; rows: string[][]; reveal?: boolean }
 
 export interface Slide {
   id: string

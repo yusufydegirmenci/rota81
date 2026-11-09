@@ -5,11 +5,12 @@ import { PART2 } from './content2'
 import { PART3 } from './content3'
 import { PART4 } from './content4'
 import { PART5 } from './content5'
+import { PART6 } from './content6'
 
 /** Narrative order: journey and tap first, then the physical card, then systems, operations and business. */
 const byId = (arr: Slide[]) => Object.fromEntries(arr.map((s) => [s.id, s]))
-const all = { ...byId(PART1), ...byId(PART2), ...byId(PART3), ...byId(PART4), ...byId(PART5) }
-const ORDER = ['title', 'vision', 'honesty', 'city', 'design-city', 'cast', 'journey', 'tap', 'card-spec', 'card-anatomy', 'nfc-physics', 'chip', 'nfc-rfid', 'five-ok', 'mfg', 'identity', 'lifecycle', 'hardware', 'validator', 'micro', 'idem', 'offline', 'rest-tour', 'rest-pay', 'tours', 'money', 'arch', 'net', 'stakeholders', 'roadmap', 'standards', 'privacy', 'security', 'lab', 'catalogue', 'ops', 'dash', 'business', 'interop', 'usecases', 'conclusion', 'refs']
+const all = { ...byId(PART1), ...byId(PART2), ...byId(PART3), ...byId(PART4), ...byId(PART5), ...byId(PART6) }
+const ORDER = ['title', 'vision', 'honesty', 'city', 'design-city', 'cast', 'journey', 'tap', 'card-spec', 'card-anatomy', 'nfc-physics', 'chip', 'nfc-rfid', 'five-ok', 'mfg', 'identity', 'lifecycle', 'hardware', 'validator', 'micro', 'idem', 'offline', 'rest-tour', 'rest-pay', 'tours', 'money', 'arch', 'net', 'stakeholders', 'roadmap', 'standards', 'privacy', 'security', 'lab', 'catalogue', 'ops', 'dash', 'business', 'interop', 'usecases', 'route-cities', 'day-istanbul', 'day-ankara', 'day-eskisehir', 'day-izmir', 'day-antalya', 'compare', 'groups', 'languages', 'tourism', 'cost-benefit', 'conclusion', 'refs', 'backup-qa']
 export const SLIDES: Slide[] = ORDER.map((id) => all[id]).filter(Boolean)
 
 /** Rough speaking time: script length plus a little per interactive step. */

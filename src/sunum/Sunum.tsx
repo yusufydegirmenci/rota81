@@ -4,7 +4,7 @@ import { SLIDES, PLANS, estMinutes } from './slides'
 import { TERMS } from './terms'
 import { QA_LIST } from './qa'
 import type { Slide } from './types'
-import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcScene, RestaurantScene, StreetScene, TableView, TechScene, maxSteps } from './scenes'
+import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcScene, RouteScene, RestaurantScene, StreetScene, TableView, TechScene, maxSteps } from './scenes'
 
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
@@ -67,10 +67,11 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
     case 'tech': return <><TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />{slide.id === 'lab' && <Suspense fallback={<p className="sn-hint">Loading replay lab…</p>}><Replay quality={quality} /></Suspense>}</>
     case 'map': return <MapScene mode={mm} setMode={setMm} pick={pick} setPick={setPick} />
     case 'dash': return <DashScene step={step} />
+    case 'route': return <RouteScene step={step} />
     case 'tours': return <ToursView />
     case 'design': return <CityDesigner quality={quality} />
-    case 'cards': return <CardsGrid items={sc.items} />
-    case 'table': return <TableView head={sc.head} rows={sc.rows} />
+    case 'cards': return <CardsGrid items={sc.items} step={sc.reveal ? step : undefined} />
+    case 'table': return <TableView head={sc.head} rows={sc.rows} step={sc.reveal ? step : undefined} />
     default: return <Hero />
   }
 }
