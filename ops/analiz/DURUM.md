@@ -41,3 +41,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 02:03 Sunum: görsel zenginlik (Proofpath animasyonlarını uyarla, parçacık, akan çizgiler, sayaç, geçiş, parallax, ses/titreşim, kalite anahtarı, reduced-motion) HEPSI.md'ye eklendi.
 
 - 2026-11-09 02:05 Sunum: hoş geldin notu (Ayşe, src/config/welcome.ts) HEPSI.md'ye eklendi, Faz 3 başında yapılacak.
+
+- 2026-11-09 02:07 Sunum: Şehir Gezgini (yerler, yemekler, fotoğraflar, künye, güvenli yedek) ve turların bu veriye dayanması HEPSI.md'ye eklendi.
