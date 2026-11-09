@@ -15,6 +15,7 @@ export type Scene =
   | { k: 'map' }
   | { k: 'dash' }
   | { k: 'tours' }
+  | { k: 'design' }
   | { k: 'cards'; items: { h: string; t: string; tag?: Tag }[] }
   | { k: 'table'; head: string[]; rows: string[][] }
 

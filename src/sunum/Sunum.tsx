@@ -10,6 +10,7 @@ const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
 import { ToursView } from './ToursView'
+import { CityDesigner } from './CityDesigner'
 const Rental = lazy(() => import('./three/RentalView').then((m) => ({ default: m.RentalView })))
 const Replay = lazy(() => import('./three/ReplayLab').then((m) => ({ default: m.ReplayLab })))
 const Resto = lazy(() => import('./three/RestaurantView').then((m) => ({ default: m.RestaurantView })))
@@ -65,6 +66,7 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
     case 'map': return <MapScene mode={mm} setMode={setMm} pick={pick} setPick={setPick} />
     case 'dash': return <DashScene step={step} />
     case 'tours': return <ToursView />
+    case 'design': return <CityDesigner quality={quality} />
     case 'cards': return <CardsGrid items={sc.items} />
     case 'table': return <TableView head={sc.head} rows={sc.rows} />
     default: return <Hero />

@@ -54,3 +54,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum Faz 7 TAMAM: araba kiralama 3D (9 adim, ucret motoru, hold/capture/release, mutabakat). Rapor ops/raporlar/faz-7.md. Siradaki: Faz 8.
 
 - 2026-11-09 Sunum Faz 8 TAMAM: 4 hazir tur + 3 rehber secenegi (tours slaydi, 41 slayt), tur verisi salt okunur. Rapor ops/raporlar/faz-8.md. Siradaki: Faz 9.
+
+- 2026-11-09 Sunum Faz 9 TAMAM: design-city (6 mod, motor, gercek veri salt okunur). Rapor ops/raporlar/faz-9.md. Siradaki: Faz 10 (QA + canliya alma).
