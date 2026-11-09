@@ -1,2 +1,2 @@
 # DURUM
-Son güncelleme: 2026-11-09. Hazır: sunum modülü ilk sürüm (40 slayt, 2.5D). Sıradaki: Faz 1. Tamamlanan faz yok.
+2026-11-09: Faz 1 eski thread'de bitti (tur donması çözüldü, 52 test). Sıradaki: Faz 2. Dal tabanı: nd1pet (Stage3D dahil).
