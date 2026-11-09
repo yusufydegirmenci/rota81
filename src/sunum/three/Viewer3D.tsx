@@ -9,7 +9,7 @@ export interface StepDef extends ShotDef { deep?: string }
 export type SceneBuilder = (m: SceneManager) => (tSec: number, step: number, technical: boolean) => void
 
 /** Reusable 3D viewer: camera per step, pause/resume, step back/forward, replay, click-to-inspect, real↔technical, deep-explanation panel. */
-export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5000 }: { steps: StepDef[]; build: SceneBuilder; label: string; quality?: Quality; holdMs?: number }) {
+export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5000, onStep }: { steps: StepDef[]; build: SceneBuilder; label: string; quality?: Quality; holdMs?: number; onStep?: (i: number) => void }) {
   const host = useRef<HTMLDivElement>(null)
   const tl = useMemo(() => new Timeline(steps.length, holdMs), [steps.length, holdMs])
   const [, bump] = useState(0); const redraw = () => bump((n) => n + 1)
@@ -35,6 +35,9 @@ export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quality, build, steps])
 
+  const cb = useRef(onStep); cb.current = onStep
+  const lastStep = useRef(0)
+  useEffect(() => { if (lastStep.current !== tl.step) { lastStep.current = tl.step; cb.current?.(tl.step) } })
   const go = (fn: () => void) => { fn(); stepRef.current = tl.step; mgr.current?.flyTo(steps[tl.step]); redraw() }
   const s = steps[tl.step]
   if (!ok) return <p className="sn-hint">3D is not available on this device. Use another view; the content is the same.</p>

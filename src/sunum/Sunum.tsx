@@ -8,6 +8,8 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
+import { HeroFigure } from './three/HeroFigure'
+const TapLab = lazy(() => import('./three/TapView').then((m) => ({ default: m.TapView })))
 const Bench = lazy(() => import('./three/BenchView').then((m) => ({ default: m.BenchView })))
 const STEP_SHOT = [2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8]
 type Mode = 'present' | 'rehearse' | 'explore'
@@ -29,8 +31,9 @@ function beep(on: boolean, ok = true) {
   try { const A = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext; const c = new A(); const o = c.createOscillator(), g = c.createGain(); o.frequency.value = ok ? 880 : 220; g.gain.value = 0.04; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.12) } catch { /* sound is optional */ }
 }
 
-export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slide; step: number; view: 'tech' | 'real' | '3d'; quality?: 'auto' | 'low' | 'high' }) {
+export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slide; step: number; view: 'tech' | 'real' | '3d' | 'lab'; quality?: 'auto' | 'low' | 'high' }) {
   const sc = slide.scene
+  if (slide.id === 'tap' && view === 'lab') return <Suspense fallback={<p className="sn-hint">Loading 3D lab…</p>}><TapLab quality={quality} /></Suspense>
   const [fault, setFault] = useState(FAULTS[0].id)
   const [mm, setMm] = useState('2D'); const [pick, setPick] = useState('Old Town')
   const fN = FAULTS.find((f) => f.id === fault)?.steps.length ?? 3
@@ -133,7 +136,7 @@ const CHECKLIST = ['I can explain how a passive card gets energy', 'I can name t
 export default function Sunum() {
   const [mode, setMode] = useState<Mode>('present')
   const [pos, setPos] = usePos()
-  const [view, setView] = useState<'tech' | 'real' | '3d'>('tech')
+  const [view, setView] = useState<'tech' | 'real' | '3d' | 'lab'>('tech')
   const [quality, setQuality] = useState<'auto' | 'low' | 'high'>('auto')
   const [sound, setSound] = useState(false)
   const [calm, setCalm] = useState(() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches } catch { return false } })
@@ -174,7 +177,8 @@ export default function Sunum() {
       <div className="sn-body">
         <ul className="sn-bul">{slide.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
         <div className="sn-scene">
-          {slide.id === 'tap' && <div className="sn-faultpick" role="tablist" aria-label="View"><button role="tab" aria-selected={view === 'tech'} className={view === 'tech' ? 'on' : ''} onClick={() => setView('tech')}>Technical view</button><button role="tab" aria-selected={view === 'real'} className={view === 'real' ? 'on' : ''} onClick={() => setView('real')}>Real-world view</button><button role="tab" aria-selected={view === '3d'} className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D camera</button>{view === '3d' && <select aria-label="3D quality" value={quality} onChange={(e) => setQuality(e.target.value as 'auto' | 'low' | 'high')}><option value="auto">Quality: auto</option><option value="low">Low (weak device)</option><option value="high">High</option></select>}</div>}
+          {slide.id === 'tap' && <div className="sn-faultpick" role="tablist" aria-label="View"><button role="tab" aria-selected={view === 'tech'} className={view === 'tech' ? 'on' : ''} onClick={() => setView('tech')}>Technical view</button><button role="tab" aria-selected={view === 'real'} className={view === 'real' ? 'on' : ''} onClick={() => setView('real')}>Real-world view</button><button role="tab" aria-selected={view === 'lab'} className={view === 'lab' ? 'on' : ''} onClick={() => setView('lab')}>3D lab</button><button role="tab" aria-selected={view === '3d'} className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D camera (classic)</button>{view === '3d' &&<select aria-label="3D quality" value={quality} onChange={(e) => setQuality(e.target.value as 'auto' | 'low' | 'high')}><option value="auto">Quality: auto</option><option value="low">Low (weak device)</option><option value="high">High</option></select>}</div>}
+          <HeroFigure slideId={slide.id} />
           <SceneView slide={slide} step={pos.s} view={view} quality={quality} />
         </div>
       </div>
