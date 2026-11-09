@@ -1,4 +1,4 @@
-# ROTA 81 / FORADAŞ: ortak durum notu (iki thread için)
+﻿# ROTA 81 / FORADAŞ: ortak durum notu (iki thread için)
 
 Son güncelleme: 2026-11-09 (Türkiye tur + veri thread'i). Kural: ortak bilgi buraya yazılır, aynı dosyalara iki thread aynı anda dokunmaz.
 
@@ -43,3 +43,4 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 02:05 Sunum: hoş geldin notu (Ayşe, src/config/welcome.ts) HEPSI.md'ye eklendi, Faz 3 başında yapılacak.
 
 - 2026-11-09 Sunum Faz 3 TAMAM: tap 3D lab (11 adim, 5 serit), yeni gorsel (ACES/bloom/PBR/golge), hos geldin seridi, hero gorseller. Rapor ops/raporlar/faz-3.md. Siradaki: Faz 4.
+- 2026-11-09 02:07 Sunum: Şehir Gezgini (yerler, yemekler, fotoğraflar, künye, güvenli yedek) ve turların bu veriye dayanması HEPSI.md'ye eklendi.
