@@ -1,0 +1,531 @@
+{
+ "photos": [
+  {
+   "file": "eskisehir-ciborek.jpg",
+   "title": "Ayran+Çibörek.jpg",
+   "author": "Eaeeae",
+   "license": "CC BY 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ayran%2B%C3%87ib%C3%B6rek.jpg",
+   "city": "Eskişehir",
+   "subject": "çibörek (küçük çözünürlük)"
+  },
+  {
+   "file": "eskisehir-sazova-1.jpg",
+   "title": "Bilim sanat ve kultur parki eskisehir.jpg",
+   "author": "Honacan",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Bilim_sanat_ve_kultur_parki_eskisehir.jpg",
+   "city": "Eskişehir",
+   "subject": "Sazova Parkı"
+  },
+  {
+   "file": "eskisehir-sazova-2.jpg",
+   "title": "Sazova Park, Eskişehir, Turkey 28.jpg",
+   "author": "Murat Özsoy 1958",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Sazova_Park,_Eski%C5%9Fehir,_Turkey_28.jpg",
+   "city": "Eskişehir",
+   "subject": "Sazova Parkı"
+  },
+  {
+   "file": "eskisehir-odunpazari-1.jpg",
+   "title": "Odunpazarı Evleri (1).jpg",
+   "author": "Canercangul",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Odunpazar%C4%B1_Evleri_(1).jpg",
+   "city": "Eskişehir",
+   "subject": "Odunpazarı"
+  },
+  {
+   "file": "eskisehir-odunpazari-2.jpg",
+   "title": "Odunpazarı, Eskişehir, Turkey 01.jpg",
+   "author": "Murat Özsoy 1958",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Odunpazar%C4%B1,_Eski%C5%9Fehir,_Turkey_01.jpg",
+   "city": "Eskişehir",
+   "subject": "Odunpazarı"
+  },
+  {
+   "file": "eskisehir-omm-1.jpg",
+   "title": "Odunpazarı Modern Müze (20221117).jpg",
+   "author": "Kadı Kadı",
+   "license": "CC BY-SA 2.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Odunpazar%C4%B1_Modern_M%C3%BCze_(20221117).jpg",
+   "city": "Eskişehir",
+   "subject": "Odunpazarı Modern Müze"
+  },
+  {
+   "file": "eskisehir-omm-2.jpg",
+   "title": "Eskisehir Odunpazari Art Museum.jpg",
+   "author": "Honacan",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Eskisehir_Odunpazari_Art_Museum.jpg",
+   "city": "Eskişehir",
+   "subject": "Odunpazarı Modern Müze"
+  },
+  {
+   "file": "eskisehir-kentpark-1.jpg",
+   "title": "The pond in Eskisehir Kentpark during sunset.jpg",
+   "author": "Raicem",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:The_pond_in_Eskisehir_Kentpark_during_sunset.jpg",
+   "city": "Eskişehir",
+   "subject": "Kentpark"
+  },
+  {
+   "file": "eskisehir-luletasi.jpg",
+   "title": "Eskişehir Meerschaum Museum in 2012 1644.jpg",
+   "author": "Dosseman",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Eski%C5%9Fehir_Meerschaum_Museum_in_2012_1644.jpg",
+   "city": "Eskişehir",
+   "subject": "lületaşı (Lületaşı Müzesi)"
+  },
+  {
+   "file": "ankara-anitkabir-1.jpg",
+   "title": "Anıtkabir 2025.jpg",
+   "author": "Nicoleon",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:An%C4%B1tkabir_2025.jpg",
+   "city": "Ankara",
+   "subject": "Anıtkabir"
+  },
+  {
+   "file": "ankara-anitkabir-2.jpg",
+   "title": "Anıtkabir gün batımı.jpg",
+   "author": "LordReco",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:An%C4%B1tkabir_g%C3%BCn_bat%C4%B1m%C4%B1.jpg",
+   "city": "Ankara",
+   "subject": "Anıtkabir gün batımı"
+  },
+  {
+   "file": "ankara-rahmikoc-1.jpg",
+   "title": "Rahmi M. Koç Museum, Ankara.jpg",
+   "author": "User:Quintucket",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Rahmi_M._Ko%C3%A7_Museum,_Ankara.jpg",
+   "city": "Ankara",
+   "subject": "Rahmi M. Koç Müzesi"
+  },
+  {
+   "file": "ankara-rahmikoc-2.jpg",
+   "title": "Ankara Çengelhan Rahmi Koç Museum Exhibits in 2011 04.jpg",
+   "author": "Dosseman",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ankara_%C3%87engelhan_Rahmi_Ko%C3%A7_Museum_Exhibits_in_2011_04.jpg",
+   "city": "Ankara",
+   "subject": "Rahmi M. Koç Müzesi (Çengelhan)"
+  },
+  {
+   "file": "ankara-kugulu.jpg",
+   "title": "Kuğulu Park, 2019 04.jpg",
+   "author": "Gargarapalvin",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ku%C4%9Fulu_Park,_2019_04.jpg",
+   "city": "Ankara",
+   "subject": "Kuğulu Park"
+  },
+  {
+   "file": "ankara-amm-1.jpg",
+   "title": "Museum of Anatolian Civilizations001.jpg",
+   "author": "Georges Jansoone (JoJan)",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Museum_of_Anatolian_Civilizations001.jpg",
+   "city": "Ankara",
+   "subject": "Anadolu Medeniyetleri Müzesi"
+  },
+  {
+   "file": "ankara-amm-2.jpg",
+   "title": "Museum of Anatolian Civilizations Lion-headed situla in 2011 05.jpg",
+   "author": "Dosseman",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Museum_of_Anatolian_Civilizations_Lion-headed_situla_in_2011_05.jpg",
+   "city": "Ankara",
+   "subject": "Anadolu Medeniyetleri Müzesi (içeri)"
+  },
+  {
+   "file": "ankara-kale-sehir.jpg",
+   "title": "View of Ankara city from the castle.jpg",
+   "author": "Tsdlnsaıd",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:View_of_Ankara_city_from_the_castle.jpg",
+   "city": "Ankara",
+   "subject": "Ankara Kalesi'nden şehir"
+  },
+  {
+   "file": "ankara-kale.jpg",
+   "title": "Ankara Castle.jpg",
+   "author": "Bernard Gagnon",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ankara_Castle.jpg",
+   "city": "Ankara",
+   "subject": "Ankara Kalesi"
+  },
+  {
+   "file": "ankara-tava-1.jpg",
+   "title": "Ankara tava.jpg",
+   "author": "E4024",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ankara_tava.jpg",
+   "city": "Ankara",
+   "subject": "Ankara tava"
+  },
+  {
+   "file": "ankara-tava-2.jpg",
+   "title": "Ankara tava and cacik.jpg",
+   "author": "E4024",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ankara_tava_and_cacik.jpg",
+   "city": "Ankara",
+   "subject": "Ankara tava"
+  },
+  {
+   "file": "istanbul-kapalicarsi-1.jpg",
+   "title": "Grand Bazaar (Istanbul).jpg",
+   "author": "Nicolas Vigier",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Grand_Bazaar_(Istanbul).jpg",
+   "city": "İstanbul",
+   "subject": "Kapalıçarşı"
+  },
+  {
+   "file": "istanbul-kapalicarsi-2.jpg",
+   "title": "Grand Bazaar, Istanbul 2.jpg",
+   "author": "Slyronit",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Grand_Bazaar,_Istanbul_2.jpg",
+   "city": "İstanbul",
+   "subject": "Kapalıçarşı"
+  },
+  {
+   "file": "istanbul-suleymaniye.jpg",
+   "title": "PXL 20241210 102315450 Suleymaniye Mosque Süleymaniye Camii Istanbul Turkey 01.jpg",
+   "author": "Sourabh.biswas003",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:PXL_20241210_102315450_Suleymaniye_Mosque_S%C3%BCleymaniye_Camii_Istanbul_Turkey_01.jpg",
+   "city": "İstanbul",
+   "subject": "Süleymaniye Camii"
+  },
+  {
+   "file": "istanbul-kizkulesi-1.jpg",
+   "title": "Maiden's Tower (Kız Kulesi).jpg",
+   "author": "A.jobs02",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Maiden%27s_Tower_(K%C4%B1z_Kulesi).jpg",
+   "city": "İstanbul",
+   "subject": "Kız Kulesi"
+  },
+  {
+   "file": "istanbul-kizkulesi-2.jpg",
+   "title": "Kız-Kulesi-01.jpg",
+   "author": "muhammad ali baloch",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:K%C4%B1z-Kulesi-01.jpg",
+   "city": "İstanbul",
+   "subject": "Kız Kulesi"
+  },
+  {
+   "file": "istanbul-istiklal-1.jpg",
+   "title": "Istanbul, İstiklâl Caddesi, 2023.jpg",
+   "author": "Antimuonium",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Istanbul,_%C4%B0stikl%C3%A2l_Caddesi,_2023.jpg",
+   "city": "İstanbul",
+   "subject": "İstiklal Caddesi"
+  },
+  {
+   "file": "istanbul-misircarsisi.jpg",
+   "title": "Mısır çarşısı eminönü - panoramio.jpg",
+   "author": "by rock",
+   "license": "CC BY 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:M%C4%B1s%C4%B1r_%C3%A7ar%C5%9F%C4%B1s%C4%B1_emin%C3%B6n%C3%BC_-_panoramio.jpg",
+   "city": "İstanbul",
+   "subject": "Eminönü Mısır Çarşısı"
+  },
+  {
+   "file": "istanbul-simit-1.jpg",
+   "title": "Simit seller.jpg",
+   "author": "Walter57",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Simit_seller.jpg",
+   "city": "İstanbul",
+   "subject": "simit satıcısı"
+  },
+  {
+   "file": "istanbul-simit-2.jpg",
+   "title": "Simit seller, Istanbul.jpg",
+   "author": "Neslihan_Turan",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Simit_seller,_Istanbul.jpg",
+   "city": "İstanbul",
+   "subject": "simit satıcısı"
+  },
+  {
+   "file": "istanbul-vapur-1.jpg",
+   "title": "Ferry Kanuni on the Bosphorus, March 2024 01.jpg",
+   "author": "Calistemon",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ferry_Kanuni_on_the_Bosphorus,_March_2024_01.jpg",
+   "city": "İstanbul",
+   "subject": "Boğaz vapuru"
+  },
+  {
+   "file": "istanbul-vapur-2.jpg",
+   "title": "Sultanahmet ferry on the Bosphorus in Istanbul, Turkey 001.jpg",
+   "author": "Moonik",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Sultanahmet_ferry_on_the_Bosphorus_in_Istanbul,_Turkey_001.jpg",
+   "city": "İstanbul",
+   "subject": "Boğaz vapuru"
+  },
+  {
+   "file": "izmir-agora-1.jpg",
+   "title": "Agora of İzmir, July 2012.jpg",
+   "author": "31774",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Agora_of_%C4%B0zmir,_July_2012.jpg",
+   "city": "İzmir",
+   "subject": "Agora (Smyrna)"
+  },
+  {
+   "file": "izmir-agora-2.jpg",
+   "title": "Agora, İzmir, 2019 02.jpg",
+   "author": "Gargarapalvin",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Agora,_%C4%B0zmir,_2019_02.jpg",
+   "city": "İzmir",
+   "subject": "Agora (Smyrna)"
+  },
+  {
+   "file": "izmir-kadifekale.jpg",
+   "title": "Kadifekale manzara 1.jpg",
+   "author": "Justinianus",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Kadifekale_manzara_1.jpg",
+   "city": "İzmir",
+   "subject": "Kadifekale"
+  },
+  {
+   "file": "izmir-efes-1.jpg",
+   "title": "TR.IZ.Selcuk Ephesus Celsus-Library 32 3x2-R 5K.jpg",
+   "author": "Roy Egloff",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:TR.IZ.Selcuk_Ephesus_Celsus-Library_32_3x2-R_5K.jpg",
+   "city": "İzmir",
+   "subject": "Efes Celsus Kütüphanesi"
+  },
+  {
+   "file": "izmir-efes-2.jpg",
+   "title": "Ephesus - Celsus Library.jpg",
+   "author": "Bernard Gagnon",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Ephesus_-_Celsus_Library.jpg",
+   "city": "İzmir",
+   "subject": "Efes Celsus Kütüphanesi"
+  },
+  {
+   "file": "izmir-kordon-1.jpg",
+   "title": "İzmir Kordon.jpg",
+   "author": "raicem",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:%C4%B0zmir_Kordon.jpg",
+   "city": "İzmir",
+   "subject": "Kordon"
+  },
+  {
+   "file": "izmir-kordon-2.jpg",
+   "title": "Kordon at sunset - panoramio.jpg",
+   "author": "Merih Sezgin",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Kordon_at_sunset_-_panoramio.jpg",
+   "city": "İzmir",
+   "subject": "Kordon akşam"
+  },
+  {
+   "file": "izmir-saatkulesi-1.jpg",
+   "title": "İzmir Saat Kulesi gece görünümü..jpg",
+   "author": "BerkeKayalarr",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:%C4%B0zmir_Saat_Kulesi_gece_g%C3%B6r%C3%BCn%C3%BCm%C3%BC..jpg",
+   "city": "İzmir",
+   "subject": "Konak Saat Kulesi"
+  },
+  {
+   "file": "antalya-aspendos-1.jpg",
+   "title": "Aspendos Theatre, Turkey.jpg",
+   "author": "Lee Vilenski",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Aspendos_Theatre,_Turkey.jpg",
+   "city": "Antalya",
+   "subject": "Aspendos Tiyatrosu"
+  },
+  {
+   "file": "antalya-aspendos-2.jpg",
+   "title": "Aspendos Theatre Scaenae frons whole breadth 7341.jpg",
+   "author": "Dosseman",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Aspendos_Theatre_Scaenae_frons_whole_breadth_7341.jpg",
+   "city": "Antalya",
+   "subject": "Aspendos Tiyatrosu"
+  },
+  {
+   "file": "antalya-perge.jpg",
+   "title": "Antalya, PERGE.JPG",
+   "author": "07özlem arlı",
+   "license": "CC BY-SA 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Antalya,_PERGE.JPG",
+   "city": "Antalya",
+   "subject": "Perge"
+  },
+  {
+   "file": "antalya-muze-1.jpg",
+   "title": "Antalya Müzesi (Archäologisches Museum Antalya).JPG",
+   "author": "Dat doris",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Antalya_M%C3%BCzesi_(Arch%C3%A4ologisches_Museum_Antalya).JPG",
+   "city": "Antalya",
+   "subject": "Antalya Müzesi"
+  },
+  {
+   "file": "antalya-muze-2.jpg",
+   "title": "Antalya Museum Mosaic P9281528.jpg",
+   "author": "Joe Wallace",
+   "license": "CC BY-SA 2.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Antalya_Museum_Mosaic_P9281528.jpg",
+   "city": "Antalya",
+   "subject": "Antalya Müzesi (mozaik)"
+  },
+  {
+   "file": "antalya-duden-1.jpg",
+   "title": "Uper Düden Waterfalls 2018.jpg",
+   "author": "Azerifactory",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Uper_D%C3%BCden_Waterfalls_2018.jpg",
+   "city": "Antalya",
+   "subject": "Yukarı Düden Şelalesi"
+  },
+  {
+   "file": "antalya-duden-2.jpg",
+   "title": "Düden Şelalesi.jpg",
+   "author": "tr:User:İlluminati31",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:D%C3%BCden_%C5%9Eelalesi.jpg",
+   "city": "Antalya",
+   "subject": "Düden Şelalesi"
+  },
+  {
+   "file": "antalya-kaleici-1.jpg",
+   "title": "Kaleiçi Old Town, Antalya, Turkey 26 Feb 2022.jpg",
+   "author": "Sharon Hahn Darlin",
+   "license": "CC BY 2.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Kalei%C3%A7i_Old_Town,_Antalya,_Turkey_26_Feb_2022.jpg",
+   "city": "Antalya",
+   "subject": "Kaleiçi"
+  },
+  {
+   "file": "antalya-kaleici-2.jpg",
+   "title": "Antalya Kaleici museum Agios Georgios church part 5805.jpg",
+   "author": "Dosseman",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Antalya_Kaleici_museum_Agios_Georgios_church_part_5805.jpg",
+   "city": "Antalya",
+   "subject": "Kaleiçi"
+  },
+  {
+   "file": "antalya-tram-1.jpg",
+   "title": "20230117 Historic tram, Antalya, Turkey.jpg",
+   "author": "Maksym Kozlenko",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:20230117_Historic_tram,_Antalya,_Turkey.jpg",
+   "city": "Antalya",
+   "subject": "nostaljik tramvay"
+  },
+  {
+   "file": "antalya-tram-2.jpg",
+   "title": "J22 343 Ali Cetinkaya Caddesi, Multigelenkwagen.jpg",
+   "author": "Falk2",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:J22_343_Ali_Cetinkaya_Caddesi,_Multigelenkwagen.jpg",
+   "city": "Antalya",
+   "subject": "modern tramvay"
+  },
+  {
+   "file": "tr-muze-girisi.jpg",
+   "title": "Afyonkarahisar Museum Entrance - 2.jpg",
+   "author": "Raicem",
+   "license": "CC0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Afyonkarahisar_Museum_Entrance_-_2.jpg",
+   "city": "Türkiye",
+   "subject": "müze girişi (Afyonkarahisar)"
+  },
+  {
+   "file": "tr-kapadokya-1.jpg",
+   "title": "Hot Air Balloons over Cappadocia 3.jpg",
+   "author": "Slyronit",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Hot_Air_Balloons_over_Cappadocia_3.jpg",
+   "city": "Türkiye",
+   "subject": "Kapadokya"
+  },
+  {
+   "file": "tr-kapadokya-2.jpg",
+   "title": "Cappadocia Aerial View Landscape.jpg",
+   "author": "Benh LIEU SONG (Flickr)",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Cappadocia_Aerial_View_Landscape.jpg",
+   "city": "Türkiye",
+   "subject": "Kapadokya"
+  },
+  {
+   "file": "tr-pamukkale-1.jpg",
+   "title": "The Travertine terraces of Pamukkale.jpg",
+   "author": "Slyronit",
+   "license": "CC BY-SA 4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:The_Travertine_terraces_of_Pamukkale.jpg",
+   "city": "Türkiye",
+   "subject": "Pamukkale"
+  },
+  {
+   "file": "tr-pamukkale-2.jpg",
+   "title": "Pamukkale Travertines - 2014.10 - panoramio.jpg",
+   "author": "rheins",
+   "license": "CC BY 3.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Pamukkale_Travertines_-_2014.10_-_panoramio.jpg",
+   "city": "Türkiye",
+   "subject": "Pamukkale"
+  }
+ ],
+ "missing": [
+  {
+   "city": "Eskişehir",
+   "subject": "met helvası",
+   "reason": "Commons ve Openverse (CC0/BY/BY-SA) aramasında uygun foto bulunamadı"
+  },
+  {
+   "city": "Eskişehir",
+   "subject": "Kentpark",
+   "reason": "konu zayıf"
+  },
+  {
+   "city": "Eskişehir",
+   "subject": "helvacı dükkânı (met helvası DEĞİL, yakın alternatif)",
+   "reason": "marka tabelalı, met helvası değil"
+  },
+  {
+   "city": "İstanbul",
+   "subject": "Topkapı Sarayı",
+   "reason": "seçilen foto saray değil (silah vitrini); yeniden aranmalı"
+  },
+  {
+   "city": "İstanbul",
+   "subject": "İstiklal Caddesi",
+   "reason": "konu zayıf"
+  },
+  {
+   "city": "İzmir",
+   "subject": "Konak Saat Kulesi",
+   "reason": "konu saat kulesi değil"
+  }
+ ]
+}
