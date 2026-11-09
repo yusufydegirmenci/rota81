@@ -66,3 +66,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 06:55 Sunum: DUZELTME.md madde 0: /#/vatandas/tur sunum gibi akacak (3D sahneler yer/yemek arasına), veri sorunu kod tarafında incelenecek; veri thread'i veriyi tamamlayacak.
 
 - 2026-11-09 06:56 Sunum: veri thread'i CityGuide'ı nd1pet'e koydu; DUZELTME.md madde 0'a eklendi (önce nd1pet merge).
+
+- 2026-11-09 07:00 Sunum: DUZELTME.md madde 4b: güvenli mod, PowerPoint klavyesi+notlar, PDF yedek, prova listesi+soru-cevap, İngilizce denetim.
