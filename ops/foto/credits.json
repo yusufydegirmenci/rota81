@@ -1,0 +1,361 @@
+{
+  "photos": [
+    {
+      "file": "ankara-beypazari-kurusu.jpg",
+      "title": "Beypazarı-kurusu-firinda.jpg",
+      "author": "Geziorum",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Beypazar%C4%B1-kurusu-firinda.jpg",
+      "city": "Ankara",
+      "subject": "Beypazarı kurusu"
+    },
+    {
+      "file": "ankara-ankaray.jpg",
+      "title": "Ankaray B02 Ext Down.jpg",
+      "author": "Emreoyun",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ankaray_B02_Ext_Down.jpg",
+      "city": "Ankara",
+      "subject": "Ankaray metro treni"
+    },
+    {
+      "file": "ankara-ego-otobus.jpg",
+      "title": "EGO mavi otobüs 2024.jpg",
+      "author": "Kayra",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:EGO_mavi_otob%C3%BCs_2024.jpg",
+      "city": "Ankara",
+      "subject": "EGO otobüsü"
+    },
+    {
+      "file": "ankara-hamamonu-evleri.jpg",
+      "title": "Tarihi Hamamönü Evleri, Ankara.jpg",
+      "author": "BIG-K006",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tarihi_Hamam%C3%B6n%C3%BC_Evleri,_Ankara.jpg",
+      "city": "Ankara",
+      "subject": "Hamamönü sokağı/evleri"
+    },
+    {
+      "file": "ankara-hamamonu-sokak.jpg",
+      "title": "Hamamönü (6477376115).jpg",
+      "author": "Omer Unlu from Ankara, Turkey",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hamam%C3%B6n%C3%BC_(6477376115).jpg",
+      "city": "Ankara",
+      "subject": "Hamamönü"
+    },
+    {
+      "file": "ankara-atakule.jpg",
+      "title": "Atakule, 2019 01.jpg",
+      "author": "Gargarapalvin",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Atakule,_2019_01.jpg",
+      "city": "Ankara",
+      "subject": "Atakule"
+    },
+    {
+      "file": "eskisehir-sazova-parki.jpg",
+      "title": "Sazova Park, Eskişehir, Turkey 02.jpg",
+      "author": "Murat Özsoy 1958",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sazova_Park,_Eski%C5%9Fehir,_Turkey_02.jpg",
+      "city": "Eskişehir",
+      "subject": "Sazova Parkı"
+    },
+    {
+      "file": "eskisehir-porsuk-gondol.jpg",
+      "title": "Eskişehir Along River gondola in 2018 8548.jpg",
+      "author": "Dosseman",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eski%C5%9Fehir_Along_River_gondola_in_2018_8548.jpg",
+      "city": "Eskişehir",
+      "subject": "Porsuk'ta gondol"
+    },
+    {
+      "file": "eskisehir-tramvay.jpg",
+      "title": "EskişehirTramvay.jpg",
+      "author": "Vincent Vega",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eski%C5%9FehirTramvay.jpg",
+      "city": "Eskişehir",
+      "subject": "Eskişehir tramvayı"
+    },
+    {
+      "file": "eskisehir-tramvay-2.jpg",
+      "title": "Tram, Eskişehir 01.jpg",
+      "author": "Zeynel Cebeci",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tram,_Eski%C5%9Fehir_01.jpg",
+      "city": "Eskişehir",
+      "subject": "Eskişehir tramvayı"
+    },
+    {
+      "file": "eskisehir-odunpazari-evleri.jpg",
+      "title": "Odunpazarı Evleri (1).jpg",
+      "author": "Canercangul",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Odunpazar%C4%B1_Evleri_(1).jpg",
+      "city": "Eskişehir",
+      "subject": "Odunpazarı evleri"
+    },
+    {
+      "file": "eskisehir-odunpazari-sokak.jpg",
+      "title": "Odunpazarı, Eskişehir, Turkey 18.jpg",
+      "author": "Murat Özsoy 1958",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Odunpazar%C4%B1,_Eski%C5%9Fehir,_Turkey_18.jpg",
+      "city": "Eskişehir",
+      "subject": "Odunpazarı"
+    },
+    {
+      "file": "istanbul-kadikoy-iskele.jpg",
+      "title": "Kadıköy Ferry Terminal in January 2024 01.jpg",
+      "author": "Kurmanbek",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kad%C4%B1k%C3%B6y_Ferry_Terminal_in_January_2024_01.jpg",
+      "city": "İstanbul",
+      "subject": "Kadıköy iskelesi"
+    },
+    {
+      "file": "istanbul-galata-balikcilar.jpg",
+      "title": "Galata bridge fishermen 1.jpg",
+      "author": "Jwslubbock",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Galata_bridge_fishermen_1.jpg",
+      "city": "İstanbul",
+      "subject": "Galata Köprüsü balıkçıları"
+    },
+    {
+      "file": "istanbul-galata-balikcilar-2.jpg",
+      "title": "Fishermen on Galata Bridge.JPG",
+      "author": "Martin Falbisoner",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fishermen_on_Galata_Bridge.JPG",
+      "city": "İstanbul",
+      "subject": "Galata Köprüsü balıkçıları"
+    },
+    {
+      "file": "istanbul-nostaljik-tramvay.jpg",
+      "title": "IstanbulNostalgicTram (1).JPG",
+      "author": "CeeGee",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:IstanbulNostalgicTram_(1).JPG",
+      "city": "İstanbul",
+      "subject": "Beyoğlu nostaljik tramvay"
+    },
+    {
+      "file": "istanbul-nostaljik-tramvay-2.jpg",
+      "title": "NostalgicTramİstiklalAvenue.jpg",
+      "author": "CeeGee",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:NostalgicTram%C4%B0stiklalAvenue.jpg",
+      "city": "İstanbul",
+      "subject": "Beyoğlu nostaljik tramvay"
+    },
+    {
+      "file": "istanbul-metro-m2.jpg",
+      "title": "M2 Gayrettepe Station and train 20220118.jpg",
+      "author": "Jelican9",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:M2_Gayrettepe_Station_and_train_20220118.jpg",
+      "city": "İstanbul",
+      "subject": "İstanbul metrosu M2"
+    },
+    {
+      "file": "istanbul-metro-halic.jpg",
+      "title": "Haliç (Istanbul Metro).JPG",
+      "author": "My another account (talk)",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hali%C3%A7_(Istanbul_Metro).JPG",
+      "city": "İstanbul",
+      "subject": "İstanbul metrosu Haliç"
+    },
+    {
+      "file": "istanbul-balik-ekmek-tekne.jpg",
+      "title": "Balik ekmek Eminönü teknesi.jpg",
+      "author": "PapaYoung89",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Balik_ekmek_Emin%C3%B6n%C3%BC_teknesi.jpg",
+      "city": "İstanbul",
+      "subject": "Eminönü balık ekmek teknesi"
+    },
+    {
+      "file": "istanbul-balik-ekmek-tekne-2.jpg",
+      "title": "Vendeurs de balik ekmek (1).jpg",
+      "author": "Jpbazard Jean-Pierre Bazard",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Vendeurs_de_balik_ekmek_(1).jpg",
+      "city": "İstanbul",
+      "subject": "Eminönü balık ekmek tekneleri"
+    },
+    {
+      "file": "izmir-boyoz.jpg",
+      "title": "Boyoz in İzmir.jpg",
+      "author": "BSRF",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Boyoz_in_%C4%B0zmir.jpg",
+      "city": "İzmir",
+      "subject": "Boyoz"
+    },
+    {
+      "file": "izmir-boyoz-2.jpg",
+      "title": "Boyoz3.jpg",
+      "author": "oğulcan bakiler, soner k.",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Boyoz3.jpg",
+      "city": "İzmir",
+      "subject": "Boyoz"
+    },
+    {
+      "file": "izmir-kumru.jpg",
+      "title": "Izmir kumru sandwich 1.jpg",
+      "author": "Samizambak",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Izmir_kumru_sandwich_1.jpg",
+      "city": "İzmir",
+      "subject": "Kumru"
+    },
+    {
+      "file": "izmir-kemeralti.jpg",
+      "title": "Izmir Kemeraltı Çarşısı 5896.jpg",
+      "author": "Dosseman",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Izmir_Kemeralt%C4%B1_%C3%87ar%C5%9F%C4%B1s%C4%B1_5896.jpg",
+      "city": "İzmir",
+      "subject": "Kemeraltı Çarşısı"
+    },
+    {
+      "file": "izmir-kemeralti-2.jpg",
+      "title": "Kemeraltı daytime.jpg",
+      "author": "Francisco Anzola",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kemeralt%C4%B1_daytime.jpg",
+      "city": "İzmir",
+      "subject": "Kemeraltı Çarşısı"
+    },
+    {
+      "file": "izmir-konak-iskele.jpg",
+      "title": "Konak Ferry Terminal, October 2015 (1).jpg",
+      "author": "Pixabay, 1508857",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Konak_Ferry_Terminal,_October_2015_(1).jpg",
+      "city": "İzmir",
+      "subject": "Konak iskelesi"
+    },
+    {
+      "file": "izmir-tramvay.jpg",
+      "title": "Alsancak Limanı Tramvay İstastonu.jpg",
+      "author": "0tanımsız",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Alsancak_Liman%C4%B1_Tramvay_%C4%B0stastonu.jpg",
+      "city": "İzmir",
+      "subject": "İzmir tramvayı"
+    },
+    {
+      "file": "izmir-nostaljik-tramvay.jpg",
+      "title": "Nostaljik tramvay araçları.jpg",
+      "author": "BSRF",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Nostaljik_tramvay_ara%C3%A7lar%C4%B1.jpg",
+      "city": "İzmir",
+      "subject": "İzmir nostaljik tramvay"
+    },
+    {
+      "file": "izmir-asansor.jpg",
+      "title": "Izmir Asansör (October 2018).jpg",
+      "author": "Francisco Anzola",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Izmir_Asans%C3%B6r_(October_2018).jpg",
+      "city": "İzmir",
+      "subject": "Tarihi Asansör"
+    },
+    {
+      "file": "antalya-piyazi.jpg",
+      "title": "20240907 Tahinli Antalya Piyazı.jpg",
+      "author": "Basak",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:20240907_Tahinli_Antalya_Piyaz%C4%B1.jpg",
+      "city": "Antalya",
+      "subject": "Antalya (tahinli) piyazı"
+    },
+    {
+      "file": "antalya-kabak-tatlisi.jpg",
+      "title": "Kabak Tatlisi.jpg",
+      "author": "Tokerm",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kabak_Tatlisi.jpg",
+      "city": "Antalya",
+      "subject": "Kabak tatlısı"
+    },
+    {
+      "file": "antalya-yivli-minare.jpg",
+      "title": "Yivli Minare Camii.JPG",
+      "author": "Cobija",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yivli_Minare_Camii.JPG",
+      "city": "Antalya",
+      "subject": "Yivli Minare"
+    },
+    {
+      "file": "antalya-yivli-minare-2.jpg",
+      "title": "Yivli Minare Mosque 01.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yivli_Minare_Mosque_01.jpg",
+      "city": "Antalya",
+      "subject": "Yivli Minare"
+    },
+    {
+      "file": "antalya-eski-liman.jpg",
+      "title": "Antalya Harbour East side ın 2015 44.jpg",
+      "author": "Dosseman",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Antalya_Harbour_East_side_%C4%B1n_2015_44.jpg",
+      "city": "Antalya",
+      "subject": "Kaleiçi Eski Liman"
+    },
+    {
+      "file": "antalya-kaleici.jpg",
+      "title": "Antalya kaleiçi 2.jpg",
+      "author": "REHBER0770",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Antalya_kalei%C3%A7i_2.jpg",
+      "city": "Antalya",
+      "subject": "Kaleiçi"
+    },
+    {
+      "file": "antalya-konyaalti-plaji.jpg",
+      "title": "Konyaaltı Plajı 2025.jpg",
+      "author": "August Dominus",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Konyaalt%C4%B1_Plaj%C4%B1_2025.jpg",
+      "city": "Antalya",
+      "subject": "Konyaaltı plajı"
+    },
+    {
+      "file": "antalya-konyaalti-manzara.jpg",
+      "title": "View of Konyaaltı Beach and Beydağları Mountains, Antalya.jpg",
+      "author": "FingerWiki",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:View_of_Konyaalt%C4%B1_Beach_and_Beyda%C4%9Flar%C4%B1_Mountains,_Antalya.jpg",
+      "city": "Antalya",
+      "subject": "Konyaaltı plajı"
+    },
+    {
+      "file": "antalya-nostaljik-tramvay.jpg",
+      "title": "20230117 Historic tram, Antalya, Turkey.jpg",
+      "author": "Maksym Kozlenko",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:20230117_Historic_tram,_Antalya,_Turkey.jpg",
+      "city": "Antalya",
+      "subject": "Antalya nostaljik tramvay"
+    }
+  ],
+  "missing": [
+    "Eskişehir çibörek (Commons'ta uygun lisanslı/Eskişehir'e özgü foto bulunamadı)",
+    "Eskişehir met helvası",
+    "Kadıköy çarşısı (net yatay kare bulunamadı; iskele fotoğrafı eklendi)",
+    "Antalya tahinli kabak tatlısı (yerine düz kabak tatlısı eklendi)"
+  ]
+}
