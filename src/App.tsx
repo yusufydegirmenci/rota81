@@ -5,6 +5,7 @@ import * as C from './pages/citizen'
 import * as Y from './pages/city'
 import * as N from './pages/national'
 import { TourPage } from './pages/tour'
+import { CityGuidePage } from './pages/rehber'
 import { OneCard } from './pages/onecard'
 import { Login, Register, Welcome } from './pages/public'
 import { WelcomeBanner } from './ui/WelcomeBanner'
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="kart" element={<C.CardPage />} />
             <Route path="tek-kart" element={<OneCard />} />
             <Route path="tur" element={<TourPage />} />
+            <Route path="rehber" element={<CityGuidePage />} />
             <Route path="cuzdan" element={<C.Wallet />} />
             <Route path="yukle" element={<C.TopUp />} />
             <Route path="islemler" element={<C.History />} />
