@@ -92,3 +92,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:30 Sunum: STRATEJİ DEĞİŞTİ. DUZELTME.md başına bağlayıcı bölüm: önce 12-15 slaytlık temiz profesyonel hikâye modu, 3D = isteğe bağlı Derin bakış (yalnız testi geçenler), her slayt ekran görüntüsüyle acımasız denetim, dürüst rapor.
 
 - 2026-11-09 07:50 Sunum: kullanıcının ChatGPT planı (ops/kaynak/chatgpt-tek-ulasim-karti-sunum-plani.pdf; solo gezgin, hibrit NatGeo+Apple, 5 şehir, 22 slayt, 4 teknoloji durağı) ana hikâye olarak DUZELTME.md A0'a işlendi.
+
+- 2026-11-09 11:05 Sunum: A0 uygulandı. Ana sunum = 22 slaytlık tek gezgin hikâyesi (#/sunum), 13 lisanslı Commons foto (public/foto, künye src/sunum/foto.ts), eski 42 slayt #/sunum/ek, PDF 22+43 sayfa, 3D derin bakış ?deep=1 ile gizli. Rapor ops/raporlar/yeniden.md (dürüst eksikler dahil). VERİ İSTEĞİ: Eskişehir/İzmir/Antalya yemekleri (çibörek, met helva, boyoz, kumru, Antalya piyazı, tahinli kabak tatlısı) için lisanslı foto; gezgin portre/arka-dönük yolcu foto.

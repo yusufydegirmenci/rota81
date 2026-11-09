@@ -1,227 +1,184 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { photoOf } from './tours'
 import { SLIDES } from './slides'
+import { Card, CardArt, Flow, DotMap, Pts, Slide, SvgIcon, Tag, Trail, credits, logo, ph } from './HikayeParts'
 import './hikaye.css'
+import './hikaye-a0.css'
 
-const B = import.meta.env.BASE_URL
-const logo = (n: string) => `${B}marka/${n}.svg`
-const concept = (n: string) => `${B}hedef/${n}.jpg`
+/** Story deck A0: one traveller, five cities, one card. Four small "technology stops" sit inside the journey. All text is English (class language); the plan source is Turkish. */
+const TOTAL = 22
+const PATHS: Record<string, number[] | undefined> = { '10': [1, 2, 4, 5, 6, 7, 9, 11, 12, 15, 18, 19, 21, 22], '3': [1, 4, 5, 7, 17, 22] }
 
-/* ── icons (24px, stroke) ── */
-const P: Record<string, string> = {
-  bus: 'M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10M5 16h14M5 16v2h2v-2M19 16v2h-2v-2M5 11h14M8.5 13.5h.01M15.5 13.5h.01',
-  train: 'M7 3h10a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2zM5 10h14M9 21l2-4M15 21l-2-4M9 14h.01M15 14h.01',
-  food: 'M6 3v7a2 2 0 0 0 2 2v9M10 3v7M6 6.5h4M17 3c-2 1-3 3.5-3 6.5 0 1.5 1 2.5 3 2.5v9',
-  museum: 'M3 9l9-5 9 5M5 9v9M9 9v9M15 9v9M19 9v9M3 20h18M3 9h18',
-  car: 'M5 16l1.5-5.5A2 2 0 0 1 8.4 9h7.2a2 2 0 0 1 1.9 1.5L19 16M4 16h16v3h-2.5v-1.5h-11V19H4zM8 13h.01M16 13h.01',
-  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M6.5 15h4',
-  lock: 'M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2',
-  eye: 'M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
-  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
-  cash: 'M3 7h18v10H3zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM6 10h.01M18 14h.01',
-  map: 'M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
-  phone: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2',
-  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20a7.5 7.5 0 0 1 15 0',
-  star: 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z',
-}
-const Ico = ({ n, or }: { n: string; or?: boolean }) => (
-  <span className={'hk-ico' + (or ? ' or' : '')} aria-hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={P[n]} /></svg></span>
-)
+const jump = (id: string) => { const i = SLIDES.findIndex((s) => s.id === id); try { localStorage.setItem('foradas-sunum-v1', JSON.stringify({ i: Math.max(i, 0), s: 0 })) } catch { /* ignore */ } }
+/** B) 3D labs stay a hidden option (they did not pass the designer test). Show with ?deep=1. */
+const DEEP = (id: string) => !/[?&]deep=1/.test(location.hash) ? null : <button className="hk-link" onClick={() => { jump(id); location.hash = '#/sunum/ek' }}>Deep dive: 3D lab →</button>
 
-/* ── building blocks ── */
-interface SP { kick: string; title: string; dark?: boolean; n: number; children: ReactNode; lead?: string }
-const Slide = ({ kick, title, dark, n, children, lead }: SP) => (
-  <section className={'hk-slide' + (dark ? ' hk-dark' : '')} aria-label={title}>
-    <p className="hk-kick">{kick}</p>
-    <h2>{title}</h2>
-    {lead && <p className="hk-lead">{lead}</p>}
-    {children}
-    <div className="hk-foot"><img src={logo(dark ? 'FORA_logo-yatay-FORADAS-koyu' : 'FORA_logo-yatay-FORADAS')} alt="FORADAŞ" /><span>{n} / {TOTAL}</span></div>
-  </section>
-)
-const Pts = ({ items }: { items: ReactNode[] }) => <ul className="hk-pts">{items.map((t, i) => <li key={i}>{t}</li>)}</ul>
-const Card = ({ ico, h, t, or }: { ico?: string; h: string; t: string; or?: boolean }) => <div className="hk-card">{ico && <Ico n={ico} or={or} />}<h3>{h}</h3><p>{t}</p></div>
-const Tag = ({ t }: { t: 'REAL' | 'DESIGN' | 'SIMULATION' }) => <span className="hk-tag" style={{ color: t === 'REAL' ? '#1a7f4b' : t === 'DESIGN' ? '#0b2d6b' : '#c25a00' }}>{t}</span>
-const Flow = ({ steps, hot, cmp }: { steps: [string, string][]; hot?: number; cmp?: boolean }) => (
-  <div className="hk-flow" style={cmp ? { ['--sh' as string]: 'calc(10 * var(--u))' } : undefined}>{steps.map(([h, t], i) => <div key={h} className={'hk-step' + (hot === i ? ' hot' : '')}><i>{i + 1}</i><h3>{h}</h3><p>{t}</p></div>)}</div>
-)
-const Credit = ({ id }: { id: string }) => { const p = photoOf(id); return p ? <p className="hk-credit">Photo: {p.credit} · Wikimedia Commons</p> : null }
-const Photo = ({ id, h }: { id: string; h: number }) => { const p = photoOf(id); return p ? <img className="hk-img" src={p.url} alt={id} style={{ height: `calc(${h} * var(--u))` }} loading="eager" /> : null }
-
-/** Hub diagram: one card in the middle, five services around it. Big labels so it stays readable on a phone. */
-function Hub() {
-  const sat: [string, string, number, number][] = [['bus', 'Bus', 130, 90], ['train', 'Metro', 130, 440], ['food', 'Restaurants', 670, 90], ['museum', 'Museums', 670, 440], ['car', 'Car rental', 400, 500]]
+interface CityDef { num: string; name: string; at: number; msg: string; hero: string; thumbs: string[]; sights: string; food: string; go: { ico: string; t: string }; acc: string; side: 'l' | 'r' | 'b' }
+function City({ c, n }: { c: CityDef; n: number }) {
+  const hero = ph(c.hero)
   return (
-    <svg viewBox="0 0 800 620" width="100%" role="img" aria-label="One card connects bus, metro, restaurants, museums and car rental" style={{ maxHeight: '100%' }}>
-      {sat.map(([, , x, y]) => <line key={x + '-' + y} x1="400" y1="265" x2={x} y2={y} stroke="#ff7a00" strokeWidth="5" strokeDasharray="2 12" strokeLinecap="round" />)}
-      <rect x="290" y="195" width="220" height="140" rx="18" fill="#0b2d6b" /><rect x="312" y="222" width="52" height="40" rx="7" fill="#ff7a00" />
-      <path d="M400 232q22 14 0 34M418 224q34 24 0 52M436 216q44 34 0 70" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity=".85" />
-      <text x="400" y="312" textAnchor="middle" fill="#fff" fontSize="26" fontWeight="800" fontFamily="Bricolage Grotesque, sans-serif">FORADAŞ card</text>
-      {sat.map(([k, l, x, y]) => (
-        <g key={l}><circle cx={x} cy={y} r="62" fill="#fff" stroke="#0b2d6b" strokeWidth="5" />
-          <g transform={`translate(${x - 26} ${y - 40}) scale(2.17)`} fill="none" stroke="#0b2d6b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={P[k]} /></g>
-          <text x={x} y={y + 90} textAnchor="middle" fill="#0a1b3d" fontSize="30" fontWeight="700" fontFamily="Geist, sans-serif">{l}</text></g>
-      ))}
-    </svg>
+    <section className={'hk-slide hk-dark hk-city side-' + c.side} aria-label={c.name} style={{ ['--acc' as string]: c.acc }}>
+      <img className="hk-bleed" src={hero.url} alt="" /><div className="hk-veil" />
+      <Trail at={c.at} />
+      <div className="hk-citybox">
+        <p className="hk-kick" style={{ color: c.acc }}>{c.num} — {c.name.toUpperCase()}</p>
+        <h2>{c.msg}</h2>
+        <ul className="hk-trio">
+          <li><SvgIcon n="map" /><span>{c.sights}</span></li>
+          <li><SvgIcon n="food" /><span>{c.food}</span></li>
+          <li><SvgIcon n={c.go.ico} /><span>{c.go.t}</span></li>
+        </ul>
+      </div>
+      <div className="hk-thumbs">{c.thumbs.map((t) => <img key={t} src={ph(t).url} alt="" />)}</div>
+      <div className="hk-foot"><span>{credits([c.hero, ...c.thumbs])}</span><span>{n} / {TOTAL}</span></div>
+    </section>
   )
 }
 
-const jump = (id: string) => { const i = SLIDES.findIndex((s) => s.id === id); try { localStorage.setItem('foradas-sunum-v1', JSON.stringify({ i: Math.max(i, 0), s: 0 })) } catch { /* ignore */ } }
-
-/* ── the deck ── */
-interface Def { id: string; say: string; deep?: string; el: (n: number) => ReactNode }
-/** B) 3D labs are a hidden option: they did not pass the designer test, so the main flow stays 3D-free. Open one with ?deep=1 in the URL. */
-const DEEP = (id: string) => !/[?&]deep=1/.test(location.hash) ? null : <button className="hk-link" onClick={() => { jump(id); location.hash = '#/sunum/ek' }}>Deep dive: 3D lab →</button>
+interface Def { id: number; say: string; el: (n: number) => ReactNode }
+const city = (c: CityDef) => (n: number) => <City c={c} n={n} />
+const S = (p: { kick: string; title: string; at?: number; dark?: boolean; tech?: boolean; lead?: string }, kids: ReactNode) => (n: number) => <Slide n={n} total={TOTAL} {...p}>{kids}</Slide>
+const col = { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(2.2 * var(--u))' } as const
 
 const DECK: Def[] = [
-  { id: 'title', say: 'Good morning. Today I will show you a single smart card for a whole city. One card, many services. First, the problem; then the card; then what happens when you tap it.',
+  { id: 1, say: 'Imagine setting out to discover a country. Five cities, dozens of stops, and one card.',
     el: (n) => (
-      <section className="hk-slide hk-dark" aria-label="Title">
-        <img className="hk-bleed" src={concept('h5-durak-sahnesi')} alt="" /><div className="hk-veil" />
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center' }}>
-          <img src={logo('FORA_logo-yatay-FORADAS-koyu')} alt="FORADAŞ" style={{ height: 'calc(3.4 * var(--u))', alignSelf: 'flex-start', marginBottom: 'calc(3 * var(--u))' }} />
-          <h1>One card for the whole city.</h1>
-          <p className="hk-lead" style={{ color: '#fff', maxWidth: '52%' }}><b style={{ color: '#ff7a00' }}>What is it?</b> One smart card for buses, metro, restaurants and museums.</p>
-          <p className="hk-lead" style={{ color: '#cfdcf5', marginTop: 'calc(.8 * var(--u))', maxWidth: '52%' }}><b style={{ color: '#ff7a00' }}>What problem does it solve?</b> Too many tickets, cards and apps.</p>
-        </div>
-        <div className="hk-foot"><span>Reference design · fictional city of Marisa · Concept illustration</span><span>{n} / {TOTAL}</span></div>
+      <section className="hk-slide hk-dark hk-cover" aria-label="Cover">
+        <img className="hk-bleed" src={ph('kapak').url} alt="" /><div className="hk-veil hk-veil-b" />
+        <img src={logo('FORA_logo-yatay-FORADAS-koyu')} alt="FORADAŞ" className="hk-coverlogo" />
+        <div className="hk-covertext"><h1>81 CITIES.<br />ONE JOURNEY.</h1><p className="hk-lead">Can one transport card take us across Türkiye?</p></div>
+        <div className="hk-foot"><span>National Shared Transport Card Project · {credits(['kapak'])}</span><span>{n} / {TOTAL}</span></div>
       </section>) },
-  { id: 'agenda', say: 'This talk has six short parts. We start with the problem and end with a summary.',
+  { id: 2, say: 'When we move from one city to another, we also have to rebuild our travel habits.',
+    el: S({ kick: 'The journey begins', title: 'Do we have to start again in every city?' },
+      <div className="hk-body"><div className="hk-col" style={{ flex: 1.1 }}>
+        <div className="hk-fan" aria-hidden>{['City A card', 'City B card', 'City C card', 'Top-up app', 'Paper ticket'].map((t, i) => <div key={t} style={{ transform: `rotate(${(i - 2) * 7}deg) translateY(${Math.abs(i - 2) * 8}px)`, zIndex: i }}><SvgIcon n="card" size={28} /><b>{t}</b></div>)}</div></div>
+        <div className="hk-col"><Pts items={['A new city means a new transport card.', 'Balances are loaded separately and are often left unused.', 'Different apps and payment systems everywhere.']} /></div></div>) },
+  { id: 3, say: 'The real problem is that transport is cut apart at city borders.',
+    el: S({ kick: 'The size of the problem', title: 'The problem is not only the number of cards.', dark: true },
+      <div className="hk-body"><div className="hk-grid3 big">
+        <Card ico="clock" or h="Lost time" t="Queues at ticket machines in every new city." />
+        <Card ico="wallet" or h="Balance chaos" t="Many small balances. Some are never used." />
+        <Card ico="layers" or h="Confusion" t="Frequent travellers, students and tourists feel it most." />
+      </div></div>) },
+  { id: 4, say: 'So what if one card were enough? This is the idea we want to explore.',
     el: (n) => (
-      <Slide n={n} kick="Agenda" title="Six short parts, one clear story.">
-        <div className="hk-body"><div className="hk-grid3 mid">
-          {[['The problem', 'Why one city needs one card'], ['The card', 'A chip and a tiny antenna'], ['The tap', 'What happens in one second'], ['Behind the scenes', 'Software, safely and simply'], ['People and business', 'Riders, shops, tourists'], ['Summary', 'Three messages to remember']].map(([h, t], i) => (
-            <div className="hk-card" key={h}><div className="hk-num">{i + 1}</div><h3>{h}</h3><p>{t}</p></div>))}
-        </div></div>
-      </Slide>) },
-  { id: 'problem', say: 'Think about visiting a new city. You buy a paper ticket for the bus, another for the metro, and you pay cash in the restaurant. This is slow for you and expensive for the city.',
-    el: (n) => (
-      <Slide n={n} kick="1 · The problem" title="Every service wants its own ticket.">
-        <div className="hk-body">
-          <div className="hk-col" style={{ flex: 1.1 }}><div className="hk-grid3" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Card ico="bus" h="Bus ticket" t="Buy it before you board." /><Card ico="train" h="Metro card" t="A different card, a different top-up." />
-            <Card ico="museum" h="Museum pass" t="Queue at a separate desk." /><Card ico="cash" h="Cash" t="Slow in shops, risky for the city." />
-          </div></div>
-          <div className="hk-col"><Pts items={[<><b>Visitors</b> carry many tickets.</>, <><b>Operators</b> lose time and money handling cash.</>, <><b>A shared card</b> needs shared rules, not only shared plastic.</>]} /></div>
+      <section className="hk-slide hk-launch" aria-label="Product launch">
+        <p className="hk-kick">The idea</p>
+        <div className="hk-body" style={{ marginTop: 'calc(1 * var(--u))' }}>
+          <div className="hk-col" style={{ flex: 1.1 }}><h2 style={{ maxWidth: '100%' }}>What if one card were enough?</h2>
+            <p className="hk-lead" style={{ maxWidth: '100%', color: 'var(--ink)' }}>A shared transport card for all 81 provinces of Türkiye.</p>
+            <p className="hk-lead" style={{ maxWidth: '100%', marginTop: 'calc(.4 * var(--u))' }}><b style={{ color: 'var(--navy)' }}>One card. One balance experience. A shared transport network.</b></p></div>
+          <div className="hk-col" style={{ alignItems: 'center' }}><CardArt /><p className="hk-credit">Symbolic card design, not a final product.</p></div>
         </div>
-      </Slide>) },
-  { id: 'solution', say: 'The idea is simple. One card. The same card works on the bus, in the metro, in restaurants and in museums. One account, one balance.',
+        <div className="hk-foot"><img src={logo('FORA_logo-yatay-FORADAS')} alt="FORADAŞ" /><span>{n} / {TOTAL}</span></div>
+      </section>) },
+  { id: 5, say: 'Let us try this idea on a real journey.',
+    el: S({ kick: 'The route', title: 'One traveller. Five cities. The same card.', dark: true },
+      <div className="hk-body" style={{ flexDirection: 'column', gap: 'calc(1 * var(--u))' }}>
+        <div style={{ width: '100%', flex: 1, minHeight: 0, display: 'flex', alignItems: 'center' }}><DotMap lit={['06', '26', '34', '35', '07']} route label /></div>
+        <p className="hk-note"><Tag t="DESIGN" /><span>Between cities: train, plane or coach. The card is for city transport. Schematic map, one dot per province.</span></p>
+      </div>) },
+  { id: 6, say: 'Our first stop is Ankara. We explore the city by public transport.',
+    el: city({ num: '01', name: 'Ankara', at: 0, msg: 'The journey begins.', hero: 'ankara-hamamonu', thumbs: ['ankara-kale', 'ankara-tava'], sights: 'Anıtkabir · Hamamönü · Ankara Castle', food: 'Ankara tava · Beypazarı dried fruit', go: { ico: 'bus', t: 'Bus · Metro · Ankaray' }, acc: '#ff9a3c', side: 'l' }) },
+  { id: 7, say: 'The moment we tap the card, the system checks that it is valid. Then the ride can start.',
+    el: S({ kick: 'Technology stop 01', title: 'One tap. The journey has started.', dark: true, tech: true, at: 0 },
+      <div className="hk-body" style={col}>
+        <Flow hot={0} steps={[['Tap', 'The card meets the reader. Radio signals wake the card (NFC).'], ['Card check', 'The card proves it is genuine.'], ['Fare check', 'Balance and city tariff are checked.'], ['Approve', 'Green light and a beep.'], ['Record', 'The ride is saved as a transaction.']]} />
+        <div className="hk-note"><Tag t="SIMULATION" /><span>Contactless (NFC) communication, secure card ID, authorisation and transaction check.</span>{DEEP('tap')}</div>
+      </div>) },
+  { id: 8, say: 'After Ankara we arrive in Eskişehir. We ride the tram, and we do not buy a new card.',
+    el: city({ num: '02', name: 'Eskişehir', at: 1, msg: 'History, youth and city life.', hero: 'eskisehir-porsuk', thumbs: ['eskisehir-odunpazari', 'eskisehir-tram'], sights: 'Odunpazarı · Porsuk River · Sazova Park', food: 'Çibörek · Met helva', go: { ico: 'tram', t: 'Tram · Bus' }, acc: '#3fd0c9', side: 'b' }) },
+  { id: 9, say: 'Every municipality may run its own system. What matters is that the systems can talk to each other through a shared base.',
+    el: S({ kick: 'Technology stop 02', title: 'Each city runs its own system. The card experience stays the same.', dark: true, tech: true, at: 1 },
+      <div className="hk-body"><div className="hk-col" style={{ flex: 1.15 }}>
+        <svg viewBox="0 0 640 400" width="100%" role="img" aria-label="City systems connect to a shared integration layer around the national card">
+          {([['Ankara', 70, 40], ['Eskişehir', 320, 20], ['İstanbul', 570, 40], ['İzmir', 70, 350], ['Antalya', 570, 350]] as [string, number, number][]).map(([n, x, y]) => <g key={n}><line x1={x} y1={y} x2="320" y2="200" stroke="#ff7a00" strokeWidth="4" strokeDasharray="3 10" strokeLinecap="round" /><rect x={x - 62} y={y - 24} width="124" height="48" rx="12" fill="#fff" /><text x={x} y={y + 9} textAnchor="middle" fontSize="23" fontWeight="700" fill="#0b2d6b" fontFamily="Geist, sans-serif">{n}</text></g>)}
+        <rect x="150" y="150" width="340" height="100" rx="18" fill="#3fd0c9" /><text x="320" y="192" textAnchor="middle" fontSize="28" fontWeight="800" fill="#071d47" fontFamily="Bricolage Grotesque, sans-serif">Shared integration</text><text x="320" y="226" textAnchor="middle" fontSize="28" fontWeight="800" fill="#071d47" fontFamily="Bricolage Grotesque, sans-serif">layer</text>
+          </svg></div>
+        <div className="hk-col"><Pts items={[<><b>One card standard</b> for everyone.</>, <><b>Shared checks</b> across operators.</>, <><b>Local tariffs</b> stay with each city.</>]} /><div className="hk-note"><Tag t="PROPOSAL" /><span>Municipality and operator integration is a design, not a live system.</span></div>{DEEP('interop')}</div></div>) },
+  { id: 10, say: 'We reach the next city with an intercity vehicle. When we arrive in İstanbul, the same card is waiting for us.',
     el: (n) => (
-      <Slide n={n} dark kick="2 · The solution" title="One card. One network.">
-        <div className="hk-body">
-          <div className="hk-col" style={{ flex: 1.2, alignSelf: 'stretch', justifyContent: 'center' }}><div style={{ background: '#fff', borderRadius: 'calc(1.6 * var(--u))', padding: 'calc(1.5 * var(--u))' }}><Hub /></div></div>
-          <div className="hk-col"><Pts items={[<><b>One account</b>, one balance.</>, <><b>One tap</b> to ride, pay or enter.</>, <>Each city keeps <b>its own prices and rules</b>.</>]} /><div><Tag t="DESIGN" /></div></div>
-        </div>
-      </Slide>) },
-  { id: 'card', say: 'Inside the plastic there are only two things that matter: a small chip and a copper antenna. There is no battery. The reader sends power through the air, and that wakes the chip.',
+      <section className="hk-slide hk-dark hk-city side-b" aria-label="Between cities" style={{ ['--acc' as string]: '#ffc26b' }}>
+        <img className="hk-bleed" src={ph('tren').url} alt="" /><div className="hk-veil" /><Trail at={1} />
+        <div className="hk-citybox"><p className="hk-kick" style={{ color: '#ffc26b' }}>BETWEEN CITIES</p><h2>Cities change. Our card does not.</h2>
+          <ul className="hk-trio"><li><SvgIcon n="train" /><span>Eskişehir → İstanbul by train, plane or coach</span></li><li><SvgIcon n="card" /><span>Intercity travel is separate. The card is for transport inside a city.</span></li></ul></div>
+        <div className="hk-foot"><span>{credits(['tren'])}</span><span>{n} / {TOTAL}</span></div>
+      </section>) },
+  { id: 11, say: 'In İstanbul we use several kinds of transport in one day, and every time it is the same card.',
+    el: city({ num: '03', name: 'İstanbul', at: 2, msg: 'Two continents, endless discoveries.', hero: 'istanbul-bogaz', thumbs: ['istanbul-vapur', 'galata', 'simit'], sights: 'Sultanahmet · Galata · Kadıköy · the Bosphorus', food: 'Balık ekmek · Simit', go: { ico: 'ferry', t: 'Metro · Tram · Ferry · Bus' }, acc: '#ffc26b', side: 'r' }) },
+  { id: 12, say: 'The traveller sees one card. Behind it, municipalities, operators and payment systems work together.',
+    el: S({ kick: 'Technology stop 03', title: 'What stands behind one card?', dark: true, tech: true, at: 2 },
+      <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(.9 * var(--u))' }}>
+        {[['Passenger and card', 'Who rides and what they carry', '#0b2d6b'], ['Reader and validation', 'Checks the card on the vehicle or gate', '#16408a'], ['Shared integration platform', 'Identity · authorisation · transactions', '#2a8f8a'], ['Municipal systems | Payment systems', 'Each keeps its own tariffs and accounts', '#ff7a00']].map(([h, t, c], i) => (
+          <div key={h} className="hk-layer hk-rise" style={{ background: c, animationDelay: `${0.25 * i + 0.2}s` }}><b>{h}</b><span>{t}</span></div>))}
+        <div className="hk-note"><Tag t="PROPOSAL" />{DEEP('arch')}</div>
+      </div>) },
+  { id: 13, say: 'The balance is managed in one shared way, while each city keeps applying its own fares.',
+    el: S({ kick: 'Balance and payment', title: 'One balance experience. Transparent fares.' },
+      <div className="hk-body"><div className="hk-col" style={{ alignItems: 'center', flex: .8 }}>
+        <div className="hk-phone" aria-label="Example phone screen"><b className="hk-ph-t">My card</b><div className="hk-ph-bal"><small>Balance</small><strong>100.00 TRY</strong></div>
+          {[['Ankara · Bus', '−10.00'], ['Eskişehir · Tram', '−10.00'], ['İstanbul · Ferry', '−10.00']].map(([a, b]) => <div className="hk-ph-row" key={a}><span>{a}</span><em>{b}</em></div>)}</div>
+        <div className="hk-note"><Tag t="ILLUSTRATIVE" /><span>Example amounts, not real tariffs.</span></div></div>
+        <div className="hk-col"><Pts items={['Top up in one place.', 'Each city sets its own fare.', 'Every ride is recorded. Operators and municipalities reconcile later.']} /></div></div>) },
+  { id: 14, say: 'In İzmir we live the same experience. No new card, no new balance to manage.',
+    el: city({ num: '04', name: 'İzmir', at: 3, msg: 'The rhythm of the Aegean.', hero: 'izmir-kordon', thumbs: ['izmir-saat'], sights: 'Clock Tower · Kemeraltı · Kordon', food: 'Boyoz · Kumru', go: { ico: 'ferry', t: 'Metro · Tram · Ferry · Bus' }, acc: '#6cc4ff', side: 'r' }) },
+  { id: 15, say: 'A single system working in many cities has to keep people safe and keep running.',
+    el: S({ kick: 'Technology stop 04', title: 'Safe travel needs a trustworthy system.', dark: true, tech: true, at: 3 },
+      <div className="hk-body"><div className="hk-grid3 big six">
+        <Card ico="shield" teal h="Secure card check" t="The card proves it is genuine, every time." />
+        <Card ico="lock" teal h="Encrypted messages" t="Data is protected on its way to the server." />
+        <Card ico="eye" teal h="Access control" t="Only authorised people and systems can act." />
+        <Card ico="sync" teal h="No double use" t="Fraud and replayed taps are detected." />
+        <Card ico="layers" teal h="Always on" t="Backups keep the service running." />
+        <Card ico="user" teal h="Privacy first" t="Collect less. The reader sees a token, not a name." />
+      </div></div>) },
+  { id: 16, say: 'Our journey that began in Ankara ends in Antalya. We visited five cities and rode many vehicles, and the card never changed.',
+    el: city({ num: '05', name: 'Antalya', at: 4, msg: 'The last stop, on the Mediterranean.', hero: 'antalya-kaleici', thumbs: ['antalya-hadrian', 'antalya-duden'], sights: 'Kaleiçi · Düden Waterfalls · Konyaaltı', food: 'Antalya piyaz · Tahini pumpkin dessert', go: { ico: 'tram', t: 'Tram · Bus' }, acc: '#3fd0c9', side: 'b' }) },
+  { id: 17, say: 'Five cities, five experiences, one card.',
     el: (n) => (
-      <Slide n={n} kick="3 · The card" title="The card is a chip and an antenna. No battery.">
-        <div className="hk-body">
-          <div className="hk-col" style={{ alignItems: 'center' }}><img className="hk-img" src={concept('h3-kart-patlatilmis')} alt="Exploded view of a smart card: chip, middle layer, antenna coil" style={{ height: 'calc(27 * var(--u))', objectFit: 'contain', background: '#fff' }} /><p className="hk-credit">Concept illustration: card layers, exploded view</p></div>
-          <div className="hk-col" style={{ gap: 'calc(1.4 * var(--u))' }}>
-            <Card ico="card" or h="Chip" t="Holds the card number and secret keys. The keys never leave the chip." />
-            <Card ico="phone" h="Antenna" t="A copper coil. The reader's radio field gives it power, from about 4 cm away." />
-            <div>{DEEP('card-anatomy')}</div>
-          </div>
-        </div>
-      </Slide>) },
-  { id: 'tap', say: 'Now the tap. Derya holds the card near the reader. The reader wakes the card, the card proves it is real, the rules are checked and the light turns green. If there is no network, the receipt is sent later.',
+      <section className="hk-slide hk-dark" aria-label="Journey summary">
+        <p className="hk-kick">The journey in one look</p><h2>Five cities. Five experiences. One card.</h2>
+        <div className="hk-strip">{['ankara-hamamonu', 'eskisehir-odunpazari', 'istanbul-bogaz', 'izmir-kordon', 'antalya-hadrian'].map((id, i) => <figure key={id}><img src={ph(id).url} alt="" /><figcaption>{['Ankara', 'Eskişehir', 'İstanbul', 'İzmir', 'Antalya'][i]}</figcaption></figure>)}</div>
+        <p className="hk-lead" style={{ maxWidth: '100%', marginTop: 'calc(1.6 * var(--u))' }}>The culture changed. The food changed. The vehicles changed. <b style={{ color: '#ff9a3c' }}>The card did not.</b></p>
+        <div className="hk-foot"><span>{credits(['ankara-hamamonu', 'eskisehir-odunpazari', 'istanbul-bogaz', 'izmir-kordon', 'antalya-hadrian'])}</span><span>{n} / {TOTAL}</span></div>
+      </section>) },
+  { id: 18, say: 'This journey should not stop at five cities. Our goal is a shared transport experience across Türkiye.',
+    el: S({ kick: 'National vision', title: 'Five cities are only the start.', dark: true },
+      <div className="hk-body"><div className="hk-col" style={{ flex: 1.3, alignSelf: 'stretch', justifyContent: 'center' }}><DotMap lit={['06', '26', '34', '35', '07']} all /><p className="hk-credit">Target: all 81 provinces. This is a goal, not a live integration.</p></div>
+        <div className="hk-col" style={{ gap: 'calc(1.4 * var(--u))' }}>
+          <div className="hk-card"><Tag t="REAL" /><h3>Already today</h3><p>Türkiye Kart (PTT) works in the public transport of municipalities that have agreed to it.</p></div>
+          <div className="hk-card"><Tag t="PROPOSAL" /><h3>Our proposal</h3><p>Make it widespread, joined-up and focused on the traveller across 81 provinces.</p></div></div></div>) },
+  { id: 19, say: 'Instead of changing every city at once, a step-by-step integration model is more realistic.',
+    el: S({ kick: 'Is it feasible?', title: 'How can every city join the same system?' },
+      <div className="hk-body" style={col}>
+        <Flow hot={3} steps={[['Agree standards', 'Common card and transaction rules.'], ['Connect', 'Municipalities and operators join.'], ['Share revenue', 'Payment and revenue-sharing rules.'], ['Pilot', 'Test in a few pilot cities.'], ['Roll out', 'Spread step by step across the country.']]} />
+        <div className="hk-note"><Tag t="PROPOSAL" /><span>A phased plan, not a promise of dates.</span></div>
+      </div>) },
+  { id: 20, say: 'Less confusion and an easier journey, for everyone who travels.',
+    el: S({ kick: 'What changes for people', title: 'Less confusion. An easier journey.' },
+      <div className="hk-body"><div className="hk-grid3 big two">
+        <Card ico="grad" h="Students" t="Easier travel between cities." /><Card ico="user" h="Passengers" t="One card, simple to use." />
+        <Card ico="map" h="Tourists" t="Fewer cards and apps to learn." /><Card ico="museum" h="Municipalities" t="Shared standards and easier integration." />
+      </div></div>) },
+  { id: 21, say: 'Cities may differ and systems may differ. But the travel experience can be shared.',
     el: (n) => (
-      <Slide n={n} kick="4 · The tap" title="One tap: seven small steps.">
-        <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(2.4 * var(--u))' }}>
-          <Flow hot={4} steps={[['Wake up', 'The reader\'s radio field powers the card.'], ['Hello', 'The card sends its ID.'], ['Proof', 'It proves it is genuine.'], ['Rules', 'Balance, line, transfer.'], ['Go', 'Green light and a beep.'], ['Receipt', 'Saved on the device.'], ['Send', 'To the server, now or later.']]} />
-          <div className="hk-note"><Tag t="SIMULATION" /><span>No network? The ride still works. The receipt is sent later.</span>{DEEP('tap')}</div>
-        </div>
-      </Slide>) },
-  { id: 'backstage', say: 'Behind the tap, the software has five layers. Apps at the top, then one secure door, then the services, then the ledger, and operations at the bottom keep everything running.',
+      <section className="hk-slide hk-dark hk-big" aria-label="The big idea">
+        <div className="hk-collage" aria-hidden>{['ankara-hamamonu', 'eskisehir-odunpazari', 'istanbul-bogaz', 'izmir-kordon', 'antalya-kaleici'].map((id) => <img key={id} src={ph(id).url} alt="" />)}</div><div className="hk-veil hk-veil-c" />
+        <div className="hk-bigtext"><div className="hk-bigcard"><CardArt /></div><h2>Not just a transport card. A shared experience.</h2>
+          <p className="hk-lead">Cities may differ. Systems may differ. The journey can be shared.</p></div>
+        <div className="hk-foot"><span>{credits(['ankara-hamamonu', 'eskisehir-odunpazari', 'istanbul-bogaz', 'izmir-kordon', 'antalya-kaleici'])}</span><span>{n} / {TOTAL}</span></div>
+      </section>) },
+  { id: 22, say: 'Because discovering a country should not mean starting again in every city.',
     el: (n) => (
-      <Slide n={n} kick="5 · Behind the scenes" title="Five layers of software, each with one job.">
-        <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(1 * var(--u))' }}>
-          {[['Apps', 'Passenger app, city dashboard', '#0b2d6b'], ['One secure door', 'API gateway: checks who is calling', '#16408a'], ['Services', 'Fares, accounts, payments', '#2a56a8'], ['Ledger', 'A record of every transaction', '#3f6fc0'], ['Operations', 'Monitoring, backups, audits', '#ff7a00']].map(([h, t, c]) => (
-            <div key={h} className="hk-layer" style={{ background: c }}><b>{h}</b><span>{t}</span></div>))}
-          <div className="hk-note"><Tag t="DESIGN" />{DEEP('arch')}</div>
-        </div>
-      </Slide>) },
-  { id: 'security', say: 'Travel history says a lot about a person, so we collect as little as possible. The validator never sees a name. It sees a token. Analytics use counts, not people.',
-    el: (n) => (
-      <Slide n={n} dark kick="6 · Security and privacy" title="The bus never learns your name.">
-        <div className="hk-body"><div className="hk-grid3 big">
-          <Card ico="lock" or h="Locked" t="Secret keys stay inside the chip. Messages are encrypted." />
-          <Card ico="user" or h="Minimal" t="The validator sees a token, not a name." />
-          <Card ico="clock" or h="Short memory" t="City reports use counts, not people. Old data is deleted." />
-        </div></div>
-        <p className="hk-note"><Tag t="DESIGN" />Designed with the Turkish data-protection law (KVKK, Law No. 6698) in mind.</p>
-      </Slide>) },
-  { id: 'journey', say: 'Let us follow Derya for one trip. She taps on the bus. She changes to the metro and taps again. The system sees two rides close together and gives a transfer discount.',
-    el: (n) => (
-      <Slide n={n} kick="7 · The passenger" title="Derya's trip: tap, ride, transfer.">
-        <div className="hk-body">
-          <div className="hk-col" style={{ flex: 1.2 }}><img className="hk-img" src={concept('h5-durak-sahnesi')} alt="People boarding a bus at a stop" style={{ height: 'calc(26 * var(--u))' }} /><p className="hk-credit">Concept illustration (AI-generated, supplied by the author)</p></div>
-          <div className="hk-col"><Pts items={[<><b>Bus:</b> tap at the door. Fare is checked.</>, <><b>Metro:</b> tap at the gate, same card.</>, <><b>Transfer:</b> two rides close together get a discount.</>]} />{DEEP('journey')}</div>
-        </div>
-      </Slide>) },
-  { id: 'shops', say: 'Shops can accept the same card. The terminal asks for a payment, Derya taps, and the platform approves in about a second. The money moves between accounts later.',
-    el: (n) => (
-      <Slide n={n} kick="8 · Restaurants and shops" title="Paying in a restaurant: approval first, money later.">
-        <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(2.4 * var(--u))' }}>
-          <Flow hot={2} steps={[['Bill', 'The terminal shows the amount.'], ['Tap', 'Derya taps her card.'], ['Approval', 'The platform says yes in about a second.'], ['Receipt', 'Both sides get a receipt.'], ['Settlement', 'The money moves later, in a batch.']]} />
-          <div className="hk-note"><Tag t="SIMULATION" /><span>Fictional restaurant. No real payment is made.</span>{DEEP('rest-pay')}</div>
-        </div>
-      </Slide>) },
-  { id: 'tourism', say: 'The same card helps visitors. The city explorer plans a day: places to see, local food, and the ride between them. These are real places with licensed photos.',
-    el: (n) => (
-      <Slide n={n} kick="9 · Tourism" title="Visitors get a day plan, not just a ticket.">
-        <div className="hk-body">
-          <div className="hk-col" style={{ flex: 1.3 }}><Photo id="ayasofya" h={19} /><Credit id="ayasofya" />
-            <div style={{ display: 'flex', gap: 'calc(1.2 * var(--u))' }}><div style={{ flex: 1 }}><Photo id="galata" h={8} /></div><div style={{ flex: 1 }}><Photo id="baklava" h={8} /></div></div></div>
-          <div className="hk-col"><Pts items={[<><b>See:</b> real places, with short stories.</>, <><b>Eat:</b> local food near each stop.</>, <><b>Move:</b> bus, metro or tram on the same card.</>]} /><div className="hk-note"><Tag t="REAL" /><span>Places and photos. Prices are estimates.</span></div></div>
-        </div>
-      </Slide>) },
-  { id: 'rental', say: 'The card can also unlock a rental car, and it can join guided tours. For the car, the platform first holds a small deposit, then charges the real price, then releases the rest.',
-    el: (n) => (
-      <Slide n={n} kick="10 · Car rental and tours" title="Hold a deposit. Charge the real price.">
-        <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(2.4 * var(--u))' }}>
-          <Flow cmp hot={2} steps={[['Choose', 'Price list is shown first.'], ['Hold', 'A 50 TRY deposit is reserved, not taken.'], ['Drive', 'Time and fee run on the meter.'], ['Charge', 'The real fee is taken from the hold.'], ['Release', 'The unused part is returned.']]} />
-          <div className="hk-grid3" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            <Card ico="car" h="Car rental" t="Demo prices: unlock fee, per minute, daily cap." /><Card ico="map" h="Ready-made tours" t="Themed tours: audio, local guide or self-paced." /><Card ico="star" h="Guides" t="Sample profiles are fictional and labelled." />
-          </div>
-          <div className="hk-note"><Tag t="SIMULATION" />{DEEP('tours')}</div>
-        </div>
-      </Slide>) },
-  { id: 'economics', say: 'A system needs money to run. Passengers pay fares. Shops pay a small fee. The city pays for the platform. These numbers are illustrative; a real model needs real quotes and legal review.',
-    el: (n) => (
-      <Slide n={n} kick="11 · How it pays for itself" title="Who pays whom, and why.">
-        <div className="hk-body"><div className="hk-grid3 big">
-          <Card ico="user" h="Passengers" t="Pay fares and a small card deposit. Get one simple card." />
-          <Card ico="food" h="Shops" t="Pay a small fee per payment. Get customers and fast acceptance." />
-          <Card ico="museum" h="The city" t="Pays for the platform. Gets better planning data, without watching people." />
-        </div></div>
-        <p className="hk-note"><Tag t="DESIGN" />All figures in this project are illustrative, not market data.</p>
-      </Slide>) },
-  { id: 'summary', say: 'To close: one card makes city life simpler. The tap is quick and works offline. And privacy is part of the design. Everything you saw is a design with a simulation, not a real payment system.',
-    el: (n) => (
-      <Slide n={n} dark kick="12 · Summary" title="Three things to remember.">
-        <div className="hk-body"><div className="hk-grid3 big">
-          <div className="hk-card"><div className="hk-num">1</div><h3>One card is simpler</h3><p>One account for bus, metro, shops, museums and rentals.</p></div>
-          <div className="hk-card"><div className="hk-num">2</div><h3>One tap is quick</h3><p>It is checked in a fraction of a second, even with no network.</p></div>
-          <div className="hk-card"><div className="hk-num">3</div><h3>Privacy by design</h3><p>Collect less, protect more. The bus never learns your name.</p></div>
-        </div></div>
-        <p className="hk-note">Labels used in this talk: <span><Tag t="REAL" />standards and places</span> <span><Tag t="DESIGN" />our architecture</span> <span><Tag t="SIMULATION" />payments and approvals</span></p>
-      </Slide>) },
-  { id: 'thanks', say: 'Thank you. I am happy to take questions. The appendix has the full technical slides if you want to go deeper.',
-    el: (n) => (
-      <section className="hk-slide hk-dark" aria-label="Thank you" style={{ justifyContent: 'center' }}>
-        <img src={logo('FORA_logo-yatay-FORADAS-koyu')} alt="FORADAŞ" style={{ height: 'calc(5 * var(--u))', alignSelf: 'flex-start', marginBottom: 'calc(3 * var(--u))' }} />
-        <h1 style={{ maxWidth: '100%' }}>Thank you. Questions?</h1>
-        <div className="hk-grid3" style={{ marginTop: 'calc(3 * var(--u))' }}>
-          <Card h="NFC" t="Near Field Communication: a short-range radio the card uses." /><Card h="Validator" t="The device on the bus that reads the card and checks the rules." /><Card h="Ledger" t="A record of every transaction." />
-        </div>
-        <p style={{ marginTop: 'calc(2 * var(--u))' }}><button className="hk-link" onClick={() => { location.hash = '#/sunum/ek' }}>Appendix: the 42 full technical slides →</button></p>
-        <div className="hk-foot"><span>Reference design · Everything shown is simulated</span><span>{n} / {TOTAL}</span></div>
+      <section className="hk-slide hk-dark hk-cover" aria-label="Final">
+        <img className="hk-bleed" src={ph('kapak').url} alt="" /><div className="hk-veil hk-veil-b" />
+        <img src={logo('FORA_logo-yatay-FORADAS-koyu')} alt="FORADAŞ" className="hk-coverlogo" />
+        <div className="hk-covertext"><h1>81 CITIES.<br />ONE CARD.<br />UNLIMITED DISCOVERY.</h1><p className="hk-lead">Let us discover Türkiye together.</p>
+          <p><button className="hk-link" onClick={() => { location.hash = '#/sunum/ek' }}>Appendix: the 42 full technical slides →</button></p></div>
+        <div className="hk-foot"><span>National Shared Transport Card Project · {credits(['kapak'])}</span><span>{n} / {TOTAL}</span></div>
       </section>) },
 ]
-const TOTAL = DECK.length
 export const STORY_SAY = DECK.map((d) => d.say)
 
 /** Static story deck for the PDF page (all slides, no controls). */
@@ -231,32 +188,40 @@ export function StoryPrint() {
 
 export default function Hikaye() {
   const [sp, setSp] = useSearchParams(); const nav = useNavigate()
+  const p = sp.get('p') ?? ''
+  const order = PATHS[p] ?? DECK.map((d) => d.id)
   const cur = Math.min(Math.max((+(sp.get('s') ?? '1') || 1) - 1, 0), TOTAL - 1)
   const [notes, setNotes] = useState(false)
-  const go = useCallback((i: number) => setSp((q) => { const n = new URLSearchParams(q); n.set('s', String(Math.min(Math.max(i, 0), TOTAL - 1) + 1)); return n }, { replace: true }), [setSp])
+  const setS = useCallback((i: number) => setSp((q) => { const n = new URLSearchParams(q); n.set('s', String(Math.min(Math.max(i, 0), TOTAL - 1) + 1)); return n }, { replace: true }), [setSp])
+  const step = useCallback((d: 1 | -1) => {
+    const nxt = d === 1 ? order.find((x) => x > cur + 1) : [...order].reverse().find((x) => x < cur + 1)
+    if (nxt) setS(nxt - 1)
+  }, [order, cur, setS])
+  const setPath = (v: string) => setSp((q) => { const n = new URLSearchParams(q); if (v) n.set('p', v); else n.delete('p'); n.set('s', String((PATHS[v] ?? [1])[0])); return n }, { replace: true })
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.tagName === 'INPUT') return
-      if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(cur + 1) }
-      else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(cur - 1) }
-      else if (e.key === 'Home') go(0); else if (e.key === 'End') go(TOTAL - 1)
+      if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); step(1) }
+      else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); step(-1) }
+      else if (e.key === 'Home') setS(order[0] - 1); else if (e.key === 'End') setS(order[order.length - 1] - 1)
       else if (e.key.toLowerCase() === 's') setNotes((v) => !v)
       else if (e.key.toLowerCase() === 'f') { if (document.fullscreenElement) void document.exitFullscreen(); else void document.documentElement.requestFullscreen?.() }
       else if (e.key === 'Escape') nav('/')
     }
     window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k)
-  }, [cur, go, nav])
+  }, [step, setS, order, nav])
   const [x0, setX0] = useState<number | null>(null)
   return (
-    <div className="hk" lang="en" onTouchStart={(e) => setX0(e.touches[0].clientX)} onTouchEnd={(e) => { if (x0 !== null) { const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 60) go(cur + (d < 0 ? 1 : -1)) } setX0(null) }}>
+    <div className="hk" lang="en" onTouchStart={(e) => setX0(e.touches[0].clientX)} onTouchEnd={(e) => { if (x0 !== null) { const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 60) step(d < 0 ? 1 : -1) } setX0(null) }}>
       <div className="hk-stage" key={cur} role="group" aria-roledescription="slide" aria-label={`Slide ${cur + 1} of ${TOTAL}`}>
         {DECK[cur].el(cur + 1)}
         {notes && <div className="hk-notes"><b>SPEAKER SCRIPT</b>{DECK[cur].say}</div>}
-        <div className="hk-bar"><i style={{ width: `${((cur + 1) / TOTAL) * 100}%` }} /></div>
+        <div className="hk-bar"><i style={{ width: `${((Math.max(order.indexOf(cur + 1), 0) + 1) / order.length) * 100}%` }} /></div>
       </div>
       <div className="hk-ctl" role="toolbar" aria-label="Slide controls">
-        <button onClick={() => go(cur - 1)} aria-label="Previous slide" disabled={cur === 0}>←</button>
-        <button onClick={() => go(cur + 1)} aria-label="Next slide" disabled={cur === TOTAL - 1}>→</button>
+        <button onClick={() => step(-1)} aria-label="Previous slide" disabled={cur === 0}>←</button>
+        <button onClick={() => step(1)} aria-label="Next slide" disabled={cur === TOTAL - 1}>→</button>
+        {[['', 'Full'], ['10', '10 min'], ['3', '3 min']].map(([v, l]) => <button key={l} onClick={() => setPath(v)} aria-pressed={p === v} aria-label={`${l} path`}>{l}</button>)}
         <button onClick={() => setNotes((v) => !v)} aria-pressed={notes} aria-label="Speaker script (S)">Script</button>
         <button onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else void document.documentElement.requestFullscreen?.() }} aria-label="Full screen (F)">⛶</button>
         <a href="#/sunum/ek">Appendix</a>
