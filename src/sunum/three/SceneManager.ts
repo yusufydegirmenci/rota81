@@ -57,7 +57,12 @@ export class SceneManager {
     this.camera.aspect = r.width / Math.max(r.height, 1); this.camera.updateProjectionMatrix()
   }
   snap(s: ShotDef) { this.rig.snap(this.camera, s) }
-  flyTo(s: ShotDef) { this.rig.flyTo(this.camera, s, performance.now()) }
+  /** With prefers-reduced-motion the camera cuts to the next shot instead of flying. */
+  flyTo(s: ShotDef) { let reduce = false; try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches } catch { /* ignore */ } if (reduce) this.rig.snap(this.camera, s); else this.rig.flyTo(this.camera, s, performance.now()) }
+  /** Marked parts that are currently visible, in scene order (used for keyboard inspection). */
+  parts(): PartId[] {
+    const out: PartId[] = []; this.scene.traverse((o) => { const id = o.userData.part as PartId | undefined; if (id && !out.includes(id)) { let v = true; for (let n: THREE.Object3D | null = o; n; n = n.parent) if (!n.visible) v = false; if (v) out.push(id) } }); return out
+  }
   /** Click/tap position → registry id of the part under it, or null. */
   pick(clientX: number, clientY: number): PartId | null {
     const r = this.el.getBoundingClientRect()
@@ -66,8 +71,11 @@ export class SceneManager {
     return null
   }
   start() {
+    // Auto quality: if the first ~2 seconds average under 24 fps, drop bloom and shadows.
+    let frames = 0, t0 = 0, measured = false
     const loop = (now: number) => {
       if (!this.alive) return
+      if (!measured && (this.composer || this.renderer.shadowMap.enabled)) { if (!t0) t0 = now; frames++; if (now - t0 > 2000) { measured = true; if (frames / ((now - t0) / 1000) < 24) { this.composer?.dispose(); this.composer = null; this.renderer.shadowMap.enabled = false; this.sun.castShadow = false; this.scene.traverse((o) => { const mm = (o as THREE.Mesh).material as THREE.Material | undefined; if (mm) mm.needsUpdate = true }) } } }
       this.rig.update(this.camera, now); this.onFrame(now / 1000, this)
       if (this.composer) this.composer.render(); else this.renderer.render(this.scene, this.camera)
       this.raf = requestAnimationFrame(loop)

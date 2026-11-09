@@ -43,7 +43,9 @@ export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5
   if (!ok) return <p className="sn-hint">3D is not available on this device. Use another view; the content is the same.</p>
   return (
     <div className="sn-flow sn-viewer">
-      <div className="sn-3d" ref={host} role="img" aria-label={label} onClick={(e) => setPicked(mgr.current?.pick(e.clientX, e.clientY) ?? null)} />
+      <div className="sn-3d" ref={host} role="img" aria-label={`${label}. Press Enter to cycle through the objects and hear their names and functions.`} tabIndex={0}
+        onClick={(e) => setPicked(mgr.current?.pick(e.clientX, e.clientY) ?? null)}
+        onKeyDown={(e) => { if (e.key !== 'Enter' && e.key !== ' ') return; e.preventDefault(); e.stopPropagation(); const ps = mgr.current?.parts() ?? []; if (!ps.length) return; const i = picked ? ps.indexOf(picked) : -1; setPicked(ps[(i + 1) % ps.length]) }} />
       <div className="sn-faultpick" role="toolbar" aria-label="3D controls">
         <button onClick={() => go(() => tl.toggle())}>{tl.playing ? 'Pause' : 'Play'}</button>
         <button onClick={() => go(() => tl.prev())} disabled={tl.step === 0}>◀ Step</button>
@@ -55,7 +57,7 @@ export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5
       <div className="sn-caption" aria-live="polite">
         <div className="sn-capn">Step {tl.step + 1} / {steps.length}</div><h3>{s.title}</h3><p>{s.text}</p>
         {s.deep && <details><summary>Deep explanation</summary><p className="sn-hint">{s.deep}</p></details>}
-        <p className="sn-hint">{picked ? <><b>{PARTS[picked].name}</b> · {PARTS[picked].tag} — {PARTS[picked].fn}{tech && 'tech' in PARTS[picked] ? ` (${(PARTS[picked] as { tech?: string }).tech})` : ''}</> : 'Click any object to see its name and function.'}</p>
+        <p className="sn-hint" role="status">{picked ? <><b>{PARTS[picked].name}</b> · {PARTS[picked].tag} — {PARTS[picked].fn}{tech && 'tech' in PARTS[picked] ? ` (${(PARTS[picked] as { tech?: string }).tech})` : ''}</> : 'Click any object to see its name and function.'}</p>
       </div>
     </div>
   )

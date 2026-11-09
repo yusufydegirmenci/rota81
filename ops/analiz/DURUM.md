@@ -56,3 +56,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum Faz 8 TAMAM: 4 hazir tur + 3 rehber secenegi (tours slaydi, 41 slayt), tur verisi salt okunur. Rapor ops/raporlar/faz-8.md. Siradaki: Faz 9.
 
 - 2026-11-09 Sunum Faz 9 TAMAM: design-city (6 mod, motor, gercek veri salt okunur). Rapor ops/raporlar/faz-9.md. Siradaki: Faz 10 (QA + canliya alma).
+
+- 2026-11-09 Sunum Faz 10 QA TAMAM (42 slayt gezildi, hata 0; a11y: klavye+reduced-motion; perf: oto kalite). OZET ops/raporlar/OZET.md. Siradaki: canliya alma (nd1pet merge+push).
