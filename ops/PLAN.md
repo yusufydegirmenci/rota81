@@ -15,3 +15,8 @@ Bilgi: src/sunum/ var (slayt motoru, 40 slayt, SVG sahneleri, Stage3D.tsx three.
 | 9 | Design-your-city + harita modları (2D/3D/ilçe/sokak/ulaşım) |
 | 10 | Genel QA, erişilebilirlik, performans, main'e alma + canlı (Pages) |
 Durak/hat verisi (OSM/EGO/ESHOT/GTFS, ilçe başı ≥40 durak araştırması): eski ROTA thread'inde.
+
+## İki thread uyumu
+- Ortak durum: ops/analiz/DURUM.md. Her faz öncesi oku, değiştirdiğin/eklediğin ortak şeyi (veri şeması, dosya yolu, foto listesi) buraya 1-2 satır yaz.
+- Veri/foto/durak: eski ROTA thread'i (src/data/tour, src/data/real, docs/VERI_*). Sunum fazları bu veriyi OKUR, yazmaz. Sunum kodu: src/sunum/, src/sunum/three/, ops/.
+- Aynı dosyaya aynı anda dokunma; çakışma varsa DURUM.md'ye not düş.
