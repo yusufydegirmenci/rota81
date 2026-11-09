@@ -1,4 +1,4 @@
-# ROTA 81 / FORADAŞ: ortak durum notu (iki thread için)
+# ROTA 81: veri ve fotoğraf durumu (veri thread'i yazar; ortak ana not: ops/analiz/DURUM.md, sunum dalında)
 
 Son güncelleme: 2026-11-09 (Türkiye tur + veri thread'i). Kural: ortak bilgi buraya yazılır, aynı dosyalara iki thread aynı anda dokunmaz.
 
