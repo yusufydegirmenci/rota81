@@ -6,5 +6,5 @@ export default defineConfig({
   base: './',
   build: { assetsInlineLimit: 200000, chunkSizeWarningLimit: 2500, rolldownOptions: { output: { codeSplitting: false } } },
   plugins: [react(), tailwindcss()],
-  test: { environment: 'jsdom', globals: true, setupFiles: ['./src/test-setup.ts'] },
+  test: { testTimeout: 60000, environment: 'jsdom', globals: true, setupFiles: ['./src/test-setup.ts'] },
 })

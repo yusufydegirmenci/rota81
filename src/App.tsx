@@ -7,12 +7,14 @@ import * as N from './pages/national'
 import { TourPage } from './pages/tour'
 import { OneCard } from './pages/onecard'
 import { Login, Register, Welcome } from './pages/public'
-import Sunum, { PresenterView } from './sunum/Sunum'
+import { WelcomeBanner } from './ui/WelcomeBanner'
+import Sunum,{ PresenterView } from './sunum/Sunum'
 
 export default function App() {
   return (
     <AppProvider>
       <HashRouter>
+        <WelcomeBanner />
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/sunum" element={<Sunum />} />
