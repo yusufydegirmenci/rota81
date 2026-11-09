@@ -31,3 +31,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum thread: Faz 2-10 tek prompt ops/promptlar/HEPSI.md (kullanıcı PC'de akıtacak). Canlı: nd1pet'e merge (main yok).
 
 - 2026-11-09 Sunum Faz 2 TAMAM: src/sunum/three/ (Timeline, CameraRig, PARTS tablosu, modeller, Viewer3D); rapor ops/raporlar/faz-2.md. Siradaki: Faz 3.
+
+- 2026-11-09 Sunum thread: görsel kalite çıtası eklendi (HEPSI.md, 5 hedef görsel: NFC okuyucu+el, POS+kart şeması, patlatılmış kart, neon mimari, durak sahnesi). Hedef görseller /mnt/project-files/rota81/hedef/ (kullanıcı yüklemeli).
