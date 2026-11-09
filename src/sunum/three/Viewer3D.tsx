@@ -3,15 +3,17 @@ import { SceneManager, type Quality } from './SceneManager'
 import { Timeline } from './timeline'
 import { PARTS, type PartId } from './registry'
 import type { ShotDef } from './camera'
+import { useSafe } from '../safe'
 
 export interface StepDef extends ShotDef { deep?: string }
 /** A scene builds its objects into the manager and returns a per-frame updater that receives the current step. */
 export type SceneBuilder = (m: SceneManager) => (tSec: number, step: number, technical: boolean) => void
 
 /** Reusable 3D viewer: camera per step, pause/resume, step back/forward, replay, click-to-inspect, real↔technical, deep-explanation panel. */
-export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5000, onStep }: { steps: StepDef[]; build: SceneBuilder; label: string; quality?: Quality; holdMs?: number; onStep?: (i: number) => void }) {
+export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5000, onStep, autoplay = false }: { steps: StepDef[]; build: SceneBuilder; label: string; quality?: Quality; holdMs?: number; onStep?: (i: number) => void; autoplay?: boolean }) {
+  const safe = useSafe()
   const host = useRef<HTMLDivElement>(null)
-  const tl = useMemo(() => new Timeline(steps.length, holdMs), [steps.length, holdMs])
+  const tl = useMemo(() => { const t = new Timeline(steps.length, holdMs); t.playing = autoplay; return t }, [steps.length, holdMs, autoplay])
   const [, bump] = useState(0); const redraw = () => bump((n) => n + 1)
   const mgr = useRef<SceneManager | null>(null)
   const stepRef = useRef(0); const techRef = useRef(false)
@@ -19,7 +21,7 @@ export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5
   const [picked, setPicked] = useState<PartId | null>(null); const [ok, setOk] = useState(true)
 
   useEffect(() => {
-    const el = host.current; if (!el) return
+    const el = host.current; if (!el || safe) return
     let m: SceneManager
     try { m = new SceneManager(el, quality) } catch { setOk(false); return }
     mgr.current = m
@@ -33,13 +35,14 @@ export function Viewer3D({ steps, build, label, quality: q0 = 'auto', holdMs = 5
     m.start()
     return () => { m.dispose(); mgr.current = null }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quality, build, steps])
+  }, [quality, build, steps, safe])
 
   const cb = useRef(onStep); cb.current = onStep
   const lastStep = useRef(0)
   useEffect(() => { if (lastStep.current !== tl.step) { lastStep.current = tl.step; cb.current?.(tl.step) } })
   const go = (fn: () => void) => { fn(); stepRef.current = tl.step; mgr.current?.flyTo(steps[tl.step]); redraw() }
   const s = steps[tl.step]
+  if (safe) return <div className="sn-flow sn-viewer"><p className="sn-hint">Safe mode: 3D is off. The steps are listed below as text.</p><ol>{steps.map((x, i) => <li key={i}><b>{x.title}.</b> {x.text}</li>)}</ol></div>
   if (!ok) return <p className="sn-hint">3D is not available on this device. Use another view; the content is the same.</p>
   return (
     <div className="sn-flow sn-viewer">

@@ -4,7 +4,7 @@ import { PLACES } from '../data/tour'
 
 describe('ready tours', () => {
   it('at least three tours, each with a guide choice (audio, local, self-paced)', () => {
-    expect(READY_TOURS.length).toBeGreaterThanOrEqual(3)
+    expect(READY_TOURS.length).toBeGreaterThanOrEqual(8)
     for (const t of READY_TOURS) expect(t.guides).toEqual(GUIDES.map((g) => g.id))
     expect(GUIDES.map((g) => g.id).sort()).toEqual(['audio', 'local', 'self'])
   })

@@ -28,3 +28,6 @@ Dal: `claude/project-thread-qm3gnw` (canlıya: `claude/project-thread-nd1pet` il
 
 ## Canlı
 Adres: https://yusufydegirmenci.github.io/rota81/#/sunum (Pages, nd1pet d6adeb0). Actions: build (npm test + build) ve deploy başarılı. Canlıda 3D lab ve 42 slayt doğrulandı.
+
+## Düzeltme turu
+Ayrıntı: duzeltme.md. Görsel kalite çıtası (hedef görseller) KISMEN karşılandı; dürüst eksikler orada.

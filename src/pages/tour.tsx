@@ -7,22 +7,12 @@ import { findBoarding, processPurchase, processScenarioLeg, processTap, type Tap
 import { distanceKm } from '../services/intercity'
 import { Badge, Card, PageHeader, SimNote } from '../ui/ui'
 import { Trace } from './onecard'
-
-interface Fact { baslik: string; ozet_en: string; resim_dosya: string; yazar: string; lisans: string; kaynak_url: string }
-const FACTS = (Object.values(import.meta.glob('../data/tour/facts.json', { eager: true, import: 'default' }))[0] ?? {}) as Record<string, Fact>
-const IMGS = import.meta.glob('../data/tour/img/*.jpg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
-const imgOf = (id: string) => IMGS[`../data/tour/img/${id}.jpg`]
+import { FACTS, Picture, imgOf } from './tourMedia'
+import { TourShow } from './TourShow'
 
 interface Done { step: TourStep; label: string; result?: TapResult; at: string; day: number; src: string; boarding?: string }
 
 const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
-
-function Picture({ id, p }: { id: string; p: Place }) {
-  const src = imgOf(id)
-  const f = FACTS[id]
-  if (src) return <figure className="pic"><img src={src} alt={p.title} loading="lazy" />{f && <figcaption>{f.yazar} · {f.lisans} · <a href={f.kaynak_url} target="_blank" rel="noreferrer">kaynak</a></figcaption>}</figure>
-  return <div className="pic ph" aria-hidden="true"><span>{p.kind === 'food' ? 'YEMEK' : 'GEZİ'}</span><b>{p.title}</b></div>
-}
 
 /** Tur başlamadan önce de görünen şehir rehberi: gezilecek yerler ve yerel yemekler, fotoğraf ve lisans künyesiyle. */
 function CityGuide({ lang }: { lang: 'tr' | 'en' }) {
@@ -81,6 +71,7 @@ export function TourPage() {
   const [done, setDone] = useState<Done[]>([])
   const [play, setPlay] = useState(false)
   const [lang, setLang] = useState<'tr' | 'en'>('en')
+  const [view, setView] = useState<'show' | 'list'>('show')
   const [clock, setClock] = useState({ day: 1, min: 9 * 60 })
   const seq = useRef(0)
   const next = TOUR[done.length] as TourStep | undefined
@@ -149,8 +140,10 @@ export function TourPage() {
     <div className="stack">
       <PageHeader title="Türkiye turu: tek kart, dört şehir" sub="İstanbul, Kocaeli, Ankara ve Konya'yı yalnızca bu kartla gezin: tramvay, metro, Marmaray, hızlı tren, otobüs ve yemek ödemeleri. Gidiş-dönüş." actions={
         <div className="row">
+          <div className="langsw" role="group" aria-label="Görünüm"><button className={view === 'show' ? 'on' : ''} onClick={() => setView('show')}>Sunum modu</button><button className={view === 'list' ? 'on' : ''} onClick={() => setView('list')}>Liste</button></div>
           <div className="langsw" role="group" aria-label="Rehber dili"><button className={lang === 'tr' ? 'on' : ''} onClick={() => setLang('tr')}>TR</button><button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>EN</button></div>
         </div>} />
+      {view === 'show' ? <TourShow lang={lang} onList={() => setView('list')} /> : <>
       <div className="grid2">
         <div className="stack">
           <TourMap cityIdx={cityIdx} doneCities={doneCities} />
@@ -223,6 +216,7 @@ export function TourPage() {
           <li><b>Sınırlar:</b> sefer saatleri, tren/otobüs ücretleri ve yemek fiyatları tahmindir; gerçek ödeme ve doğrulayıcı yoktur. Konya–Ankara gibi iller arası saat/ücret mesafeden tahmin edilir.</li>
         </ul>
       </Card>
+      </>}
     </div>
   )
 }

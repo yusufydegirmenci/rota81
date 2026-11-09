@@ -9,6 +9,8 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+import { isSafe, setSafe, useSafe, webglOk } from './safe'
+import { PROVA_CHECKLIST, PROVA_PLANS, PROVA_QA } from './prova'
 import { ToursView } from './ToursView'
 import { CityDesigner } from './CityDesigner'
 const Rental = lazy(() => import('./three/RentalView').then((m) => ({ default: m.RentalView })))
@@ -33,7 +35,7 @@ export function usePos() {
 }
 
 function beep(on: boolean, ok = true) {
-  if (!on) return
+  if (!on || isSafe()) return
   try { const A = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext; const c = new A(); const o = c.createOscillator(), g = c.createGain(); o.frequency.value = ok ? 880 : 220; g.gain.value = 0.04; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.12) } catch { /* sound is optional */ }
 }
 
@@ -164,14 +166,30 @@ export default function Sunum() {
   const slideRef = useRef(slide); slideRef.current = slide
 
   const go = (n: () => void) => { n(); beep(sound) }
+  const [dark, setDark] = useState(false)
+  const [goto, setGoto] = useState('')
+  const safe = useSafe()
+  const [suggest, setSuggest] = useState(false)
+  useEffect(() => {
+    if (safe) return
+    if (!webglOk()) { setSuggest(true); return }
+    let n = 0, stop = false; const t0 = performance.now()
+    const f = (t: number) => { if (stop) return; n++; if (t - t0 < 1500) requestAnimationFrame(f); else if (n / ((t - t0) / 1000) < 18) setSuggest(true) }
+    requestAnimationFrame(f); return () => { stop = true }
+  }, [safe])
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement; if (/INPUT|TEXTAREA|SELECT/.test(t.tagName)) return
-      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(next) }
-      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev() }
+      if (/^[0-9]$/.test(e.key)) { setGoto((g) => (g + e.key).slice(0, 2)); return }
+      if (e.key === 'Enter' && goto) { e.preventDefault(); const n = Math.min(Math.max(+goto, 1), SLIDES.length); setGoto(''); setPos({ i: n - 1, s: 0 }); return }
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') { if (e.key === 'Enter' && /BUTTON|A|SUMMARY/.test(t.tagName)) return; e.preventDefault(); go(next) }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') { e.preventDefault(); prev() }
+      else if (e.key === 'Home') setPos({ i: 0, s: 0 })
+      else if (e.key === 'End') setPos({ i: SLIDES.length - 1, s: 0 })
+      else if (e.key === 'b' || e.key === 'B' || e.key === '.') setDark((d) => !d)
       else if (e.key === 'f' || e.key === 'F') toggleFs()
       else if (e.key === 'n' || e.key === 'N') setDrawer((d) => (d === 'notes' ? null : 'notes'))
-      else if (e.key === 'Escape') setDrawer(null)
+      else if (e.key === 'Escape') { setGoto(''); setDark(false); setDrawer(null); if (document.fullscreenElement) void document.exitFullscreen() }
       else if (e.key === 'r' || e.key === 'R') setPos({ i: pos.i, s: 0 })
     }
     window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h)
@@ -192,7 +210,7 @@ export default function Sunum() {
         <div className="sn-scene">
           {slide.id === 'tap' && <div className="sn-faultpick" role="tablist" aria-label="View"><button role="tab" aria-selected={view === 'tech'} className={view === 'tech' ? 'on' : ''} onClick={() => setView('tech')}>Technical view</button><button role="tab" aria-selected={view === 'real'} className={view === 'real' ? 'on' : ''} onClick={() => setView('real')}>Real-world view</button><button role="tab" aria-selected={view === 'lab'} className={view === 'lab' ? 'on' : ''} onClick={() => setView('lab')}>3D lab</button><button role="tab" aria-selected={view === '3d'} className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D camera (classic)</button>{view === '3d' &&<select aria-label="3D quality" value={quality} onChange={(e) => setQuality(e.target.value as 'auto' | 'low' | 'high')}><option value="auto">Quality: auto</option><option value="low">Low (weak device)</option><option value="high">High</option></select>}</div>}
           <HeroFigure slideId={slide.id} />
-          <SceneView slide={slide} step={pos.s} view={view} quality={quality} />
+          <SceneView slide={slide} step={pos.s} view={safe && view !== 'real' ? 'tech' : view} quality={quality} />
         </div>
       </div>
       {slide.check && <details className="sn-check"><summary>Optional check</summary><p><b>{slide.check.q}</b></p><p>{slide.check.a}</p></details>}
@@ -200,13 +218,16 @@ export default function Sunum() {
   )
 
   return (
-    <div ref={root} lang="en" className={`sn-root ${calm ? 'calm' : ''} ${fs ? 'fs' : ''}`}>
+    <div ref={root} lang="en" className={`sn-root ${calm || safe ? 'calm' : ''} ${fs ? 'fs' : ''} ${safe ? 'safe' : ''}`}>
+      {dark && <div className="sn-black" onClick={() => setDark(false)} role="button" aria-label="Screen blanked. Press B or click to return." />}
+      {suggest && !safe && <div className="sn-suggest" role="alert">This device looks slow or has no WebGL. <button className="btn sm" onClick={() => setSafe(true)}>Switch to safe mode</button> <button className="btn sm" onClick={() => setSuggest(false)}>Dismiss</button></div>}
       <div className="sn-top">
         <Link to="/" className="sn-brand" aria-label="Back to site">FORADAŞ</Link>
         <div className="sn-modes" role="tablist" aria-label="Mode">{([['present', 'Presentation'], ['rehearse', 'Rehearsal'], ['explore', 'Technical exploration']] as const).map(([k, l]) => <button key={k} role="tab" aria-selected={mode === k} className={mode === k ? 'on' : ''} onClick={() => setMode(k)}>{l}</button>)}</div>
         <div className="sn-tools">
           <button onClick={() => setDrawer(drawer === 'chapters' ? null : 'chapters')} aria-label="Chapters">☰</button>
-          <button onClick={() => setSound(!sound)} aria-pressed={sound} aria-label="Sound">{sound ? '🔊' : '🔇'}</button>
+          <button onClick={() => setSafe(!safe)} aria-pressed={safe} title="Safe mode: no 3D, effects or sound">{safe ? 'Safe mode: on' : 'Safe mode'}</button>
+          <button onClick={() => setSound(!sound)} aria-pressed={sound && !safe} aria-label="Sound">{sound ? '🔊' : '🔇'}</button>
           <button onClick={() => setCalm(!calm)} aria-pressed={calm} title="Reduce motion">{calm ? 'Motion off' : 'Motion on'}</button>
           <button onClick={openPresenter}>Presenter window</button>
           <button onClick={toggleFs}>{fs ? 'Exit full screen' : 'Full screen'}</button>
@@ -245,9 +266,10 @@ export default function Sunum() {
         <footer className="sn-foot">
           <button className="btn" onClick={prev} aria-label="Previous step">← Back</button>
           <button className="btn" onClick={() => setPos({ i: pos.i, s: 0 })} aria-label="Replay this scene">⟲ Replay</button>
-          <span className="sn-pos" aria-live="polite">Slide {pos.i + 1} / {SLIDES.length}{stepsN > 1 ? ` · step ${Math.min(pos.s, stepsN - 1) + 1} / ${stepsN}` : ''}</span>
+          <span className="sn-pos" aria-live="polite">{goto ? `Go to slide ${goto}… (Enter)` : ''} Slide {pos.i + 1} / {SLIDES.length}{stepsN > 1 ? ` · step ${Math.min(pos.s, stepsN - 1) + 1} / ${stepsN}` : ''}</span>
           <button className="btn" onClick={() => setDrawer(drawer === 'notes' ? null : 'notes')}>Deeper explanation (N)</button>
           <button className="btn" onClick={() => setPos({ i: 0, s: 0 })}>Reset</button>
+          <a className="btn" href="#/sunum/pdf" target="_blank" rel="noreferrer">Download PDF</a>
           <button className="btn accent" onClick={() => go(next)} aria-label="Next step">Next →</button>
         </footer>
       )}
@@ -279,7 +301,8 @@ export function PresenterView() {
       <main className="sn-rehearse"><section className="sn-side wide"><h2>{slide.title}</h2><Teleprompter slide={slide} size={size} keywords={kw} />
         <div className="row"><button className="btn" onClick={prev}>← Back step</button><button className="btn accent" onClick={next}>Next step →</button></div>
         <p className="sn-hint">Presenter controls the audience window: steps advance only when you click.</p></section>
-        <aside className="sn-side"><h3>Next</h3><p>{nextSlide ? nextSlide.title : 'End'}</p>
+        <aside className="sn-side"><h3>On screen now</h3><ul>{slide.bullets.map((b) => <li key={b}>{b}</li>)}</ul><h3>Next slide</h3><p><b>{nextSlide ? nextSlide.title : 'End'}</b></p>{nextSlide && <ul>{nextSlide.bullets.slice(0, 3).map((b) => <li key={b}>{b}</li>)}</ul>}
+          <details><summary>Rehearsal checklist and likely questions</summary><ul>{PROVA_CHECKLIST.map((c) => <li key={c}>{c}</li>)}</ul><h3>Time plans</h3><ul>{PROVA_PLANS.map((c) => <li key={c}>{c}</li>)}</ul><h3>Questions</h3>{PROVA_QA.map((x) => <p key={x.q}><b>{x.q}</b><br />{x.a}</p>)}</details>
           {emTerm && <><h3>Emphasise: {emTerm.en}</h3><p>{emTerm.say}{emTerm.ipa ? ` · ${emTerm.ipa}` : ''}<br />Turkish: {emTerm.tr}</p></>}
           <h3>Terms on this slide</h3><p>{slide.terms?.map((t) => <Term key={t} en={t} />)}</p><h3>Technical notes</h3><p>{slide.notes}</p>
           {slide.check && <><h3>Likely question</h3><p><b>{slide.check.q}</b></p><p>{slide.check.a}</p></>}</aside></main>

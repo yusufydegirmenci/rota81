@@ -4,6 +4,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+import { loadHdri } from './assets'
 import { CameraRig, type ShotDef } from './camera'
 import { partOf } from './models'
 import type { PartId } from './registry'
@@ -30,10 +31,10 @@ export class SceneManager {
     this.renderer = new THREE.WebGLRenderer({ antialias: !this.lowQ })
     this.renderer.setPixelRatio(this.lowQ ? 1 : Math.min(window.devicePixelRatio || 1, quality === 'high' ? 2 : 1.5))
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 0.8
-    this.renderer.shadowMap.enabled = !this.lowQ; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.renderer.shadowMap.enabled = !this.lowQ; this.renderer.shadowMap.type = THREE.PCFShadowMap
     const cv = this.renderer.domElement; cv.style.width = '100%'; cv.style.height = '100%'; el.appendChild(cv)
     this.scene.background = new THREE.Color(sky); this.scene.fog = new THREE.Fog(sky, 40, 140)
-    if (!this.lowQ) { const pm = new THREE.PMREMGenerator(this.renderer); this.scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; this.scene.environmentIntensity = 0.35; pm.dispose() }
+    if (!this.lowQ) { const pm = new THREE.PMREMGenerator(this.renderer); this.scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; this.scene.environmentIntensity = 0.35; pm.dispose(); loadHdri(this) }
     this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8aa0a8, 0.35))
     this.sun = new THREE.DirectionalLight(0xffe2b0, 1.5); this.sun.position.set(-8, 14, 10)
     this.sun.castShadow = !this.lowQ; this.sun.shadow.mapSize.set(2048, 2048)

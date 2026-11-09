@@ -41,6 +41,10 @@ export const READY_TOURS: ReadyTour[] = [
   make('istanbul', 'Istanbul Classics', 'Blue Mosque, Hagia Sophia, a fish sandwich on the waterfront, Galata Tower and baklava, using tram and metro.', '34', 1, 8),
   make('kocaeli', 'Marmaray to İzmit', 'Under the Bosphorus by Marmaray, then Gebze’s historic sites and İzmit’s clock tower with local sweets and fish.', '41', 9, 16),
   make('ankara', 'Ankara in a Day', 'Metro to Anıtkabir, the museum and the castle, with Ankara tava and a simit.', '06', 18, 24),
+  make('istanbul-bites', 'Gastronomy: Istanbul Waterfront Bites', 'Theme: food. Tram to Eminönü for a fish sandwich, metro to Galata, then baklava in Karaköy. Short, cheap and all paid with one card.', '34', 4, 8),
+  make('gebze-history', 'History: Gebze and İzmit', 'Theme: history. Çoban Mustafa Paşa complex, Hannibal’s tomb and İzmit’s clock tower (ancient Nicomedia), ending with pişmaniye.', '41', 10, 15),
+  make('ankara-culture', 'Culture and Art: Ankara Museums', 'Theme: culture. The Museum of Anatolian Civilizations and the castle, a bus ride between them, then Ankara tava and a simit. Good for students and a small budget.', '06', 20, 24),
+  make('konya-day', 'One Day in Konya', 'Theme: one-day city trip. Tram to Alâeddin Hill, İnce Minare, a bus to the Mevlana Museum and etli ekmek for lunch.', '42', 27, 32),
   make('konya', 'Konya by High-Speed Rail', 'Ankara–Konya by rail, then Alâeddin Hill, the Mevlana Museum and Konya’s oven dishes.', '42', 26, 33),
 ]
 export const tryText = (kurus: number) => `${(kurus / 100).toFixed(2)} TRY`

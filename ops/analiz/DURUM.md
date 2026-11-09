@@ -60,3 +60,24 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum Faz 10 QA TAMAM (42 slayt gezildi, hata 0; a11y: klavye+reduced-motion; perf: oto kalite). OZET ops/raporlar/OZET.md. Siradaki: canliya alma (nd1pet merge+push).
 
 - 2026-11-09 Sunum CANLI: nd1pet merge+push (d6adeb0), Actions Pages basarili, https://yusufydegirmenci.github.io/rota81/#/sunum acildi (42 slayt, 3D lab calisiyor, konsol hatasi 0). Faz 2-10 TAMAM.
+
+- 2026-11-09 06:50 Sunum: Faz 2-10 canlıda. DUZELTME.md hazır (glTF/HDRI görsel kalite, TR/EN şerit, tam canlı kontrol, mobil).
+
+- 2026-11-09 06:55 Sunum: DUZELTME.md madde 0: /#/vatandas/tur sunum gibi akacak (3D sahneler yer/yemek arasına), veri sorunu kod tarafında incelenecek; veri thread'i veriyi tamamlayacak.
+
+- 2026-11-09 06:56 Sunum: veri thread'i CityGuide'ı nd1pet'e koydu; DUZELTME.md madde 0'a eklendi (önce nd1pet merge).
+
+- 2026-11-09 07:00 Sunum: DUZELTME.md madde 4b: güvenli mod, PowerPoint klavyesi+notlar, PDF yedek, prova listesi+soru-cevap, İngilizce denetim.
+
+- 2026-11-09 07:02 Sunum: DUZELTME.md'ye 'PowerPoint'i sönük bırakan' kalite çıtası eklendi (slayt başı denetim).
+
+- 2026-11-09 07:05 Sunum: DUZELTME.md 0+: >=8 hazır tur, kurgusal rehber profilleri+etiketli örnek yorumlar, kültür notları, galeri. Veri thread'inden istenen: daha fazla yer/yemek/kültür notu/lisanslı foto (VERİ İSTEĞİ).
+
+- 2026-11-09 07:07 Sunum: veri şeması GUIDE (src/data/guide) DUZELTME.md'ye işlendi.
+- 2026-11-09 Sunum DÜZELTME: tur sunum modu, güvenli mod, PDF, PROVA, TR/EN şerit, 8 tur, HDRI+glTF (kısmi). Rapor ops/raporlar/duzeltme.md.
+
+- 2026-11-09 07:10 Sunum: restoran dış sahnesi 'kaçınılacak örnek' (ops/hedef/kacinilacak-restoran-dis.png) ve düzeltme kuralları DUZELTME.md'ye eklendi.
+
+- 2026-11-09 07:12 Sunum: 'gerçek fotoğraf esası' DUZELTME.md'ye eklendi (hero=gerçek lisanslı foto, 3D ikinci katman, kurgusal restoran etiketli).
+
+- 2026-11-09 07:14 Sunum: Google Haritalar fotoğrafları telifli, kopyalanmaz; 'Haritalar'da aç' linki/embed + Unsplash/Pexels/Flickr CC kaynakları DUZELTME.md'ye eklendi. Veri thread'i bu ek kaynakları da kullanabilir.

@@ -10,6 +10,7 @@ import { OneCard } from './pages/onecard'
 import { Login, Register, Welcome } from './pages/public'
 import { WelcomeBanner } from './ui/WelcomeBanner'
 import Sunum,{ PresenterView } from './sunum/Sunum'
+import PrintDeck from './sunum/PrintDeck'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/" element={<Welcome />} />
           <Route path="/sunum" element={<Sunum />} />
           <Route path="/sunum/sunucu" element={<PresenterView />} />
+          <Route path="/sunum/pdf" element={<PrintDeck />} />
           <Route path="/giris" element={<Login />} />
           <Route path="/kayit" element={<Register />} />
 

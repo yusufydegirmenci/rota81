@@ -7,6 +7,7 @@ const HERO: Record<string, { file: string; alt: string }> = {
   arch: { file: 'h4-mimari-neon', alt: 'Layered system architecture with gateway, auth, notification, queue, databases and storage' },
   journey: { file: 'h5-durak-sahnesi', alt: 'Evening bus stop with an electric bus, mixed crowd including a wheelchair user, and a skyline' },
 }
+export const heroOf = (id: string) => HERO[id]
 export const hasHero = (slideId: string) => slideId in HERO
 
 export function HeroFigure({ slideId }: { slideId: string }) {
