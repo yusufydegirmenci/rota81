@@ -30,7 +30,7 @@ export class SceneManager {
     this.renderer = new THREE.WebGLRenderer({ antialias: !this.lowQ })
     this.renderer.setPixelRatio(this.lowQ ? 1 : Math.min(window.devicePixelRatio || 1, quality === 'high' ? 2 : 1.5))
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 0.8
-    this.renderer.shadowMap.enabled = !this.lowQ; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.renderer.shadowMap.enabled = !this.lowQ; this.renderer.shadowMap.type = THREE.PCFShadowMap
     const cv = this.renderer.domElement; cv.style.width = '100%'; cv.style.height = '100%'; el.appendChild(cv)
     this.scene.background = new THREE.Color(sky); this.scene.fog = new THREE.Fog(sky, 40, 140)
     if (!this.lowQ) { const pm = new THREE.PMREMGenerator(this.renderer); this.scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; this.scene.environmentIntensity = 0.35; pm.dispose() }
