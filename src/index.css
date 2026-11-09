@@ -527,3 +527,22 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 .ggrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--s4); }
 .gcard { display: grid; gap: 8px; border-top: 2px solid var(--ink); padding-top: 8px; min-width: 0; }
 .gcard h4 { margin: 0; font-family: var(--f-disp); }
+
+/* Tour presentation mode */
+.tshow { display: grid; gap: 10px; position: relative; }
+.tshow.full { position: fixed; inset: 0; z-index: 90; background: var(--bg); padding: 12px 16px; overflow: auto; align-content: start; }
+.tsbar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; } .tsbar i { display: block; height: 100%; background: var(--signal); transition: width .25s linear; }
+.tsdots { display: flex; gap: 3px; flex-wrap: wrap; } .tsdots span { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .tsdots span.past { background: var(--ink2); } .tsdots span.on { background: var(--signal); transform: scale(1.4); }
+.tscities { display: flex; gap: 6px; flex-wrap: wrap; } .tscities button { min-height: 44px; padding: 0 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); border-radius: 999px; cursor: pointer; } .tscities button.on { background: var(--sel); color: var(--sel-ink); border-color: var(--sel); }
+.tsstage { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 16px; opacity: 1; transition: opacity .22s ease; animation: tsIn .5s ease; }
+.tsstage.veil { opacity: 0; }
+@keyframes tsIn { from { transform: scale(1.015); } to { transform: none; } }
+.tsmain, .tsside { min-width: 0; } .tsside { display: grid; gap: 8px; align-content: start; } .tsside h2 { margin: 0; font-family: var(--f-disp); }
+.tsphoto .pic img { aspect-ratio: 16 / 10; animation: kenburns 22s ease-out both; } .tsphoto .pic { overflow: hidden; border-radius: 6px; }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate(-1%, -1%); } }
+.tsmap { width: 100%; max-height: 140px; color: var(--ink); background: var(--sunk); border-radius: 6px; }
+.tsguide { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.tsctl { display: flex; gap: 8px; flex-wrap: wrap; } .tsctl .btn, .tshow .btn { min-height: 44px; }
+.tsdetail { border-left: 3px solid var(--signal); padding-left: 10px; }
+@media (max-width: 760px) { .tsstage { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .tsstage, .tsphoto .pic img { animation: none; transition: none; } }
