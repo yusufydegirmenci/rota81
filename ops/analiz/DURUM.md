@@ -37,3 +37,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 02:00 Sunum: Faz 2 bitti. HEPSI.md'ye 'durma/sorma' kuralı ve canlıya alma onayı eklendi. Sıradaki Faz 3.
 
 - 2026-11-09 02:02 Sunum: görsel kalite ÖNCELİK 1 (glTF/CC0 modeller, HDRI, hero görsel yedeği, faz başına ekran görüntüsü kontrolü) HEPSI.md'ye eklendi.
+
+- 2026-11-09 02:03 Sunum: görsel zenginlik (Proofpath animasyonlarını uyarla, parçacık, akan çizgiler, sayaç, geçiş, parallax, ses/titreşim, kalite anahtarı, reduced-motion) HEPSI.md'ye eklendi.
