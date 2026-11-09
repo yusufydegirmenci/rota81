@@ -522,3 +522,4 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 @media (prefers-reduced-motion: reduce) { .sn-root * { animation: none !important; transition: none !important; } }
 @media (max-width: 900px) { .sn-body, .sn-rehearse, .sn-xgrid { grid-template-columns: 1fr; } .sn-foot .btn { flex: 1 1 auto; } .sn-tablewrap table { min-width: 480px; } }
 .sn-caption h3, .sn-root h3 { text-transform: none; letter-spacing: 0; }
+.sn-3d { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #cfe8ee; }
