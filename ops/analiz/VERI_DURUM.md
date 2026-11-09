@@ -29,3 +29,9 @@ Sunum dalı, `claude/project-thread-nd1pet` üzerinden açılsın: `git fetch or
 Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması) veri thread'inde bitti. Sıradaki: Faz 2 (yeniden kullanılabilir 3D bileşenler, src/sunum/three/). Sunum dalı nd1pet tabanını içeriyor (merge edildi). facts.json'a sunum yazmaz; yeni kayıt gerekirse veri thread'ine yazılır.
 
 - 2026-11-09 Sunum thread: Faz 2-10 tek prompt ops/promptlar/HEPSI.md (kullanıcı PC'de akıtacak). Canlı: nd1pet'e merge (main yok).
+
+## 2026-11-09: Türkiye turu sayfasında "Şehir rehberi"
+- `/vatandas/tur` artık tur başlamadan önce de şehir sekmeleriyle (İstanbul, Kocaeli, Ankara, Konya) gezilecek yerleri ve yemekleri gösterir (`CityGuide`, `src/pages/tour.tsx`).
+- Kaynaklar: `PLACES` (`src/data/tour.ts`, şema `Place {id, city, title, lat, lon, tr, en, kind: 'sight'|'food'}`), `facts.json` (İngilizce özet, yazar, lisans, kaynak_url) ve `img/<id>.jpg`. Yemeğin işletme adı ve fiyatı `TOUR` içindeki `food` adımından okunur.
+- Güvenli yedek: resmi olmayan yer "yer tutucu" kartı ve "serbest lisanslı görsel henüz bulunamadı" notuyla görünür; şehirde kayıt yoksa "kayıtlı yer yok" yazar. Şu an fotoğrafsız: korfez-balik (Kocaeli), firin-kebabi (Konya).
+- Sunum dalı bu bileşeni kullanabilir ya da kendi 3D sahnelerini `PLACES` id'leriyle eşleştirebilir. `src/sunum/` dosyalarına dokunulmadı.

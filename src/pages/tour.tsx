@@ -24,6 +24,35 @@ function Picture({ id, p }: { id: string; p: Place }) {
   return <div className="pic ph" aria-hidden="true"><span>{p.kind === 'food' ? 'YEMEK' : 'GEZİ'}</span><b>{p.title}</b></div>
 }
 
+/** Tur başlamadan önce de görünen şehir rehberi: gezilecek yerler ve yerel yemekler, fotoğraf ve lisans künyesiyle. */
+function CityGuide({ lang }: { lang: 'tr' | 'en' }) {
+  const [city, setCity] = useState(TOUR_CITIES[0])
+  const foodStep = (id: string) => TOUR.find((t) => t.k === 'food' && t.place === id) as Extract<TourStep, { k: 'food' }> | undefined
+  const list = Object.values(PLACES).filter((p) => p.city === city)
+  const sights = list.filter((p) => p.kind === 'sight'), foods = list.filter((p) => p.kind === 'food')
+  const Card = ({ p }: { p: Place }) => {
+    const f = FACTS[p.id], fs = p.kind === 'food' ? foodStep(p.id) : undefined
+    return (
+      <article className="gcard">
+        <Picture id={p.id} p={p} />
+        <div><h4>{p.title}</h4><p className="small">{lang === 'en' ? (f?.ozet_en || p.en) : p.tr}</p>
+          {fs && <p className="small"><b>{fs.merchant}</b> · {fs.item} · {TL(fs.amount)} <span className="muted">(örnek fiyat, kartla ödenir)</span></p>}
+          {!imgOf(p.id) && <p className="small muted">Fotoğraf: serbest lisanslı uygun görsel henüz bulunamadı.</p>}
+        </div>
+      </article>
+    )
+  }
+  return (
+    <section aria-label="Şehir rehberi" className="guide">
+      <div className="tabs" role="tablist" aria-label="Şehir">{TOUR_CITIES.map((c) => <button key={c} role="tab" aria-selected={c === city} className="tab" onClick={() => setCity(c)}>{CITY_LABEL[c]}</button>)}</div>
+      <h3>{lang === 'en' ? 'Places to see' : 'Gezilecek yerler'}</h3>
+      <div className="ggrid">{sights.length ? sights.map((p) => <Card key={p.id} p={p} />) : <p className="muted">Bu şehir için kayıtlı yer yok.</p>}</div>
+      <h3>{lang === 'en' ? 'Local food to try (pay with the card)' : 'Denenecek yemekler (kartla ödenir)'}</h3>
+      <div className="ggrid">{foods.length ? foods.map((p) => <Card key={p.id} p={p} />) : <p className="muted">Bu şehir için kayıtlı yemek yok.</p>}</div>
+    </section>
+  )
+}
+
 function TourMap({ cityIdx, doneCities }: { cityIdx: number; doneCities: Set<string> }) {
   const pts = TOUR_CITIES.map((c) => ({ c, la: CENTROIDS[c][0], lo: CENTROIDS[c][1] }))
   const W = 520, H = 240
@@ -142,6 +171,8 @@ export function TourPage() {
           <SimNote>Her durak ve hat gerçek veridir (İstanbul: İETT + OpenStreetMap, diğer şehirler: OpenStreetMap). <b>GERÇEK</b>: gerçek durak/hat. <b>TAHMİN</b>: gerçek istasyonlar, tahmini saat ve ücret. <b>SENARYO</b>: verisi doğrulanamayan öğe. Yemek fiyatları ve işletmeler örnektir.</SimNote>
         </div>
       </div>
+
+      <CityGuide lang={lang} />
 
       <section aria-label="Tur adımları">
         <ol className="tourlist">
