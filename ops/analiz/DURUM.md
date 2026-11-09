@@ -90,3 +90,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:27 Sunum: tur sayfası sunum modu ekran görüntüsü 'zayıf' bulundu (ops/hedef/mevcut-tur-sayfasi-zayif.png); DUZELTME.md'ye 8 maddelik denetim eklendi.
 
 - 2026-11-09 07:30 Sunum: STRATEJİ DEĞİŞTİ. DUZELTME.md başına bağlayıcı bölüm: önce 12-15 slaytlık temiz profesyonel hikâye modu, 3D = isteğe bağlı Derin bakış (yalnız testi geçenler), her slayt ekran görüntüsüyle acımasız denetim, dürüst rapor.
+
+- 2026-11-09 07:50 Sunum: kullanıcının ChatGPT planı (ops/kaynak/chatgpt-tek-ulasim-karti-sunum-plani.pdf; solo gezgin, hibrit NatGeo+Apple, 5 şehir, 22 slayt, 4 teknoloji durağı) ana hikâye olarak DUZELTME.md A0'a işlendi.
