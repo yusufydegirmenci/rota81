@@ -1,3 +1,8 @@
+# !!! DEĞİŞMEZ KURAL (en üstte, her şeyden önce) !!!
+ASLA fazlar arasında durma. ASLA onay/izin sorma ("devam edeyim mi?" yasak). Faz 3'ten Faz 10'a kadar peş peşe, tek seferde çalıştır. Emin olmadığın yerde kendin karar ver ve kararı ops/raporlar/faz-N.md'ye bir satır yaz. Sadece GERÇEK bir engelde (erişim yok, araç çalışmıyor) o engeli ops/analiz/DURUM.md'ye yaz ve engellenmeyen sonraki faza geç; en sonda engelleri listele. Faz 2 yapıldı (62 test geçti), Faz 3'ten başla. Kullanıcı uyuyor, kimse cevap vermeyecek.
+CANLIYA ALMA ONAYLI: Faz 10'da claude/project-thread-nd1pet dalına merge + push (zorla itme yok) kullanıcı tarafından ÖNCEDEN ONAYLANDI; build ve testler yeşilse sorma, yap. Node uyumsuzsa testi `npx -p node@22.22.2 node node_modules/vitest/vitest.mjs run` ile çalıştır. Yerel nd1pet kopyası geride/ileride olabilir: push etmeden önce `git fetch origin` ve uzak nd1pet ile merge et.
+Faz 1 doğrulaması isteğe bağlı, atla.
+
 # ROTA81 SUNUM — FAZ 2-10 TEK PROMPT (sırayla, kesintisiz)
 Önce oku: ops/PLAN.md, ops/analiz/DURUM.md, ops/analiz/VERI_DURUM.md (varsa). Dal: claude/project-thread-qm3gnw (git pull; nd1pet'i en başta `git merge origin/claude/project-thread-nd1pet` ile içine al). Her faz: ayrı commit + push + ops/raporlar/faz-N.md (kısa: ne yapıldı, test çıktısı, eksikler) + ops/analiz/DURUM.md'ye 1-2 satır. Faz bitmeden sonrakine geçme; test/build kırmızıysa düzelt. Kesilirse DURUM.md'den kaldığın fazı bul, devam et.
 
