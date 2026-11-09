@@ -35,3 +35,11 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - Kaynaklar: `PLACES` (`src/data/tour.ts`, şema `Place {id, city, title, lat, lon, tr, en, kind: 'sight'|'food'}`), `facts.json` (İngilizce özet, yazar, lisans, kaynak_url) ve `img/<id>.jpg`. Yemeğin işletme adı ve fiyatı `TOUR` içindeki `food` adımından okunur.
 - Güvenli yedek: resmi olmayan yer "yer tutucu" kartı ve "serbest lisanslı görsel henüz bulunamadı" notuyla görünür; şehirde kayıt yoksa "kayıtlı yer yok" yazar. Şu an fotoğrafsız: korfez-balik (Kocaeli), firin-kebabi (Konya).
 - Sunum dalı bu bileşeni kullanabilir ya da kendi 3D sahnelerini `PLACES` id'leriyle eşleştirebilir. `src/sunum/` dosyalarına dokunulmadı.
+
+## 2026-11-09: Şehir rehberi veri şeması (yeni, sunum thread'i bunu okur)
+- Tip: `src/data/guide/types.ts` (`CityGuideData`, `GuideItem`, `GuideImage`). Yükleyici: `src/data/guide/index.ts` (`GUIDE[plaka]`, `guideImg(plaka, id)`, `guideItems`).
+- Dosyalar: `src/data/guide/<plaka>.json` (iki haneli plaka, örn. `42.json`) ve resimler `src/data/guide/img/<plaka>-<id>.jpg`.
+- Alanlar: `plate, name, intro_en, intro_tr, culture[], sights[], foods[], streets[]`. Her öğe: `id, title_en, title_tr, text_en, text_tr, source_url, text_licence`, isteğe bağlı `lat, lon, local_name, ingredients_en, where_en, culture_en, culture_tr, image {file, author, licence, source_url}`.
+- Sayfa: `/vatandas/rehber` (`src/pages/rehber.tsx`). Verisi olmayan ilde "veri yok" kartı gösterir; fotoğrafı olmayan öğe yer tutucu gösterir. Uydurma içerik yok; her metnin kaynağı ve lisansı öğede yazılı.
+- Dolum: PC oturumu (Wikipedia, Wikivoyage, Wikimedia Commons; yalnızca serbest lisanslı). Sunum thread'i `GUIDE` verisini dinamik okuyabilir; dosya yoksa boş gelir.
+- Rehber (kişi) profilleri ve örnek yorumlar sunum thread'inin işi; kurgusal ve "simülasyon" etiketli olmalı, gerçek kişi/yorum uydurulmaz.
