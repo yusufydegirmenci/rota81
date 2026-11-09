@@ -9,6 +9,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+const Replay = lazy(() => import('./three/ReplayLab').then((m) => ({ default: m.ReplayLab })))
 const Resto = lazy(() => import('./three/RestaurantView').then((m) => ({ default: m.RestaurantView })))
 const Journey = lazy(() => import('./three/JourneyView').then((m) => ({ default: m.JourneyView })))
 const TapLab = lazy(() => import('./three/TapView').then((m) => ({ default: m.TapView })))
@@ -57,7 +58,7 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
       : <CardScene step={step} />
     case 'nfc': return <NfcScene step={step} />
     case 'restaurant': return <><RestaurantScene step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D restaurant…</p>}><Resto quality={quality} part="tour" /></Suspense></>
-    case 'tech': return <TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />
+    case 'tech': return <><TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />{slide.id === 'lab' && <Suspense fallback={<p className="sn-hint">Loading replay lab…</p>}><Replay quality={quality} /></Suspense>}</>
     case 'map': return <MapScene mode={mm} setMode={setMm} pick={pick} setPick={setPick} />
     case 'dash': return <DashScene step={step} />
     case 'cards': return <CardsGrid items={sc.items} />

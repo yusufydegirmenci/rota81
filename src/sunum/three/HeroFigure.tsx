@@ -3,6 +3,7 @@ const HERO: Record<string, { file: string; alt: string }> = {
   tap: { file: 'h1-nfc-okuyucu-el', alt: 'A hand holds a blue contactless card over a black NFC reader with a rainbow LED edge' },
   'card-anatomy': { file: 'h3-kart-patlatilmis', alt: 'Exploded view of a smart card: chip module layer, bonding layer, antenna coil layer' },
   'nfc-physics': { file: 'h2-pos-kart-semasi', alt: 'POS terminal and a transparent card showing antenna coil and secure chip, energy and data via NFC' },
+  lab: { file: 'h4-mimari-neon', alt: 'Layered system architecture with gateway, auth, notification, queue, databases and storage' },
   arch: { file: 'h4-mimari-neon', alt: 'Layered system architecture with gateway, auth, notification, queue, databases and storage' },
   journey: { file: 'h5-durak-sahnesi', alt: 'Evening bus stop with an electric bus, mixed crowd including a wheelchair user, and a skyline' },
 }
