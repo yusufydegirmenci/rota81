@@ -546,3 +546,11 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 .tsdetail { border-left: 3px solid var(--signal); padding-left: 10px; }
 @media (max-width: 760px) { .tsstage { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .tsstage, .tsphoto .pic img { animation: none; transition: none; } }
+
+/* Presentation: blackout, safe mode, print deck */
+.sn-black { position: fixed; inset: 0; background: #000; z-index: 200; cursor: pointer; }
+.sn-suggest { position: sticky; top: 0; z-index: 80; background: #fff3cd; color: #222; padding: 8px 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pd { max-width: 900px; margin: 0 auto; padding: 16px; color: var(--ink); background: var(--bg); }
+.pd-page { padding: 24px 0; border-bottom: 1px solid var(--line); } .pd-page img { max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; }
+.pd-ch { font-family: var(--f-mono); font-size: .8rem; color: var(--mute); }
+@media print { .pd-bar, .sn-top, .sn-foot, .sn-suggest { display: none !important; } .pd { max-width: none; background: #fff; color: #000; } .pd-page { break-after: page; border: 0; min-height: 90vh; } .pd-page h1 { font-size: 26pt; } .pd-page li, .pd-page p { font-size: 13pt; } }

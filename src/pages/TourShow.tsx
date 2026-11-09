@@ -106,8 +106,9 @@ export function TourShow({ lang, onList }: { lang: Lang; onList: () => void }) {
   const root = useRef<HTMLDivElement>(null)
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const SCENE_MS = 22000
+  const tgt = useRef(0)
   const go = useCallback((n: number) => {
-    const t = Math.max(0, Math.min(scenes.length - 1, n))
+    const t = Math.max(0, Math.min(scenes.length - 1, n)); tgt.current = t
     clearTimeout(timer.current); setVeil(true); setTick(0)
     timer.current = setTimeout(() => { setI(t); setDetail(false); setVeil(false) }, 220)
   }, [scenes.length])
@@ -123,8 +124,8 @@ export function TourShow({ lang, onList }: { lang: Lang; onList: () => void }) {
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       if (/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement).tagName)) return
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i + 1) }
-      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1) }
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(tgt.current + 1) }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(tgt.current - 1) }
       else if (e.key === 'Home') go(0)
       else if (e.key === 'End') go(scenes.length - 1)
       else if (e.key === 'p' || e.key === 'P') setAuto((a) => !a)
