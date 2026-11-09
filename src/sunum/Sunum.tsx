@@ -9,6 +9,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+import { ToursView } from './ToursView'
 const Rental = lazy(() => import('./three/RentalView').then((m) => ({ default: m.RentalView })))
 const Replay = lazy(() => import('./three/ReplayLab').then((m) => ({ default: m.ReplayLab })))
 const Resto = lazy(() => import('./three/RestaurantView').then((m) => ({ default: m.RestaurantView })))
@@ -63,6 +64,7 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
     case 'tech': return <><TechScene faultId={fault} step={Math.min(step, fN + 1)} onFault={setFault} />{slide.id === 'lab' && <Suspense fallback={<p className="sn-hint">Loading replay lab…</p>}><Replay quality={quality} /></Suspense>}</>
     case 'map': return <MapScene mode={mm} setMode={setMm} pick={pick} setPick={setPick} />
     case 'dash': return <DashScene step={step} />
+    case 'tours': return <ToursView />
     case 'cards': return <CardsGrid items={sc.items} />
     case 'table': return <TableView head={sc.head} rows={sc.rows} />
     default: return <Hero />
