@@ -9,6 +9,7 @@ import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcS
 const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
 import { TAP_SHOTS } from './Stage3D'
 import { HeroFigure } from './three/HeroFigure'
+const Journey = lazy(() => import('./three/JourneyView').then((m) => ({ default: m.JourneyView })))
 const TapLab = lazy(() => import('./three/TapView').then((m) => ({ default: m.TapView })))
 const Bench = lazy(() => import('./three/BenchView').then((m) => ({ default: m.BenchView })))
 const STEP_SHOT = [2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8]
@@ -44,7 +45,9 @@ export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slid
   }
   if (slide.id === 'tap' && view === 'real' && SLIDES[0]) { const j = SLIDES.find((s) => s.id === 'journey'); if (j && j.scene.k === 'street') return <StreetScene steps={j.scene.steps} step={5} /> }
   switch (sc.k) {
-    case 'street': return <StreetScene steps={sc.steps} step={step} />
+    case 'street': return slide.id === 'journey'
+      ? <><StreetScene steps={sc.steps} step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D journey…</p>}><Journey quality={quality} /></Suspense></>
+      : <StreetScene steps={sc.steps} step={step} />
     case 'flow': return <FlowView flow={sc.flow} step={step} />
     case 'card': return slide.id === 'card-anatomy'
       ? <><CardScene step={step} /><Suspense fallback={<p className="sn-hint">Loading 3D parts…</p>}><Bench quality={quality} /></Suspense></>

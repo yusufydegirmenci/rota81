@@ -44,3 +44,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 
 - 2026-11-09 Sunum Faz 3 TAMAM: tap 3D lab (11 adim, 5 serit), yeni gorsel (ACES/bloom/PBR/golge), hos geldin seridi, hero gorseller. Rapor ops/raporlar/faz-3.md. Siradaki: Faz 4.
 - 2026-11-09 02:07 Sunum: Şehir Gezgini (yerler, yemekler, fotoğraflar, künye, güvenli yedek) ve turların bu veriye dayanması HEPSI.md'ye eklendi.
+
+- 2026-11-09 Sunum Faz 4 TAMAM: journey 3D (14 adim, tek karakter, ariza+teknisyen, tekerlekli sandalye, metro). Rapor ops/raporlar/faz-4.md. Siradaki: Faz 5.

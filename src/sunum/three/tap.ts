@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
-import { Bus, Etiket, Hand, Karakter, Sokak, SmartCard, Validator, VeriAkisi, canvasTex, mark, mat, phys, type LaneKind } from './models'
+import { Bus, Etiket, Hand, Karakter, Sokak, SmartCard, Validator, VeriAkisi, mark, mat, phys, type LaneKind } from './models'
+import { skyTex } from './sky'
 import type { PartId } from './registry'
 import type { SceneBuilder, StepDef } from './Viewer3D'
 
@@ -21,7 +22,6 @@ export const TAP_STEPS: TapStep[] = [
   { lanes: [], result: 'ok', pos: [-9, 3.2, 12], look: [0, 1.2, 1], title: 'Back to the real world', text: 'Derya boards. For her, nothing visible happened except a green light and a beep. Everything else was invisible infrastructure.', deep: 'Camera purpose: return to the opening shot to close the loop between the technical chain and the human moment.' },
 ]
 
-const skyTex = () => canvasTex(2, 256, (g) => { const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, '#2b5a86'); gr.addColorStop(0.6, '#e9b98a'); gr.addColorStop(1, '#f6dcc0'); g.fillStyle = gr; g.fillRect(0, 0, 2, 256) })
 
 export const buildTap: SceneBuilder = (m) => {
   const sky = skyTex(); if (sky) m.scene.background = sky
