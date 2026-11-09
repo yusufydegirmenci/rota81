@@ -554,3 +554,8 @@ details { border-top: 1px solid var(--line2); padding: 8px 0; } summary { cursor
 .pd-page { padding: 24px 0; border-bottom: 1px solid var(--line); } .pd-page img { max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; }
 .pd-ch { font-family: var(--f-mono); font-size: .8rem; color: var(--mute); }
 @media print { .pd-bar, .sn-top, .sn-foot, .sn-suggest { display: none !important; } .pd { max-width: none; background: #fff; color: #000; } .pd-page { break-after: page; border: 0; min-height: 90vh; } .pd-page h1 { font-size: 26pt; } .pd-page li, .pd-page p { font-size: 13pt; } }
+
+/* Touch targets >= 44px on phones and tablets */
+@media (max-width: 820px), (pointer: coarse) {
+  .sn-root button, .sn-root .btn, .sn-root select, .sn-root summary, .tshow button, .tshow .btn, .langsw button, .sn-modes button, .sn-tools button, .sn-faultpick button { min-height: 44px; min-width: 44px; }
+}

@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Bus, Etiket, Sokak, Validator, canvasTex, mark, mat } from './models'
 import { BusInterior, House, MetroEntrance, Person, Phone, Shelter, Wheelchair } from './world'
 import { skyTex } from './sky'
+import { addWalker } from './assets'
 import type { SceneBuilder, StepDef } from './Viewer3D'
 
 /** Phase 4: one continuous journey. The hero is one object that only ever walks (no teleport); every step moves her target, the camera follows a different idea.
@@ -55,6 +56,7 @@ export const buildJourney: SceneBuilder = (m) => {
   const house_light = new THREE.PointLight(0xffc98a, 18, 12); house_light.position.set(-40, 2.6, -5); m.scene.add(house_light)
   const stop_light = new THREE.PointLight(0xbfe3ff, 14, 10); stop_light.position.set(-6, 3, -2.5); m.scene.add(stop_light)
   m.prepare()
+  const walkers = [addWalker(m, [-12, 0, -2.2], 0.95, Math.PI / 2), addWalker(m, [-1.5, 0, -2.0], 0.9, -Math.PI / 2)]
   const vUpdate = val.userData.update as (t: number, s: { tech?: boolean; active?: boolean; result?: 'ok' | 'bad' | null }) => void
   const gate = metro.userData.gate as THREE.Object3D; const gUpdate = gate.userData.update as typeof vUpdate
   const iVal = inter.userData.validator as THREE.Object3D; const iUpdate = iVal.userData.update as typeof vUpdate
@@ -63,6 +65,7 @@ export const buildJourney: SceneBuilder = (m) => {
   const V = new THREE.Vector3()
   const walk = (o: THREE.Object3D, tx: number, ty: number, tz: number, k = 0.035) => { const d = Math.hypot(tx - o.position.x, tz - o.position.z); o.position.x += (tx - o.position.x) * k; o.position.z += (tz - o.position.z) * k; o.position.y += (ty - o.position.y) * 0.1; return d > 0.08 }
   return (t, step, techView) => {
+    walkers.forEach((w) => w(t))
     const s = JOURNEY_STEPS[Math.min(step, STEP_FRAMES - 1)]
     if (step !== lastStep) { lastStep = step; if (s.phone) phoneDraw(...s.phone); if (s.arrival) shDraw(s.arrival) }
     // bus
