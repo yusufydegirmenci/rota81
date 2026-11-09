@@ -3,6 +3,13 @@
 
 Durum: 42 slayt canlıda (https://yusufydegirmenci.github.io/rota81/#/sunum), 97 test yeşil. Ekran görüntüleri ops/raporlar/img/ içinde: yapı iyi ama görsel kalite hâlâ hedefin (ops/hedef/h1-h5) altında: insanlar kapsül, otobüs/okuyucu/durak prosedürel kutular, HDRI/glTF yok.
 
+0) EN ÜST ÖNCELİK — TUR SAYFASI SUNUM GİBİ OLSUN (kullanıcı: /#/vatandas/tur'da gezilecek yerler ve yemekler görünmüyor; asıl mevzu: sunumdaki gerçekçi 3D sahneler bu tur sayfasının arasına serpiştirilsin, sunum gibi geçişlerle aksın).
+ a) Veri tarafı: /#/vatandas/tur (src/pages/tour.tsx) neden yer/yemek göstermiyor bul (facts.json/şema/yükleme/filtre/id eşleşmesi). Düzeltmeyi KOD tarafında yap; veri dosyalarına (src/data/tour/**, src/data/real/**) YAZMA, şemaya VERI_DURUM.md'den uy. Veri eksikse sayfa yer tutucu + "veri yok" ile çalışsın; veri thread'i veriyi tamamlayıp sana mesaj atacak, git pull ile gelir.
+ b) Tur = sunum akışı: tur sayfasına "Sunum modu" (varsayılan açık, "Liste" görünümüne geçiş düğmesi): tam ekran, sahneler arası dokun/kaydır/ok tuşu ile ilerle, sinematik çapraz geçiş (cross-fade + kamera hareketi), ilerleme çubuğu + adım noktaları, geri/ileri, duraklat, Esc ile çık.
+ c) Sıra (her tur için): şehre varış/yolculuk sahnesi (otobüs+durak 3D, kart okutma) → gezilecek yer (foto+künye+kısa özet+harita konumu) → yerel yemek (foto+künye; restoran 3D iç mekân + POS ödemesi sahnesi) → ulaşım (kart ile otobüs/metro) → gerekirse araba kiralama sahnesi → rehber seçeneği (sesli/yerel/kendi hızında) → sonraki durak. Sahneleri src/sunum/three/ bileşenlerinden YENİDEN KULLAN (kopyalama yok); sunum ve tur aynı bileşenleri paylaşsın. Her sahne kısa (10-25 sn) ve duraklatılabilir; "Detay" paneliyle teknik açıklamaya inilebilsin ve geri dönülsün.
+ d) Verisi olmayan şehir/yer: sahne atlanır veya jenerik 3D sahneyle devam, "veri yok" notu; çökme yok. Foto künyesi her yerde görünür.
+ e) Görsel kalite kuralı (madde 1) burada da geçerli; sahneler gerçekçi modellerle. Playwright ile bir turu baştan sona gez, ekran görüntüleri duzeltme-tur-*.png.
+
 1) GÖRSEL KALİTE (en büyük iş). Serbest lisanslı varlıkları GERÇEKTEN indir (curl/npm; ağ yoksa DURUM.md'ye yaz): 
  - HDRI: Poly Haven (CC0), 1k .hdr dosyası (gün batımı/şehir), RGBELoader ile ortam + arka plan; public/tex/.
  - İnsanlar: Quaternius "Ultimate Animated Characters"/"Universal Base Characters" veya Kenney characters (CC0, GLB), yürüme/bekleme/boşta animasyonu (AnimationMixer), farklı boy/kıyafet renkleri (malzeme klonla), tekerlekli sandalye kullanıcısı (Kenney/Quaternius sandalye modeli + oturan karakter).

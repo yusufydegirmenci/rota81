@@ -62,3 +62,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum CANLI: nd1pet merge+push (d6adeb0), Actions Pages basarili, https://yusufydegirmenci.github.io/rota81/#/sunum acildi (42 slayt, 3D lab calisiyor, konsol hatasi 0). Faz 2-10 TAMAM.
 
 - 2026-11-09 06:50 Sunum: Faz 2-10 canlıda. DUZELTME.md hazır (glTF/HDRI görsel kalite, TR/EN şerit, tam canlı kontrol, mobil).
+
+- 2026-11-09 06:55 Sunum: DUZELTME.md madde 0: /#/vatandas/tur sunum gibi akacak (3D sahneler yer/yemek arasına), veri sorunu kod tarafında incelenecek; veri thread'i veriyi tamamlayacak.
