@@ -3,6 +3,8 @@
 
 Durum: 42 slayt canlıda (https://yusufydegirmenci.github.io/rota81/#/sunum), 97 test yeşil. Ekran görüntüleri ops/raporlar/img/ içinde: yapı iyi ama görsel kalite hâlâ hedefin (ops/hedef/h1-h5) altında: insanlar kapsül, otobüs/okuyucu/durak prosedürel kutular, HDRI/glTF yok.
 
+ÇITA (kullanıcı): en iyi, en şık PowerPoint sunumu bile bunun yanında sönük kalmalı. Her slayt: güçlü tipografi, tutarlı renk/boşluk ızgarası, kaliteli görsel/3D, akıcı geçiş, hiçbir taşma/kırpılma/boş alan. Zayıf görünen slayt bırakma; her slaytı tek tek ekran görüntüsüyle denetle (duzeltme-slayt-NN.png) ve zayıfları iyileştir.
+
 0) EN ÜST ÖNCELİK — TUR SAYFASI SUNUM GİBİ OLSUN (kullanıcı: /#/vatandas/tur'da gezilecek yerler ve yemekler görünmüyor; asıl mevzu: sunumdaki gerçekçi 3D sahneler bu tur sayfasının arasına serpiştirilsin, sunum gibi geçişlerle aksın).
  a0) GÜNCEL: veri thread'i nd1pet'e "Şehir rehberi" (CityGuide, src/pages/tour.tsx; şehir sekmeleri, yerler+yemekler, foto+lisans künyesi, güvenli yer tutucu) ekledi ve 10 foto getirdi. ÖNCE nd1pet'i çek/merge et (tour.tsx çakışmasında onların CityGuide'ını koru), sonra 3D sahneleri PLACES id'leriyle (src/data/tour.ts) eşleyip sayfaya serpiştir. Körfez balığı ve fırın kebabı fotoğrafsız (yer tutucu, uydurma foto yok). Veri thread'i tour.tsx'te şimdilik iş bırakmıyor.
  a) Veri tarafı: /#/vatandas/tur (src/pages/tour.tsx) neden yer/yemek göstermiyor bul (facts.json/şema/yükleme/filtre/id eşleşmesi). Düzeltmeyi KOD tarafında yap; veri dosyalarına (src/data/tour/**, src/data/real/**) YAZMA, şemaya VERI_DURUM.md'den uy. Veri eksikse sayfa yer tutucu + "veri yok" ile çalışsın; veri thread'i veriyi tamamlayıp sana mesaj atacak, git pull ile gelir.
