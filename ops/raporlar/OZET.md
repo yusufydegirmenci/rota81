@@ -25,3 +25,6 @@ Dal: `claude/project-thread-qm3gnw` (canlıya: `claude/project-thread-nd1pet` il
 - Hoş geldin şeridi TR; ortak dil anahtarı olmadığından EN metin config'te hazır ama kullanılmıyor.
 - Ekran görüntüleri yalnızca bu makinenin yazılım WebGL'iyle alındı, mobil gerçek cihazda denenmedi.
 - Teknik görünüm "teknik çizim" render modu değil; etiketler, X-ray ve katman ayrımı.
+
+## Canlı
+Adres: https://yusufydegirmenci.github.io/rota81/#/sunum (Pages, nd1pet d6adeb0). Actions: build (npm test + build) ve deploy başarılı. Canlıda 3D lab ve 42 slayt doğrulandı.

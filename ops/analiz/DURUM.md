@@ -58,3 +58,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum Faz 9 TAMAM: design-city (6 mod, motor, gercek veri salt okunur). Rapor ops/raporlar/faz-9.md. Siradaki: Faz 10 (QA + canliya alma).
 
 - 2026-11-09 Sunum Faz 10 QA TAMAM (42 slayt gezildi, hata 0; a11y: klavye+reduced-motion; perf: oto kalite). OZET ops/raporlar/OZET.md. Siradaki: canliya alma (nd1pet merge+push).
+
+- 2026-11-09 Sunum CANLI: nd1pet merge+push (d6adeb0), Actions Pages basarili, https://yusufydegirmenci.github.io/rota81/#/sunum acildi (42 slayt, 3D lab calisiyor, konsol hatasi 0). Faz 2-10 TAMAM.
