@@ -1,11 +1,14 @@
 import { SLIDES } from './slides'
 import { heroOf } from './three/HeroFigure'
+import { StoryPrint } from './Hikaye'
 
 /** One slide per page, static pictures instead of 3D, so the deck can be saved as a PDF and opened with no internet (Print, then Save as PDF). */
 export default function PrintDeck() {
   return (
     <div lang="en" className="pd">
       <div className="pd-bar"><button className="btn accent" onClick={() => window.print()}>Print / Save as PDF</button> <a href="#/sunum">Back to the presentation</a></div>
+      <StoryPrint />
+      <h1 style={{ pageBreakBefore: 'always' }}>Appendix: full technical slides</h1>
       {SLIDES.map((s, i) => {
         const h = heroOf(s.id)
         return (

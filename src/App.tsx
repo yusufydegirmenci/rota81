@@ -11,6 +11,7 @@ import { Login, Register, Welcome } from './pages/public'
 import { WelcomeBanner } from './ui/WelcomeBanner'
 import Sunum,{ PresenterView } from './sunum/Sunum'
 import PrintDeck from './sunum/PrintDeck'
+import Hikaye from './sunum/Hikaye'
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <WelcomeBanner />
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route path="/sunum" element={<Sunum />} />
+          <Route path="/sunum" element={<Hikaye />} />
+          <Route path="/sunum/ek" element={<Sunum />} />
           <Route path="/sunum/sunucu" element={<PresenterView />} />
           <Route path="/sunum/pdf" element={<PrintDeck />} />
           <Route path="/giris" element={<Login />} />
