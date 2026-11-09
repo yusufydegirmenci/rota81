@@ -70,3 +70,7 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 07:00 Sunum: DUZELTME.md madde 4b: güvenli mod, PowerPoint klavyesi+notlar, PDF yedek, prova listesi+soru-cevap, İngilizce denetim.
 
 - 2026-11-09 07:02 Sunum: DUZELTME.md'ye 'PowerPoint'i sönük bırakan' kalite çıtası eklendi (slayt başı denetim).
+
+- 2026-11-09 07:05 Sunum: DUZELTME.md 0+: >=8 hazır tur, kurgusal rehber profilleri+etiketli örnek yorumlar, kültür notları, galeri. Veri thread'inden istenen: daha fazla yer/yemek/kültür notu/lisanslı foto (VERİ İSTEĞİ).
+
+- 2026-11-09 07:07 Sunum: veri şeması GUIDE (src/data/guide) DUZELTME.md'ye işlendi.
