@@ -10,12 +10,17 @@ export const CITIES = [['06', 'Ankara'], ['26', 'Eskişehir'], ['34', 'İstanbul
 
 /** A photo by id: Commons photos fetched for this deck (public/foto) or the tour photos already in the repo. Always with author and licence. */
 export function ph(id: string): { url: string; credit: string } {
+  if (id.startsWith('ai-')) return { url: `${B}foto/${id}.jpg`, credit: 'Concept illustration (AI-generated)' }
   const f = FOTO[id]
   if (f) return { url: `${B}foto/${id}.jpg`, credit: `${f.by}, ${f.lic}` }
   const p = photoOf(id)
   return p ?? { url: '', credit: '' }
 }
-export const credits = (ids: string[]) => 'Photos: ' + ids.map((i) => ph(i).credit).filter(Boolean).join(' · ') + ' · Wikimedia Commons'
+export const credits = (ids: string[]) => {
+  const real = ids.filter((i) => !i.startsWith('ai-')).map((i) => ph(i).credit).filter(Boolean)
+  const ai = ids.some((i) => i.startsWith('ai-'))
+  return [real.length ? 'Photos: ' + real.join(' · ') + ' · Wikimedia Commons' : '', ai ? 'Concept illustration (AI-generated)' : ''].filter(Boolean).join(' · ')
+}
 
 const P: Record<string, string> = {
   bus: 'M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10M5 16h14M5 16v2h2v-2M19 16v2h-2v-2M5 11h14M8.5 13.5h.01M15.5 13.5h.01',
@@ -54,21 +59,22 @@ export const Trail = ({ at }: { at: number }) => (
 
 export const Tag = ({ t }: { t: 'REAL' | 'DESIGN' | 'SIMULATION' | 'PROPOSAL' | 'ILLUSTRATIVE' }) => <span className="hk-tag" style={{ color: t === 'REAL' ? '#1a7f4b' : t === 'SIMULATION' || t === 'ILLUSTRATIVE' ? '#c25a00' : '#0b2d6b' }}>{t}</span>
 
-interface SP { kick: string; title: string; dark?: boolean; n: number; total: number; at?: number; children: ReactNode; lead?: string; tech?: boolean }
-export const Slide = ({ kick, title, dark, n, total, at, children, lead, tech }: SP) => (
+interface SP { kick: string; title: string; dark?: boolean; n: number; total: number; at?: number; children: ReactNode; lead?: string; tech?: boolean; bg?: string }
+export const Slide = ({ kick, title, dark, n, total, at, children, lead, tech, bg }: SP) => (
   <section className={'hk-slide' + (dark ? ' hk-dark' : '') + (tech ? ' hk-tech' : '')} aria-label={title}>
+    {bg && <img className="hk-slidebg" src={ph(bg).url} alt="" />}
     {at !== undefined && <Trail at={at} />}
     <p className="hk-kick">{kick}</p>
     <h2>{title}</h2>
     {lead && <p className="hk-lead">{lead}</p>}
     {children}
-    <div className="hk-foot"><img src={logo(dark ? 'FORA_logo-yatay-FORADAS-koyu' : 'FORA_logo-yatay-FORADAS')} alt="FORADAŞ" /><span>{n} / {total}</span></div>
+    <div className="hk-foot"><img src={logo(dark ? 'FORA_logo-yatay-FORADAS-koyu' : 'FORA_logo-yatay-FORADAS')} alt="FORADAŞ" /><span>{bg ? credits([bg]) + ' · ' : ''}{n} / {total}</span></div>
   </section>
 )
 export const Pts = ({ items }: { items: ReactNode[] }) => <ul className="hk-pts">{items.map((t, i) => <li key={i}>{t}</li>)}</ul>
 export const Card = ({ ico, h, t, or, teal }: { ico?: string; h: string; t: string; or?: boolean; teal?: boolean }) => <div className="hk-card">{ico && <Ico n={ico} or={or} teal={teal} />}<h3>{h}</h3><p>{t}</p></div>
-export const Flow = ({ steps, hot }: { steps: [string, string][]; hot?: number }) => (
-  <div className="hk-flow">{steps.map(([h, t], i) => <div key={h} className={'hk-step' + (hot === i ? ' hot' : '')} style={{ animationDelay: `${0.15 * i + 0.2}s` }}><i>{i + 1}</i><h3>{h}</h3><p>{t}</p></div>)}</div>
+export const Flow = ({ steps, hot, vert }: { steps: [string, string][]; hot?: number; vert?: boolean }) => (
+  <div className={'hk-flow' + (vert ? ' vert' : '')}>{steps.map(([h, t], i) => <div key={h} className={'hk-step' + (hot === i ? ' hot' : '')} style={{ animationDelay: `${0.15 * i + 0.2}s` }}><i>{i + 1}</i><h3>{h}</h3><p>{t}</p></div>)}</div>
 )
 
 /** Dot map of Türkiye from the 81 province centres (src/data/places.ts). `lit` = province ids drawn in orange; `route` joins them in order. Schematic, not a survey map. */

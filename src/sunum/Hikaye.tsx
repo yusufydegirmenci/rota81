@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SLIDES } from './slides'
-import { Card, CardArt, Flow, DotMap, Pts, Slide, SvgIcon, Tag, Trail, credits, logo, ph } from './HikayeParts'
+import { concept, Card, CardArt, Flow, DotMap, Pts, Slide, SvgIcon, Tag, Trail, credits, logo, ph } from './HikayeParts'
 import './hikaye.css'
 import './hikaye-a0.css'
 
@@ -37,17 +37,17 @@ function City({ c, n }: { c: CityDef; n: number }) {
 
 interface Def { id: number; say: string; el: (n: number) => ReactNode }
 const city = (c: CityDef) => (n: number) => <City c={c} n={n} />
-const S = (p: { kick: string; title: string; at?: number; dark?: boolean; tech?: boolean; lead?: string }, kids: ReactNode) => (n: number) => <Slide n={n} total={TOTAL} {...p}>{kids}</Slide>
+const S = (p: { kick: string; title: string; at?: number; dark?: boolean; tech?: boolean; lead?: string; bg?: string }, kids: ReactNode) => (n: number) => <Slide n={n} total={TOTAL} {...p}>{kids}</Slide>
 const col = { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(2.2 * var(--u))' } as const
 
 const DECK: Def[] = [
   { id: 1, say: 'Imagine setting out to discover a country. Five cities, dozens of stops, and one card.',
     el: (n) => (
-      <section className="hk-slide hk-dark hk-cover" aria-label="Cover">
-        <img className="hk-bleed" src={ph('kapak').url} alt="" /><div className="hk-veil hk-veil-b" />
+      <section className="hk-slide hk-dark hk-cover rt" aria-label="Cover">
+        <img className="hk-bleed" src={ph('ai-gezgin').url} alt="" /><div className="hk-veil hk-veil-b" />
         <img src={logo('FORA_logo-yatay-FORADAS-koyu')} alt="FORADAŞ" className="hk-coverlogo" />
         <div className="hk-covertext"><h1>81 CITIES.<br />ONE JOURNEY.</h1><p className="hk-lead">Can one transport card take us across Türkiye?</p></div>
-        <div className="hk-foot"><span>National Shared Transport Card Project · {credits(['kapak'])}</span><span>{n} / {TOTAL}</span></div>
+        <div className="hk-foot"><span>National Shared Transport Card Project · {credits(['ai-gezgin'])}</span><span>{n} / {TOTAL}</span></div>
       </section>) },
   { id: 2, say: 'When we move from one city to another, we also have to rebuild our travel habits.',
     el: S({ kick: 'The journey begins', title: 'Do we have to start again in every city?' },
@@ -83,10 +83,10 @@ const DECK: Def[] = [
     el: city({ num: '01', name: 'Ankara', at: 0, msg: 'The journey begins.', hero: 'ankara-hamamonu', thumbs: ['ankara-kale', 'ankara-tava'], sights: 'Anıtkabir · Hamamönü · Ankara Castle', food: 'Ankara tava · Beypazarı dried fruit', go: { ico: 'bus', t: 'Bus · Metro · Ankaray' }, acc: '#ff9a3c', side: 'l' }) },
   { id: 7, say: 'The moment we tap the card, the system checks that it is valid. Then the ride can start.',
     el: S({ kick: 'Technology stop 01', title: 'One tap. The journey has started.', dark: true, tech: true, at: 0 },
-      <div className="hk-body" style={col}>
-        <Flow hot={0} steps={[['Tap', 'The card meets the reader. Radio signals wake the card (NFC).'], ['Card check', 'The card proves it is genuine.'], ['Fare check', 'Balance and city tariff are checked.'], ['Approve', 'Green light and a beep.'], ['Record', 'The ride is saved as a transaction.']]} />
-        <div className="hk-note"><Tag t="SIMULATION" /><span>Contactless (NFC) communication, secure card ID, authorisation and transaction check.</span>{DEEP('tap')}</div>
-      </div>) },
+      <div className="hk-body"><div className="hk-col" style={{ flex: .9 }}><img className="hk-img" src={concept('h1-nfc-okuyucu-el')} alt="A hand holds a card to a reader" style={{ height: 'calc(25 * var(--u))' }} /><p className="hk-credit">Concept illustration (supplied by the author)</p></div>
+        <div className="hk-col" style={{ flex: 1.3 }}>
+          <Flow vert hot={0} steps={[['Tap', 'Radio signals wake the card (NFC).'], ['Card check', 'The card proves it is genuine.'], ['Fare check', 'Balance and city tariff are checked.'], ['Approve', 'Green light and a beep.'], ['Record', 'The ride is saved as a transaction.']]} />
+          <div className="hk-note"><Tag t="SIMULATION" /><span>Contactless (NFC), secure card ID, authorisation, transaction check.</span>{DEEP('tap')}</div></div></div>) },
   { id: 8, say: 'After Ankara we arrive in Eskişehir. We ride the tram, and we do not buy a new card.',
     el: city({ num: '02', name: 'Eskişehir', at: 1, msg: 'History, youth and city life.', hero: 'eskisehir-porsuk', thumbs: ['eskisehir-odunpazari', 'eskisehir-tram'], sights: 'Odunpazarı · Porsuk River · Sazova Park', food: 'Çibörek · Met helva', go: { ico: 'tram', t: 'Tram · Bus' }, acc: '#3fd0c9', side: 'b' }) },
   { id: 9, say: 'Every municipality may run its own system. What matters is that the systems can talk to each other through a shared base.',
@@ -106,7 +106,7 @@ const DECK: Def[] = [
         <div className="hk-foot"><span>{credits(['tren'])}</span><span>{n} / {TOTAL}</span></div>
       </section>) },
   { id: 11, say: 'In İstanbul we use several kinds of transport in one day, and every time it is the same card.',
-    el: city({ num: '03', name: 'İstanbul', at: 2, msg: 'Two continents, endless discoveries.', hero: 'istanbul-bogaz', thumbs: ['istanbul-vapur', 'galata', 'simit'], sights: 'Sultanahmet · Galata · Kadıköy · the Bosphorus', food: 'Balık ekmek · Simit', go: { ico: 'ferry', t: 'Metro · Tram · Ferry · Bus' }, acc: '#ffc26b', side: 'r' }) },
+    el: city({ num: '03', name: 'İstanbul', at: 2, msg: 'Two continents, endless discoveries.', hero: 'ai-istanbul-kart', thumbs: ['istanbul-bogaz', 'galata', 'simit'], sights: 'Sultanahmet · Galata · Kadıköy · the Bosphorus', food: 'Balık ekmek · Simit', go: { ico: 'ferry', t: 'Metro · Tram · Ferry · Bus' }, acc: '#ffc26b', side: 'r' }) },
   { id: 12, say: 'The traveller sees one card. Behind it, municipalities, operators and payment systems work together.',
     el: S({ kick: 'Technology stop 03', title: 'What stands behind one card?', dark: true, tech: true, at: 2 },
       <div className="hk-body" style={{ flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: 'calc(.9 * var(--u))' }}>
@@ -124,7 +124,7 @@ const DECK: Def[] = [
   { id: 14, say: 'In İzmir we live the same experience. No new card, no new balance to manage.',
     el: city({ num: '04', name: 'İzmir', at: 3, msg: 'The rhythm of the Aegean.', hero: 'izmir-kordon', thumbs: ['izmir-saat'], sights: 'Clock Tower · Kemeraltı · Kordon', food: 'Boyoz · Kumru', go: { ico: 'ferry', t: 'Metro · Tram · Ferry · Bus' }, acc: '#6cc4ff', side: 'r' }) },
   { id: 15, say: 'A single system working in many cities has to keep people safe and keep running.',
-    el: S({ kick: 'Technology stop 04', title: 'Safe travel needs a trustworthy system.', dark: true, tech: true, at: 3 },
+    el: S({ kick: 'Technology stop 04', title: 'Safe travel needs a trustworthy system.', dark: true, tech: true, at: 3, bg: 'ai-guvenlik' },
       <div className="hk-body"><div className="hk-grid3 big six">
         <Card ico="shield" teal h="Secure card check" t="The card proves it is genuine, every time." />
         <Card ico="lock" teal h="Encrypted messages" t="Data is protected on its way to the server." />
@@ -144,7 +144,7 @@ const DECK: Def[] = [
         <div className="hk-foot"><span>{credits(['ankara-hamamonu', 'eskisehir-odunpazari', 'istanbul-bogaz', 'izmir-kordon', 'antalya-hadrian'])}</span><span>{n} / {TOTAL}</span></div>
       </section>) },
   { id: 18, say: 'This journey should not stop at five cities. Our goal is a shared transport experience across Türkiye.',
-    el: S({ kick: 'National vision', title: 'Five cities are only the start.', dark: true },
+    el: S({ kick: 'National vision', title: 'Five cities are only the start.', dark: true, bg: 'ai-turkiye-ag' },
       <div className="hk-body"><div className="hk-col" style={{ flex: 1.3, alignSelf: 'stretch', justifyContent: 'center' }}><DotMap lit={['06', '26', '34', '35', '07']} all /><p className="hk-credit">Target: all 81 provinces. This is a goal, not a live integration.</p></div>
         <div className="hk-col" style={{ gap: 'calc(1.4 * var(--u))' }}>
           <div className="hk-card"><Tag t="REAL" /><h3>Already today</h3><p>Türkiye Kart (PTT) works in the public transport of municipalities that have agreed to it.</p></div>

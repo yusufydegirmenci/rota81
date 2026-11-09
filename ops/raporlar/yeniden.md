@@ -17,6 +17,9 @@ Kaynak: `ops/kaynak/chatgpt-tek-ulasim-karti-sunum-plani.pdf` (22 slayt planı) 
 - **PDF yedek:** `#/sunum/pdf` 22 slaytı (1280x720, 1 slayt = 1 sayfa) + eki basar. Dosya: `public/rota81-sunum.pdf` (~14 MB).
 - **C) Ekran görüntüleri:** `ops/raporlar/img/yeniden-NN.png` (1280x720) ve `yeniden-NN-m.png` (390x844), 22'şer adet, son tur.
 
+## PDF görsel kaynak kararı (DUZELTME.md, son satırlar)
+`ops/kaynak/gorseller/` içine PDF'teki 36 görsel çıkarıldı (pypdf). Kurala göre yalnız açıkça yapay zekâ konsepti olanlar yayına girdi, her biri "Concept illustration (AI-generated)" etiketli: kapak gezgini (`ai-gezgin`), İstanbul kart+vapur+tramvay (`ai-istanbul-kart`, slayt 11 hero), güvenlik veri merkezi (`ai-guvenlik`, slayt 15 zemin), Türkiye ağ haritası (`ai-turkiye-ag`, slayt 18 zemin). **Elenenler:** gerçek marka logolu veya ekranlı (EGO, Tallinn/Ühiskaart, Navigo, Auckland AT, Biletmatik görünümlü makine), harita kopyası (slayt 5 için Google tarzı harita), stok/basın fotoğrafı gibi görünenler (Ankara/Antalya/İzmir panoramaları, Boğaz), "dreamstime" benzeri yazı taşıyanlar (tramvayda gülen kadın), izometrik stok vektör çizim, sahte uygulama ekranı. Şüphede kalanlar kullanılmadı. **Sınırlama:** hangisinin gerçekten yapay zekâ ürünü olduğunu dosyadan kanıtlayamam; görünüme göre yargıladım. Kullanıcı gözle kontrol etmeli.
+
 ## Eleştiri turları (acımasız grafik tasarımcı gözüyle)
 1. İlk render: şehir slaytlarında metin/foto/başlık tamamen yanlış yerde (CSS özgüllük hatası: relative kuralı absolute'u eziyordu) → düzeltildi.
 2. Kapak logosu H1 ile çakışıyordu; kart yelpazesi etiketleri kırpılıyordu (kart genişletildi); S9 kutusunda "Shared integration layer" taşıyordu; teknoloji durağı adımları 2 sn sonra görünüyor (animasyon) diye ilk görüntüde soluktu → bekleme artırıldı.
@@ -26,7 +29,7 @@ Kaynak: `ops/kaynak/chatgpt-tek-ulasim-karti-sunum-plani.pdf` (22 slayt planı) 
 
 ## DÜRÜST eksikler (hâlâ zayıf, olduğundan iyi gösterilmiyor)
 - **Fotoğraf kalitesi eşit değil.** Kapadokya kapağı güçlü ama rota dışı (Kapadokya hikâyede yok, "Türkiye manzarası" olarak kullanıldı). Eskişehir Odunpazarı küçük fotosu sönük; İzmir Kordon hero koyulaştırılmış ve kalabalık sırtı dönük (yolcuyu andırıyor ama gezgin değil); İstanbul Boğaz fotosu bulanıkça. Planın "sinematik, her şehre özgün atmosfer" çıtasının altında; ücretsiz lisanslı fotoğraflarla bu kadar.
-- **Gezgin görünmüyor.** Plan "yolcu arkası dönük ufka bakıyor" diyor; lisanslı gerçek bir "tek gezgin" fotosu bulamadım ve uydurmadım. Gezgin yalnız rota şeridi ve metinle var.
+- **Gezgin yalnız kapakta görünüyor** (PDF'ten çıkarılan yapay zekâ konsept görseli, "Concept illustration (AI-generated)" etiketli). Sonraki şehirlerde gezgin portresi yok; lisanslı gerçek bir "tek gezgin" fotosu bulamadım ve uydurmadım.
 - **Yemekler** (çibörek, met helva, boyoz, kumru, Antalya piyazı, tahinli kabak tatlısı) metin olarak var; fotoğrafsız. Veri thread'inden foto istenebilir (VERİ İSTEĞİ).
 - **İstanbul'da 3 küçük foto**tan biri (vapur) gerçek işletme markası içeriyor olabilir; Commons künyeli ama marka kullanımı ayrıca denetlenmedi.
 - Teknoloji durakları (7, 9, 12, 15) temiz ama **sade HTML/SVG kutu diyagramı**; animasyon yalnız giriş. Slayt 12 katman şeması planın "her katman sırayla açılır" isteğini yalnız giriş animasyonuyla karşılıyor.
