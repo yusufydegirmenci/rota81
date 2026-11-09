@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { SLIDES, PLANS, estMinutes } from './slides'
 import { TERMS } from './terms'
@@ -6,6 +6,9 @@ import { QA_LIST } from './qa'
 import type { Slide } from './types'
 import { Hero, CardScene, CardsGrid, DashScene, FAULTS, FlowView, MapScene, NfcScene, RestaurantScene, StreetScene, TableView, TechScene, maxSteps } from './scenes'
 
+const Stage3D = lazy(() => import('./Stage3D').then((m) => ({ default: m.Stage3D })))
+import { TAP_SHOTS } from './Stage3D'
+const STEP_SHOT = [2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8]
 type Mode = 'present' | 'rehearse' | 'explore'
 const KEY = 'foradas-sunum-v1'
 const CH = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('foradas-sunum') : null
@@ -25,11 +28,16 @@ function beep(on: boolean, ok = true) {
   try { const A = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext; const c = new A(); const o = c.createOscillator(), g = c.createGain(); o.frequency.value = ok ? 880 : 220; g.gain.value = 0.04; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.12) } catch { /* sound is optional */ }
 }
 
-export function SceneView({ slide, step, view }: { slide: Slide; step: number; view: 'tech' | 'real' }) {
+export function SceneView({ slide, step, view, quality = 'auto' }: { slide: Slide; step: number; view: 'tech' | 'real' | '3d'; quality?: 'auto' | 'low' | 'high' }) {
   const sc = slide.scene
   const [fault, setFault] = useState(FAULTS[0].id)
   const [mm, setMm] = useState('2D'); const [pick, setPick] = useState('Old Town')
   const fN = FAULTS.find((f) => f.id === fault)?.steps.length ?? 3
+  if (slide.id === 'tap' && view === '3d' && slide.scene.k === 'flow') {
+    const sh = STEP_SHOT[Math.min(step, STEP_SHOT.length - 1)], fs = slide.scene.flow.steps[Math.min(step, slide.scene.flow.steps.length - 1)]
+    return (<div className="sn-flow"><Suspense fallback={<p className="sn-hint">Loading 3D scene…</p>}><Stage3D shot={sh} quality={quality} /></Suspense>
+      <div className="sn-caption" aria-live="polite"><div className="sn-capn">Camera: {TAP_SHOTS[sh].title} · step {Math.min(step, 12) + 1} / 13</div><h3>{fs.title}</h3><p>{TAP_SHOTS[sh].text}</p><p className="sn-hint">{fs.text}</p></div></div>)
+  }
   if (slide.id === 'tap' && view === 'real' && SLIDES[0]) { const j = SLIDES.find((s) => s.id === 'journey'); if (j && j.scene.k === 'street') return <StreetScene steps={j.scene.steps} step={5} /> }
   switch (sc.k) {
     case 'street': return <StreetScene steps={sc.steps} step={step} />
@@ -122,7 +130,8 @@ const CHECKLIST = ['I can explain how a passive card gets energy', 'I can name t
 export default function Sunum() {
   const [mode, setMode] = useState<Mode>('present')
   const [pos, setPos] = usePos()
-  const [view, setView] = useState<'tech' | 'real'>('tech')
+  const [view, setView] = useState<'tech' | 'real' | '3d'>('tech')
+  const [quality, setQuality] = useState<'auto' | 'low' | 'high'>('auto')
   const [sound, setSound] = useState(false)
   const [calm, setCalm] = useState(() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches } catch { return false } })
   const [drawer, setDrawer] = useState<null | 'notes' | 'terms' | 'plans' | 'chapters'>(null)
@@ -162,8 +171,8 @@ export default function Sunum() {
       <div className="sn-body">
         <ul className="sn-bul">{slide.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
         <div className="sn-scene">
-          {slide.id === 'tap' && <div className="sn-faultpick" role="tablist" aria-label="View"><button role="tab" aria-selected={view === 'tech'} className={view === 'tech' ? 'on' : ''} onClick={() => setView('tech')}>Technical view</button><button role="tab" aria-selected={view === 'real'} className={view === 'real' ? 'on' : ''} onClick={() => setView('real')}>Real-world view</button></div>}
-          <SceneView slide={slide} step={pos.s} view={view} />
+          {slide.id === 'tap' && <div className="sn-faultpick" role="tablist" aria-label="View"><button role="tab" aria-selected={view === 'tech'} className={view === 'tech' ? 'on' : ''} onClick={() => setView('tech')}>Technical view</button><button role="tab" aria-selected={view === 'real'} className={view === 'real' ? 'on' : ''} onClick={() => setView('real')}>Real-world view</button><button role="tab" aria-selected={view === '3d'} className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D camera</button>{view === '3d' && <select aria-label="3D quality" value={quality} onChange={(e) => setQuality(e.target.value as 'auto' | 'low' | 'high')}><option value="auto">Quality: auto</option><option value="low">Low (weak device)</option><option value="high">High</option></select>}</div>}
+          <SceneView slide={slide} step={pos.s} view={view} quality={quality} />
         </div>
       </div>
       {slide.check && <details className="sn-check"><summary>Optional check</summary><p><b>{slide.check.q}</b></p><p>{slide.check.a}</p></details>}
