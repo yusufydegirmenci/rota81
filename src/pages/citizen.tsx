@@ -27,6 +27,7 @@ export const CITIZEN_NAV: NavItem[] = [
   { group: 'Yolculuk', to: '/vatandas/hatlar', label: 'Hatlar', icon: '🚌' },
   { group: 'Yolculuk', to: '/vatandas/duraklar', label: 'Duraklar', icon: '📍' },
   { group: 'Keşfet', to: '/vatandas/tur', label: 'Türkiye turu (rehber)', icon: '🧳', bottom: false },
+  { group: 'Keşfet', to: '/sunum', label: 'Sunum (English)', icon: '📖' },
   { group: 'Keşfet', to: '/vatandas/gezi', label: 'Gezi planla', icon: '🧳' },
   { group: 'Keşfet', to: '/vatandas/favoriler', label: 'Favorilerim', icon: '⭐' },
   { group: 'Keşfet', to: '/vatandas/sehirler', label: 'İller ve ilçeler', icon: '🗺️' },

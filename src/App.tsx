@@ -7,6 +7,7 @@ import * as N from './pages/national'
 import { TourPage } from './pages/tour'
 import { OneCard } from './pages/onecard'
 import { Login, Register, Welcome } from './pages/public'
+import Sunum, { PresenterView } from './sunum/Sunum'
 
 export default function App() {
   return (
@@ -14,6 +15,8 @@ export default function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
+          <Route path="/sunum" element={<Sunum />} />
+          <Route path="/sunum/sunucu" element={<PresenterView />} />
           <Route path="/giris" element={<Login />} />
           <Route path="/kayit" element={<Register />} />
 

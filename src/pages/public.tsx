@@ -74,6 +74,7 @@ export function Welcome() {
               {user ? <Link className="btn accent" to={ROLE_HOME[user.role]}>Panelime git</Link> : <>
                 <Link className="btn accent" to="/giris">Demoyu dene</Link>
                 <Link className="btn" to="/kayit">Hesap oluştur</Link>
+                <Link className="btn" to="/sunum">Sunum (English)</Link>
               </>}
             </div>
           </div>
