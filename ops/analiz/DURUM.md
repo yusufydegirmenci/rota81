@@ -35,3 +35,5 @@ Plan: ops/PLAN.md, aktif prompt: ops/promptlar/SIRADAKI.md. Faz 1 (tur donması)
 - 2026-11-09 Sunum thread: görsel kalite çıtası eklendi (HEPSI.md, 5 hedef görsel: NFC okuyucu+el, POS+kart şeması, patlatılmış kart, neon mimari, durak sahnesi). Hedef görseller ops/hedef/.
 
 - 2026-11-09 02:00 Sunum: Faz 2 bitti. HEPSI.md'ye 'durma/sorma' kuralı ve canlıya alma onayı eklendi. Sıradaki Faz 3.
+
+- 2026-11-09 02:02 Sunum: görsel kalite ÖNCELİK 1 (glTF/CC0 modeller, HDRI, hero görsel yedeği, faz başına ekran görüntüsü kontrolü) HEPSI.md'ye eklendi.
